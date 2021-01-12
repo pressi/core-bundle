@@ -1,4 +1,19 @@
 services:
-  _defaults:
-    public: true
-    autoconfigure: true
+    _instanceof:
+        Contao\CoreBundle\Framework\FrameworkAwareInterface:
+            calls:
+                - ["setFramework", ["@contao.framework"]]
+
+        Symfony\Component\DependencyInjection\ContainerAwareInterface:
+            calls:
+                - ["setContainer", ["@service_container"]]
+
+    _defaults:
+        public: true
+        autoconfigure: true
+
+
+    IIDO\CoreBundle\EventListener\BackendMenuListener:
+        arguments:
+            - "@router"
+            - "@request_stack"
