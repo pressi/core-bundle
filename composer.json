@@ -1,0 +1,81 @@
+{
+    "name"          : "2do/core-bundle",
+    "type"          : "contao-bundle",
+    "description"   : "Contao 4 - IIDO Core Bundle",
+    "homepage"      : "http://www.iido.at",
+    "license"       : "MIT",
+    "authors"       :
+    [
+        {
+            "name"      : "Stephan Preßl",
+            "email"     : "development@prestep.at",
+            "homepage"  : "http://www.prestep.at",
+            "role"      : "Developer"
+        }
+    ],
+    "version": "0.1.1",
+    "require":
+    {
+        "php": ">=7.4",
+        "contao/core-bundle": ">=4.0 || <=5.0",
+        "codefog/contao-haste": "^4.24.13",
+        "madeyourday/contao-rocksolid-custom-elements": "^2.2.17",
+        "heimrichhannot/contao-fieldpalette-bundle": "^0.5.1"
+    },
+    "replace":
+    {
+        "2do/contao-basic-bundle": "*",
+        "2do/contao-config-bundle": "*"
+    },
+    "conflict":
+    {
+        "contao/core": "*",
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "suggest":
+    {
+        "2do/contao-master-connect-bundle": "IIDO Master Connection Bundle",
+        "2do/contao-projects-bundle": "IIDO Projects Bundle",
+        "2do/contao-hotel-bundle": "IIDO Hotel Bundle",
+        "codefog/contao-cookiebar": "Cookiebar",
+        "netzhirsch/cookie-opt-in-bundle": "Cookie Opt-In (Kommerziell)",
+        "oveleon/contao-cookiebar": "Erweiterte Cookiebar",
+        "numero2/contao-marketing-suite": "Marketing Suite, SEO (Kommerziell)",
+        "terminal42/contao-changelanguage": "Sprachenwechsler",
+        "terminal42/contao-leads": "Formular Erweiterung (Leads)",
+        "terminal42/contao-geoip2-country": "Inhalte für Länder (GeoIP)",
+        "terminal42/notification_center": "Notification Center",
+        "madeyourday/contao-rocksolid-slider": "RockSolid Slider",
+        "heimrichhannot/contao-slick-bundle": "Slick Slider",
+        "codefog/contao-news_categories": "News Kategorien",
+        "madeyourday/contao-rocksolid-antispam": "Antispam",
+        "do-while/contao-backupdb-bundle": "Datenbanksicherung",
+        "fritzmg/contao-backend-documentation": "Backend Dokumentation",
+        "heimrichhannot/contao-backend-lost-password-bundle": "Backend Login: Passwort vergessen",
+        "oveleon/contao-advanced-form-bundle": "Mehrseitige Formulare",
+        "mvo/contao-group-widget": "BE: Group Widget (like RSCE)"
+    },
+    "autoload":
+    {
+        "psr-4":
+        {
+            "IIDO\\CoreBundle\\": "src/"
+        }
+    },
+    "require-dev":
+    {
+        "contao/manager-plugin": "^2.0",
+        "phpunit/phpunit": "^8.5"
+    },
+    "extra":
+    {
+        "contao-manager-plugin": "IIDO\\CoreBundle\\ContaoManager\\Plugin"
+    },
+    "autoload-dev":
+    {
+        "psr-4":
+        {
+            "IIDO\\CoreBundle\\Tests\\": "tests/"
+        }
+    }
+}
