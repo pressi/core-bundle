@@ -21,11 +21,11 @@ use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 //use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
-//use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
+use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 //use Contao\ManagerPlugin\Config\ConfigPluginInterface;
 
-//use Symfony\Component\Config\Loader\LoaderResolverInterface;
-//use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Config\Loader\LoaderResolverInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 //use Symfony\Component\Config\Loader\LoaderInterface;
 
 
@@ -35,8 +35,8 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
  * @author Stephan Preßl <development@prestep.at>
  */
 //class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPluginInterface
-//class Plugin implements BundlePluginInterface, RoutingPluginInterface
-final class Plugin implements BundlePluginInterface
+class Plugin implements BundlePluginInterface, RoutingPluginInterface
+//final class Plugin implements BundlePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -75,17 +75,17 @@ final class Plugin implements BundlePluginInterface
 
 
 
-//    /**
-//     * {@inheritdoc}
-//     *
-//     * @throws \Exception
-//     */
-//    public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
-//    {
-//        $file = __DIR__ . '/../Resources/config/routing.yml';
-//
-//        return $resolver->resolve($file)->load($file);
-//    }
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Exception
+     */
+    public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
+    {
+        $file = __DIR__ . '/../Resources/config/routing.yml';
+
+        return $resolver->resolve($file)->load($file);
+    }
 
 
 
