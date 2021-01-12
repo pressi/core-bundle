@@ -71,6 +71,10 @@
     {
         "contao-manager-plugin": "IIDO\\CoreBundle\\ContaoManager\\Plugin"
     },
+    "config":
+    {
+        "preferred-install": "dist"
+    },
     "autoload-dev":
     {
         "psr-4":
