@@ -13,14 +13,15 @@
             "role"      : "Developer"
         }
     ],
-    "version": "0.1.2",
+    "version": "0.2.0",
     "require":
     {
         "php": ">=7.4",
         "contao/core-bundle": ">=4.0 || <=5.0",
         "codefog/contao-haste": "^4.24.13",
         "madeyourday/contao-rocksolid-custom-elements": "^2.2.17",
-        "heimrichhannot/contao-fieldpalette-bundle": "^0.5.1"
+        "heimrichhannot/contao-fieldpalette-bundle": "^0.5.1",
+        "heimrichhannot/contao-multi-column-editor-bundle": "^2.12.2"
     },
     "replace":
     {
@@ -60,7 +61,21 @@
         "psr-4":
         {
             "IIDO\\CoreBundle\\": "src/"
-        }
+        },
+
+        "classmap":
+        [
+            "src/DataContainer/DC_YamlConfigFile.php"
+        ],
+
+        "exclude-from-classmap":
+        [
+            "tests/",
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/",
+            "src/Resources/contao/templates/"
+        ]
     },
     "require-dev":
     {
