@@ -1,4 +1,45 @@
 services:
+#    _instanceof:
+#        Contao\CoreBundle\Framework\FrameworkAwareInterface:
+#            calls:
+#                - ["setFramework", ["@contao.framework"]]
+
+#        Symfony\Component\DependencyInjection\ContainerAwareInterface:
+#            calls:
+#                - ["setContainer", ["@service_container"]]
+
     _defaults:
         public: true
         autoconfigure: true
+
+
+
+    IIDO\CoreBundle\Twig\TwigTemplatesExtension:
+        public: false
+        tags:
+            - { name: twig.extension }
+
+
+    #classes
+    iido.core.website-settings.settings:
+        class: IIDO\CoreBundle\Backend\WebsiteSettings
+
+
+    #event listener
+    IIDO\CoreBundle\EventListener\BackendMenuListener:
+        arguments:
+            - "@router"
+            - "@request_stack"
+
+    IIDO\CoreBundle\EventListener\AjaxListener:
+        arguments:
+            - "@monolog.logger.contao"
+            - "@contao.framework"
+
+#    IIDO\CoreBundle\EventListener\BackendTemplateListener: ~
+
+
+    #event subscriber
+    IIDO\CoreBundle\EventSubscriber\KernelRequestSubscriber:
+        arguments:
+            - "@contao.routing.scope_matcher"
