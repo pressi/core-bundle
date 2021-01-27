@@ -20,13 +20,14 @@ use Contao\CalendarBundle\ContaoCalendarBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-//use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
+use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
 use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
-//use Contao\ManagerPlugin\Config\ConfigPluginInterface;
+use Contao\ManagerPlugin\Config\ConfigPluginInterface;
 
+use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
-//use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\Config\Loader\LoaderInterface;
 
 
 /**
@@ -82,15 +83,16 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface
      */
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
     {
-        $file = __DIR__ . '/../Resources/config/routing.yml';
+        $file = __DIR__ . '/../Resources/config/routes.yml';
 
         return $resolver->resolve($file)->load($file);
     }
 
 
 
-//    public function registerContainerConfiguration(LoaderInterface $loader, array $config)
+//    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
 //    {
-//        $loader->load(__DIR__ . '/config/custom.yml');
+//        $loader->load(__DIR__ . '/../Resources/config/config.yml');
+//        $loader->load('@IIDOCoreBundle/Resources/config/config.yml');
 //    }
 }
