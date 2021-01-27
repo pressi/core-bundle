@@ -1,0 +1,23 @@
+{% extends "@ContaoCore/Backend/be_page.html.twig" %}
+
+{% block headline %}
+    <span>Website-Einstellungen</span>{% if headline.sub %} › <span>{{ headline.sub }}</span> {% endif %}
+{% endblock %}
+
+{% block error %}{% if error.message %}{{ error.message }}{% endif %}{% endblock %}
+
+{% block main %}
+    <div class="tl_listing_container">
+
+        <div class="iido-backend-container container-settings">
+            {% for alias, setting in settings %}
+                <div class="container-item setting-item setting-{{ alias }}{% if setting.iconTag %} has-icon{% endif %}">
+                    <a href="{{ setting.href }}"{% if not setting.iconTag and setting.icon %} style="background-image:url('{{ setting.icon }}');"{% endif %}>
+                        <div class="icon">{{ setting.iconTag|raw }}</div>
+                        <div class="name">{{ setting.name|raw }}</div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
