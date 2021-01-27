@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+    <file datatype="php" original="src/Resources/contao/languages/en/website-settings.php" source-language="en" target-language="de">
+        <body>
+
+            <trans-unit id="IIDO.website-settings.settings.name">
+                <source>Settings</source>
+                <target>Einstellungen</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="IIDO.settings_field.previewMode.0">
+                <source>enable preview mode</source>
+                <target>Vorschau-Modus aktivieren</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="IIDO.settings_legend.main_legend">
+                <source>Defaults</source>
+                <target>Standards</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>
