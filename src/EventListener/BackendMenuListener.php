@@ -12,6 +12,7 @@ namespace IIDO\CoreBundle\EventListener;
 
 use Contao\CoreBundle\Event\MenuEvent;
 use Contao\CoreBundle\Event\ContaoCoreEvents;
+use IIDO\CoreBundle\Config\BundleConfig;
 use IIDO\CoreBundle\Controller\Backend\WebsiteSettingsController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
@@ -19,7 +20,7 @@ use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
 
 /**
- * @ServiceTag("kernel.event_listener", event=ContaoCoreEvents::BACKEND_MENU_BUILD, priority=-256)
+ * @ServiceTag("kernel.event_listener", event=ContaoCoreEvents::BACKEND_MENU_BUILD, priority=-255)
  */
 class BackendMenuListener
 {
@@ -52,7 +53,7 @@ class BackendMenuListener
             ->setLabel('Website-Einstellungen')
             ->setLinkAttribute('title', 'Website-Einstellungen')
             ->setLinkAttribute('class', 'website-settings')
-            ->setCurrent( $this->requestStack->getCurrentRequest()->get('_controller') === WebsiteSettingsController::class );
+            ->setCurrent( (0 === strpos($this->requestStack->getCurrentRequest()->get('_controller'), WebsiteSettingsController::class)) );
 
         $systemNode->addChild( $node );
     }
