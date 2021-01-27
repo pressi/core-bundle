@@ -15,7 +15,7 @@ namespace IIDO\CoreBundle\DependencyInjection;
 use Symfony\Component\Config\FileLocator;
 //use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
+//use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -25,7 +25,8 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  *
  * @author Stephan Preßl <https://github.com/pressi>
  */
-class IIDOCoreExtension extends Extension implements PrependExtensionInterface
+//class IIDOCoreExtension extends Extension implements PrependExtensionInterface
+class IIDOCoreExtension extends Extension
 {
     /**
      * {@inheritdoc}
@@ -36,30 +37,30 @@ class IIDOCoreExtension extends Extension implements PrependExtensionInterface
     {
         $loader = new YamlFileLoader( $container, new FileLocator(__DIR__ . '/../Resources/config') );
 
-//        $loader->load('listener.yml');
-        $loader->load('services.yml');
+        $loader->load('listener.yml');
+//        $loader->load('services.yml');
     }
 
 
-    /**
-     * {@inheritdoc}
-     *
-     * @throws \Exception
-     */
-    public function prepend(ContainerBuilder $container): void
-    {
-        $rootDir = $container->getParameter('kernel.root_dir');
-
-        if (file_exists($rootDir . '/config/parameters.yml') || !file_exists($rootDir . '/config/parameters.yml.dist'))
-        {
-            return;
-        }
-
-        $loader = new YamlFileLoader(
-            $container,
-            new FileLocator($rootDir . '/config')
-        );
-
-        $loader->load('parameters.yml.dist');
-    }
+//    /**
+//     * {@inheritdoc}
+//     *
+//     * @throws \Exception
+//     */
+//    public function prepend(ContainerBuilder $container): void
+//    {
+//        $rootDir = $container->getParameter('kernel.root_dir');
+//
+//        if (file_exists($rootDir . '/config/parameters.yml') || !file_exists($rootDir . '/config/parameters.yml.dist'))
+//        {
+//            return;
+//        }
+//
+//        $loader = new YamlFileLoader(
+//            $container,
+//            new FileLocator($rootDir . '/config')
+//        );
+//
+//        $loader->load('parameters.yml.dist');
+//    }
 }
