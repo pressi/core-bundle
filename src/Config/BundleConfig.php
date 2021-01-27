@@ -38,7 +38,7 @@ class BundleConfig
      *
      * @return string
      */
-    public static function getBundleConfig( string $funcName, null|string $funcVar = null ): string
+    public static function getBundleConfig( string $funcName, $funcVar = null ): string
     {
         $functionName = 'get' . $funcName;
 
