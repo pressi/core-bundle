@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************
- * (c) 2020 Stephan Preßl, www.prestep.at <development@prestep.at>
+ * (c) 2021 Stephan Preßl, www.prestep.at <development@prestep.at>
  * All rights reserved
  * Modification, distribution or any other action on or with
  * this file is permitted unless explicitly granted by IIDO
@@ -10,6 +10,10 @@
 namespace IIDO\CoreBundle\Controller\Backend;
 
 
+use Contao\Ajax;
+use Contao\Controller;
+use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\Environment;
 use Contao\Input;
 use Contao\System;
 use IIDO\CoreBundle\Config\BundleConfig;
@@ -46,12 +50,18 @@ class WebsiteSettingsController extends AbstractController
      */
     public function detailsAction( $settingAlias ): Response
     {
+        $this->runBefore();
+
+//        /* @var $framework ContaoFramework */
+//        $framework = System::getContainer()->get('contao.framework');
+//        $framework->initialize();
+
         $settings   = WebsiteSettingsUtil::getBackendWebsiteSettings();
         $router     = System::getContainer()->get('router');
         $setting    = $settings[ $settingAlias ];
 
         $callback   = $setting['callback'];
-        $table      = Input::get('table');
+//        $table      = Input::get('table');
 
         $templateConfig =
         [
@@ -62,5 +72,32 @@ class WebsiteSettingsController extends AbstractController
         ];
 
         return $this->render( '@IIDOCore/Backend/website_settings-details.html.twig', $templateConfig);
+    }
+
+
+
+    protected function runBefore()
+    {
+        $table      = Input::get('table');
+
+        // AJAX request
+        if( $table && $_POST && Environment::get('isAjaxRequest') )
+        {
+            Controller::loadDataContainer( $table );
+
+            $tableConfig = $GLOBALS['TL_DCA'][ $table ];
+            $dataContainer = $tableConfig['config']['dataContainer'];
+
+            if( $dataContainer === 'YamlConfigFile' )
+            {
+                $classPath  = '\IIDO\CoreBundle\DataContainer';
+            }
+
+            $tableMode  = $classPath . '\DC_' . $dataContainer;
+            $objTable   = new $tableMode( $table );
+
+            $objAjax = new Ajax( Input::post('action') );
+            $objAjax->executePostActions( $objTable );
+        }
     }
 }
