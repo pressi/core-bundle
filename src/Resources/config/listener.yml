@@ -14,18 +14,19 @@ services:
 
 
 
+    # twig
     IIDO\CoreBundle\Twig\TwigTemplatesExtension:
         public: false
         tags:
             - { name: twig.extension }
 
 
-    #classes
+    # classes
     iido.core.website-settings.settings:
         class: IIDO\CoreBundle\Backend\WebsiteSettings
 
 
-    #event listener
+    # event listener
     IIDO\CoreBundle\EventListener\BackendMenuListener:
         arguments:
             - "@router"
@@ -36,10 +37,14 @@ services:
             - "@monolog.logger.contao"
             - "@contao.framework"
 
-#    IIDO\CoreBundle\EventListener\BackendTemplateListener: ~
+    IIDO\CoreBundle\EventListener\BackendTemplateListener: ~
 
 
-    #event subscriber
+    # dca tables listener
+    IIDO\CoreBundle\EventListener\DataContainer\CoreSettingsListener: ~
+
+
+    # event subscriber
     IIDO\CoreBundle\EventSubscriber\KernelRequestSubscriber:
         arguments:
             - "@contao.routing.scope_matcher"
