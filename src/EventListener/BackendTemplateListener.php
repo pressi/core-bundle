@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************
- * (c) 2020 Stephan Preßl, www.prestep.at <development@prestep.at>
+ * (c) 2021 Stephan Preßl, www.prestep.at <development@prestep.at>
  * All rights reserved
  * Modification, distribution or any other action on or with
  * this file is permitted unless explicitly granted by IIDO
@@ -22,6 +22,34 @@ class BackendTemplateListener
     public function onOutputBackendTemplate( string $content, string $template )
     {
 //        $GLOBALS['TL_CSS']['be_iido_styles'] = BundleConfig::getBundlePath( true, false ) . '/styles/backend.scss||static';
+
+        return $content;
+    }
+
+
+
+    /**
+     * @Hook("parseBackendTemplate")
+     */
+    public function onParseBackendTemplate( string $content, string $template )
+    {
+        if( "be_welcome" === $template )
+        {
+            preg_match_all('/<p>(.*?)<\/p>/', $content, $matches);
+            $introMessage = '<div id="tl_intro"><div class="inside"><p>' . $matches[0][0] . '</p></div></div>';
+
+            $content = preg_replace('/<p>(.*?)<\/p>/', '', $content, 1);
+            $content = str_replace('<div id="tl_messages">', $introMessage . '<div id="tl_messages">', $content);
+
+            $noMessages = '<p>Zurzeit sind keine Hinweise vorhanden.</p>';
+            preg_match_all('/<div id="tl_messages">([A-Za-z0-9\s\-<>=",;.:_öäüÖÄÜß!?\/\(\)\{\}]+)<\/div>/', $content, $matches);
+            preg_match_all('/<p>(.*?)<\/p>/', $matches[1][0], $matches);
+
+            if( count($matches[0]) <= 1 )
+            {
+                $content = preg_replace('/<div id="tl_messages">([\n\s]{0,})<h2>([A-Za-z0-9\s\-,;.:_öäüÖÄÜß!?]+)<\/h2>/', '<div id="tl_messages">$1<h2>$2</h2>' . $noMessages, $content);
+            }
+        }
 
         return $content;
     }
