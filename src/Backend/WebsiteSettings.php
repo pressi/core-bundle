@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************
- * (c) 2020 Stephan Preßl, www.prestep.at <development@prestep.at>
+ * (c) 2021 Stephan Preßl, www.prestep.at <development@prestep.at>
  * All rights reserved
  * Modification, distribution or any other action on or with
  * this file is permitted unless explicitly granted by IIDO
@@ -60,108 +60,6 @@ class WebsiteSettings
 //        ];
 
         return preg_replace('/<div id="tl_buttons">([A-Za-z0-9\s\n\-,;.:_öäüÖÄÜß!?="#\(\)\{\}\/<>%+&]{0,})<\/div>/', '', $objTable->edit()); //$twig->render('@IIDOCore\Backend\website_settings-settings.html.twig', $config);
-    }
-
-
-
-    protected function getFormFields( $values = array(), $onlyFields = false ): array
-    {
-        $legends =
-        [
-            'main_legend' =>
-            [
-                'previewMode'   => $onlyFields ? '' : $this->getFieldWidget('previewMode', 'checkbox', $values['previewMode']),
-                'backendStyles' => '',
-                'customLogin'   => ''
-            ],
-
-            'nav_legend' =>
-            [
-                'enableMobileNavigation'    => ''
-            ],
-
-            'content_legend' =>
-            [
-                'includeElementFields'      => '',
-                'removeHeadlineFieldFromElements' => '',
-                'enableLayout'              => ''
-            ],
-
-            'article_legend' =>
-            [
-                'includeArticleFields'      => ''
-            ],
-
-            'page_legend' =>
-            [
-                'includePageFields'         => ''
-            ],
-
-            'backend_legend' =>
-            [
-                'navLabels'                 => ''
-            ]
-        ];
-
-        $legends = Services::getEventDispatcher()->dispatch(EventDispatcher::WEBSITE_SETTINGS_FIELDS, $legends );
-
-//        if( !$onlyFields )
-//        {
-//            foreach( $legends as $legend => $fields )
-//            {
-//            }
-//        }
-
-        return $legends;
-    }
-
-
-
-    public function getFieldWidget( string $fieldName, string $fieldType = 'text', $value = '' )
-    {
-        $widgetClass = ' w50 cbx';
-
-        $class  = $GLOBALS['BE_FFL'][ $fieldType ];
-        $config = [ 'label' => $GLOBALS['TL_LANG']['IIDO']['settings_field'][ $fieldName ], 'inputType' => $fieldType ];
-
-        if( $fieldType === 'checkbox' )
-        {
-            $widgetClass .= ' m12';
-        }
-
-        $widget = new $class( $class::getAttributesFromDca( $config, $fieldName, $value ) );
-
-        return '<div class="widget' . $widgetClass . '">' . $widget->generate() . '</div>';
-    }
-
-
-
-    public static function getFieldWidgetStatic( string $fieldName, string $fieldType = 'text', $value = '')
-    {
-        $object = new self();
-        return $object->getFieldWidget( $fieldName, $fieldType, $value );
-    }
-
-
-
-    protected function processForm()
-    {
-        if( Input::post('FORM_SUBMIT') === 'iido-settings' )
-        {
-            $values = [];
-            foreach( $this->getFormFields([], true) as $legend => $fields )
-            {
-                foreach( $fields as $field => $widget )
-                {
-                    $values[ $field ] = Input::post( $field );
-                }
-            }
-
-            if( count($values) )
-            {
-                WebsiteSettingsUtil::saveConfigFileValue( $values );
-            }
-        }
     }
 
 }

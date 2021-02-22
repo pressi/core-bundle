@@ -13,6 +13,11 @@ namespace IIDO\BasicBundle\Twig;
 use IIDO\BasicBundle\Helper\BasicHelper;
 
 
+/**
+ * Class AppExtension
+ *
+ * @deprecated NO MORE IN USE!! use Twig Template Extension instead
+ */
 class AppExtension extends \Twig_Extension
 {
 

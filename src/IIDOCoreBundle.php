@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /*******************************************************************
- * (c) 2020 Stephan Preßl, www.prestep.at <development@prestep.at>
+ * (c) 2021 Stephan Preßl, www.prestep.at <development@prestep.at>
  * All rights reserved
  * Modification, distribution or any other action on or with
  * this file is permitted unless explicitly granted by IIDO

@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************
- * (c) 2020 Stephan Preßl, www.prestep.at <development@prestep.at>
+ * (c) 2021 Stephan Preßl, www.prestep.at <development@prestep.at>
  * All rights reserved
  * Modification, distribution or any other action on or with
  * this file is permitted unless explicitly granted by IIDO
@@ -198,13 +198,7 @@ class Field
     public static function update( $strName, $objTable )
     {
         $objField = $objTable->getField( $strName );
-//echo "<pre>";
-//print_r( $objTable );
-//echo "<br>";
-//print_r( $strName);
-//echo "<br>";
-//print_r( $objField );
-//exit;
+
         if( is_array($objField) )
         {
             $arrField = $objField;
@@ -768,7 +762,7 @@ class Field
             $this->addEval('multiple', true);
         }
 
-        if( !$this->issetEval('orderField') )
+        if( !$this->issetEval('orderField') && ($this->issetEval('noOrderField') && !$this->getEval('noOrderField')) )
         {
             $this->addEval('orderField', 'order' . ucfirst($this->name) );
         }
