@@ -1,0 +1,229 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+    <file datatype="php" original="src/Resources/contao/languages/en/tl_iido_core_settings.php" source-language="en" target-language="de">
+        <body>
+
+            <trans-unit id="tl_iido_core_settings.previewMode.0">
+                <source>Vorschau-Modus aktivieren</source>
+                <target><![CDATA[Vorschau-Modus aktivieren <span style="color:#006494;">TODO: zu den Seiteneinstellungen! (ROOT)</span>]]></target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.backendStyles.0">
+                <source>Backend-Styles aktivieren</source>
+                <target><![CDATA[Backend-Styles aktivieren <span style="color:#006494;">TODO: entfernen?</span>]]></target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.customLogin.0">
+                <source>personalisierter Login</source>
+                <target><![CDATA[personalisierter Login <span style="color:#006494;">TODO: entfernen?</span>]]></target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.loginImageSRC.0">
+                <source>Login HG-Bild(er)</source>
+                <target>Login HG-Bild(er)</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.loginLogoSRC.0">
+                <source>Logo</source>
+                <target>Logo</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.loginShowPublisherLink.0">
+                <source>Agentur Link aktivieren</source>
+                <target>Agentur Link aktivieren</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.loginShowImageCopyright.0">
+                <source>HG-Bild(er) Copyright anzeigen</source>
+                <target>HG-Bild(er) Copyright anzeigen</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_iido_core_settings.enableMobileNavigation.0">
+                <source>Mobile Navigation aktivieren</source>
+                <target><![CDATA[Mobile Navigation aktivieren <span style="color:#006494;">TODO: zu den Seiteneinstellungen! (ROOT)</span>]]></target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.showMobileNavOnTablet.0">
+                <source>Mobile Navigation bereits auf Tablets anzeigen</source>
+                <target>Mobile Navigation bereits auf Tablets anzeigen</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.showMobileNavBurgerDark.0">
+                <source>Dunkler Burger der Mobile Navigation anzeigen</source>
+                <target>Dunkler Burger der Mobile Navigation anzeigen</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.includeElementFields.0">
+                <source>IIDO Felder bei den Inhaltselemente aktivieren</source>
+                <target>IIDO Felder bei den Inhaltselemente aktivieren</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.elementFields.0">
+                <source>Fields</source>
+                <target>Felder</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.removeHeadlineFieldFromElements.0">
+                <source>Überschrift bei allen Elementen entfernen</source>
+                <target>Überschrift bei allen Elementen entfernen</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.enableLayout.0">
+                <source>Spalten (Grid) Layout aktiviern</source>
+                <target>Spalten (Grid) Layout aktiviern</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_iido_core_settings.includeArticleFields.0">
+                <source>IIDO Felder bei den Artikeln aktivieren</source>
+                <target>IIDO Felder bei den Artikeln aktivieren</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.articleFields.0">
+                <source>Fields</source>
+                <target>Felder</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_iido_core_settings.includePageFields.0">
+                <source>IIDO Felder bei den Seiten aktivieren</source>
+                <target>IIDO Felder bei den Seiten aktivieren</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.pageFields.0">
+                <source>Fields</source>
+                <target>Felder</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_iido_core_settings.navLabels.0">
+                <source>Navigation Labels</source>
+                <target>Navigation Labels</target>
+            </trans-unit>
+
+
+
+<!-- ### LEGENDS ############################################################################################################ -->
+
+            <trans-unit id="tl_iido_core_settings.default_legend">
+                <source>Standards</source>
+                <target>Standards</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.navigation_legend">
+                <source>Navigation</source>
+                <target>Navigation</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.elements_legend">
+                <source>Inhalts Elemente</source>
+                <target>Inhalts Elemente</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.articles_legend">
+                <source>Artikel</source>
+                <target>Artikel</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.pages_legend">
+                <source>Seiten</source>
+                <target>Seiten</target>
+            </trans-unit>
+
+            <trans-unit id="tl_iido_core_settings.backend_legend">
+                <source>Backend</source>
+                <target>Backend</target>
+            </trans-unit>
+
+
+
+<!-- ### OPTIONS ############################################################################################################ -->
+
+<!--            <trans-unit id="tl_iido_core_settings.options.elementFields.topHeadline">-->
+<!--                <source>top headline</source>-->
+<!--                <target>Überschrift oben</target>-->
+<!--            </trans-unit>-->
+<!--            <trans-unit id="tl_iido_core_settings.options.elementFields.topHeadlineFloating">-->
+<!--                <source>top headline floating</source>-->
+<!--                <target>Überschrift oben: Ausrichtung</target>-->
+<!--            </trans-unit>-->
+<!--            <trans-unit id="tl_iido_core_settings.options.elementFields.topHeadlineColor">-->
+<!--                <source>top headline color</source>-->
+<!--                <target>Überschrift oben: Farbe</target>-->
+<!--            </trans-unit>-->
+<!--            <trans-unit id="tl_iido_core_settings.options.elementFields.headlineFloating">-->
+<!--                <source>top headline color</source>-->
+<!--                <target>Überschrift oben: Farbe</target>-->
+<!--            </trans-unit>-->
+<!--            <trans-unit id="tl_iido_core_settings.options.elementFields.headlineColor">-->
+<!--                <source>top headline color</source>-->
+<!--                <target>Überschrift oben: Farbe</target>-->
+<!--            </trans-unit>-->
+
+            <trans-unit id="tl_iido_core_settings.options.elementFields.topHeadline">
+                <source>top headline</source>
+                <target>Überschrift Oben</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.elementFields.subHeadline">
+                <source>sub headline</source>
+                <target>Überschrift Unten</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.elementFields.animation">
+                <source>Animation</source>
+                <target>Animation</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.elementFields.cssID">
+                <source>update cssID</source>
+                <target>Update: CSS-ID/Klasse</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_iido_core_settings.options.pageFields.fullpage">
+                <source>FullPage</source>
+                <target>FullPage</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_iido_core_settings.options.articleFields.frontendTitle">
+                <source>frontend title</source>
+                <target>Frontend-Titel</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.navTitle">
+                <source>navigation title</source>
+                <target>Navigations-Titel</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.width">
+                <source>Width</source>
+                <target>Breite</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.height">
+                <source>Height</source>
+                <target>Höhe</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.bg_color">
+                <source>Background Color</source>
+                <target>Hintergrundfarbe</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.bg_gradient">
+                <source>Background Gradient</source>
+                <target>Hintergrund Verlauf</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.bg_image">
+                <source>Background Image</source>
+                <target>Hintergrund Bild</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.animation">
+                <source>Animation</source>
+                <target>Animation</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>
