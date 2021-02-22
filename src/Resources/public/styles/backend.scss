@@ -75,3 +75,19 @@ $colorOrange: #f47c00;
         }
     }
 }
+
+
+
+/**
+ * core settings backend nav labels
+ * ------------------------------------ */
+
+.multi-column-editor.nav-labels {
+
+    .mce-row {
+
+        .actions {
+            display: none !important;
+        }
+    }
+}
