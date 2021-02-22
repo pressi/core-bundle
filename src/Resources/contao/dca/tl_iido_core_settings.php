@@ -1,4 +1,11 @@
 <?php
+/*******************************************************************
+ * (c) 2021 Stephan Preßl, www.prestep.at <development@prestep.at>
+ * All rights reserved
+ * Modification, distribution or any other action on or with
+ * this file is permitted unless explicitly granted by IIDO
+ * www.iido.at <development@iido.at>
+ *******************************************************************/
 
 $strConfTable = \IIDO\CoreBundle\Config\BundleConfig::getFileTable( __FILE__ );
 $objConfTable = new \IIDO\CoreBundle\Dca\Table( $strConfTable );
@@ -94,6 +101,7 @@ $objConfTable->addSubpalette('loginShowPublisherLink', 'loginPublisher');
     ->addToTable( $objConfTable );
 
 \IIDO\CoreBundle\Dca\Field::create('loginImageSRC', 'images')
+    ->addEval('noOrderField', true)
     ->addToTable( $objConfTable );
 
 \IIDO\CoreBundle\Dca\Field::create('loginLogoSRC', 'image')
