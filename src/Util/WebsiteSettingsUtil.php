@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************
- * (c) 2020 Stephan Preßl, www.prestep.at <development@prestep.at>
+ * (c) 2021 Stephan Preßl, www.prestep.at <development@prestep.at>
  * All rights reserved
  * Modification, distribution or any other action on or with
  * this file is permitted unless explicitly granted by IIDO
@@ -36,21 +36,22 @@ class WebsiteSettingsUtil
            [
                'name'       => $GLOBALS['TL_LANG']['IIDO']['website-settings']['settings']['name'],
                'icon'       => 'settings.svg',
-               'href'       => $router->generate('iido.core.website-settings.details', ['settingAlias'=>'settings']) . '?table=tl_iido_core_settings&ref=' . TL_REFERER_ID,
+               'href'       => $router->generate('iido.core.website-settings.details', ['settingAlias'=>'settings']),
+               'table'      => 'tl_iido_core_settings',
                'callback'   => ['iido.core.website-settings.settings', 'renderSettings']
            ]
        ];
 
-        $settings = Services::getEventDispatcher()->dispatch(EventDispatcher::WEBSITE_SETTINGS );
+        $settings = Services::getEventDispatcher()->dispatch(EventDispatcher::WEBSITE_SETTINGS, $defaultSettings );
 
-        if( $settings && is_array($settings) && count($settings) )
-        {
-            $settings = array_merge($defaultSettings, $settings);
-        }
-        else
-        {
-            $settings = $defaultSettings;
-        }
+//        if( $settings && is_array($settings) && count($settings) )
+//        {
+//            $settings = array_merge($defaultSettings, $settings);
+//        }
+//        else
+//        {
+//            $settings = $defaultSettings;
+//        }
 
         foreach( $settings  as $key => $setting)
         {
@@ -70,6 +71,13 @@ class WebsiteSettingsUtil
                     $setting['iconTag'] = file_get_contents( $setting['icon'] );
                 }
             }
+
+            if( isset($setting['table']) )
+            {
+                $setting['href'] = $setting['href'] . (preg_match('/\?([A-Za-z_\[\]]{1,})=/', $setting['href']) ? '&' : '?') . 'table=' . $setting['table'];
+            }
+
+            $setting['href'] = $setting['href'] . (preg_match('/\?([A-Za-z_\[\]]{1,})=/', $setting['href']) ? '&' : '?') . 'ref=' . TL_REFERER_ID;
 
             $settings[ $key ] = $setting;
         }
@@ -146,10 +154,10 @@ class WebsiteSettingsUtil
 
         if( !$table && $name )
         {
-            //TODO: ERROR name withoit table does not work!
+            //TODO: ERROR name without table does not work!
         }
 
-        return $settings;
+        return $settings ?? null;
     }
 
 
