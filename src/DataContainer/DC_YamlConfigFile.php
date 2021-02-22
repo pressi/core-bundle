@@ -1,6 +1,6 @@
 <?php
 /*******************************************************************
- * (c) 2020 Stephan Preßl, www.prestep.at <development@prestep.at>
+ * (c) 2021 Stephan Preßl, www.prestep.at <development@prestep.at>
  * All rights reserved
  * Modification, distribution or any other action on or with
  * this file is permitted unless explicitly granted by IIDO
@@ -36,7 +36,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 		$this->intId = Input::get('id');
 
 		// Check whether the table is defined
-		if( $strTable == '' || !isset($GLOBALS['TL_DCA'][ $strTable ]) )
+		if( !$strTable || !isset($GLOBALS['TL_DCA'][ $strTable ]) )
 		{
 			$logger = static::getContainer()->get('monolog.logger.contao');
 		    $logger->log(\Psr\Log\LogLevel::ERROR, 'Could not load data container configuration for "' . $strTable . '"', array('contao' => new ContaoContext(__METHOD__, TL_ERROR)));
@@ -111,6 +111,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 		$this->strPalette = $this->getPalette();
 		$boxes = StringUtil::trimsplit(';', $this->strPalette);
 		$legends = array();
+
 		if( !empty($boxes) )
 		{
 			foreach( $boxes as $k => $v )
@@ -191,7 +192,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 
 					if ($vv == '[EOF]')
 					{
-						if ($blnAjax && Environment::get('isAjaxRequest'))
+					    if( $blnAjax && Environment::get('isAjaxRequest') )
 						{
 							return $strAjax . '<input type="hidden" name="FORM_FIELDS[]" value="' . StringUtil::specialchars($this->strPalette) . '">';
 						}
@@ -316,19 +317,19 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 <input type="hidden" name="FORM_FIELDS[]" value="' . StringUtil::specialchars($this->strPalette) . '">' . $return;
 
 		// Reload the page to prevent _POST variables from being sent twice
-		if (!$this->noReload && Input::post('FORM_SUBMIT') == $this->strTable)
+		if( !$this->noReload && Input::post('FORM_SUBMIT') == $this->strTable )
 		{
 			// Call onsubmit_callback
-			if (\is_array($GLOBALS['TL_DCA'][$this->strTable]['config']['onsubmit_callback']))
+			if( \is_array($GLOBALS['TL_DCA'][$this->strTable]['config']['onsubmit_callback']) )
 			{
-				foreach ($GLOBALS['TL_DCA'][$this->strTable]['config']['onsubmit_callback'] as $callback)
+				foreach( $GLOBALS['TL_DCA'][$this->strTable]['config']['onsubmit_callback'] as $callback )
 				{
-					if (\is_array($callback))
+					if( \is_array($callback) )
 					{
-						$this->import($callback[0]);
-						$this->{$callback[0]}->{$callback[1]}($this);
+						$this->import( $callback[0] );
+						$this->{$callback[0]}->{$callback[1]}( $this );
 					}
-					elseif (\is_callable($callback))
+					elseif( \is_callable($callback) )
 					{
 						$callback($this);
 					}
@@ -336,7 +337,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 			}
 
 			// Reload
-			if (isset($_POST['saveNclose']))
+			if( isset($_POST['saveNclose']) )
 			{
 				Message::reset();
 				$this->redirect($this->getReferer());
@@ -346,7 +347,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 		}
 
 		// Set the focus if there is an error
-		if ($this->noReload)
+		if( $this->noReload )
 		{
 			$return .= '
 <script>
@@ -381,7 +382,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 			$varValue = $varValue ? true : false;
 		}
 
-		if ($varValue != '')
+		if( $varValue )
 		{
 			// Convert binary UUIDs (see #6893)
 			if ($arrData['inputType'] == 'fileTree')
@@ -460,7 +461,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 			$prior = \is_bool($fileValue) ? ($fileValue ? 'true' : 'false') : $fileValue;
 
 			// Add a log entry
-			if (!\is_array($deserialize) && !\is_array(StringUtil::deserialize($prior)))
+			if( !\is_array($deserialize) && !\is_array(StringUtil::deserialize($prior)) )
 			{
 				if ($arrData['inputType'] == 'password' || $arrData['inputType'] == 'textStore')
 				{
@@ -502,23 +503,22 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 				{
 					$key = (Input::get('act') == 'editAll') ? $name . '_' . $this->intId : $name;
 
-					if (!$GLOBALS['TL_DCA'][$this->strTable]['fields'][$name]['eval']['submitOnChange'])
+					if( !$GLOBALS['TL_DCA'][ $this->strTable ]['fields'][ $name ]['eval']['submitOnChange'] )
 					{
 						$trigger = Input::post($key);
 					}
 				}
 
-				if ($trigger != '')
+				if( $trigger )
 				{
-//                    $this->log( $name , __FUNCTION__, TL_ERROR);
-					if ($GLOBALS['TL_DCA'][$this->strTable]['fields'][$name]['inputType'] == 'checkbox' && !$GLOBALS['TL_DCA'][$this->strTable]['fields'][$name]['eval']['multiple'])
+					if( $GLOBALS['TL_DCA'][$this->strTable]['fields'][$name]['inputType'] == 'checkbox' && !$GLOBALS['TL_DCA'][$this->strTable]['fields'][$name]['eval']['multiple'] )
 					{
 						$sValues[] = $name;
 
 						// Look for a subpalette
-						if (isset($GLOBALS['TL_DCA'][$this->strTable]['subpalettes'][$name]))
+						if (isset($GLOBALS['TL_DCA'][ $this->strTable ]['subpalettes'][ $name ]))
 						{
-							$subpalettes[$name] = $GLOBALS['TL_DCA'][$this->strTable]['subpalettes'][$name];
+							$subpalettes[ $name ] = $GLOBALS['TL_DCA'][ $this->strTable ]['subpalettes'][ $name ];
 						}
 					}
 					else
@@ -527,12 +527,11 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 						$key = $name . '_' . $trigger;
 
 						// Look for a subpalette
-						if (isset($GLOBALS['TL_DCA'][$this->strTable]['subpalettes'][$key]))
+						if( isset($GLOBALS['TL_DCA'][ $this->strTable ]['subpalettes'][ $key ]) )
 						{
-							$subpalettes[$name] = $GLOBALS['TL_DCA'][$this->strTable]['subpalettes'][$key];
+							$subpalettes[ $name ] = $GLOBALS['TL_DCA'][ $this->strTable ]['subpalettes'][ $key ];
 						}
 					}
-//                    $this->log( implode(',', $subpalettes[$name]) , __FUNCTION__, TL_ERROR);
 				}
 			}
 
