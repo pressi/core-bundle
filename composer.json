@@ -18,10 +18,9 @@
     {
         "php": ">=7.4",
         "contao/core-bundle": ">=4.0 || <=5.0",
-        "codefog/contao-haste": "^4.24.13",
+        "codefog/contao-haste": "^4.24",
         "madeyourday/contao-rocksolid-custom-elements": "^2.2.17",
-        "heimrichhannot/contao-fieldpalette-bundle": "^0.5.1",
-        "heimrichhannot/contao-multi-column-editor-bundle": "^2.12.2"
+        "heimrichhannot/contao-multi-column-editor-bundle": "^2.12"
     },
     "replace":
     {
