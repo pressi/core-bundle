@@ -13,7 +13,7 @@
             "role"      : "Developer"
         }
     ],
-    "version": "0.2.3",
+    "version": "0.2.4",
     "require":
     {
         "php": ">=7.4",
