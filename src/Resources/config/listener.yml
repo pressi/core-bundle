@@ -9,8 +9,17 @@ services:
 #                - ["setContainer", ["@service_container"]]
 
     _defaults:
-        public: true
         autoconfigure: true
+        autowire: true
+        public: true
+
+
+
+
+    # backend controller
+    IIDO\CoreBundle\Controller\Backend\WebsiteSettingsController:
+        calls:
+            - [setContainer, ['@service_container']]
 
 
 
