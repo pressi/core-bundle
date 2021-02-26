@@ -24,8 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 /**
- * //, defaults={"_scope": "backend"}
- * @Route("/contao")
+ * @Route("/contao", defaults={"_scope": "backend", "_token_check": true})
  */
 class WebsiteSettingsController extends AbstractController
 {
