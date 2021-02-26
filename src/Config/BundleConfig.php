@@ -10,6 +10,10 @@
 namespace IIDO\CoreBundle\Config;
 
 
+use Contao\Model;
+use Contao\System;
+
+
 class BundleConfig
 {
     static $namespace           = 'IIDO';
@@ -228,10 +232,11 @@ class BundleConfig
 
     public static function getTableClass( string $strTable ): string
     {
-        $tableClass     = preg_replace(array('/^Iido/', '/Model$/'), '', array_pop(explode("\\", \Model::getClassFromTable( $strTable ))));
-        $arrClass       = preg_split('/(?=[A-Z])/', lcfirst($tableClass));
-        $iidoTable      = ((preg_match('/^tl_iido/', $strTable)) ? TRUE : FALSE);
-        $newTableClass  = (($iidoTable) ? 'IIDO\\' : 'IIDO\\' . self::getSubNamespace() . '\\Table\\');
+        $classParts    = explode("\\", Model::getClassFromTable($strTable));
+        $tableClass    = preg_replace(array('/^Iido/', '/Model$/'), '', array_pop($classParts));
+        $arrClass      = preg_split('/(?=[A-Z])/', lcfirst($tableClass));
+        $iidoTable     = ((preg_match('/^tl_iido/', $strTable)) ? TRUE : FALSE);
+        $newTableClass = (($iidoTable) ? 'IIDO\\' : 'IIDO\\' . self::getSubNamespace() . '\\Table\\');
 
         foreach( $arrClass as $i => $class)
         {
@@ -258,7 +263,7 @@ class BundleConfig
 
     public static function getContaoVersion(): string
     {
-        $packages = \System::getContainer()->getParameter('kernel.packages');
+        $packages = System::getContainer()->getParameter('kernel.packages');
         return $packages['contao/core-bundle'];
     }
 
@@ -266,7 +271,7 @@ class BundleConfig
 
     public static function isActiveBundle( string $bundleName ): bool
     {
-        $packages = \System::getContainer()->getParameter('kernel.packages');
+        $packages = System::getContainer()->getParameter('kernel.packages');
         return key_exists($bundleName, $packages);
     }
 
@@ -274,6 +279,6 @@ class BundleConfig
 
     public static function getRootDir( bool $includeSlash = false ): string
     {
-        return dirname(\System::getContainer()->getParameter('kernel.root_dir')) . ($includeSlash ? '/' : '');
+        return dirname(System::getContainer()->getParameter('kernel.project_dir')) . ($includeSlash ? '/' : '');
     }
 }
