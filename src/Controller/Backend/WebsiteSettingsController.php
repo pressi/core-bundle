@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 /**
+ * //, defaults={"_scope": "backend"}
  * @Route("/contao")
  */
 class WebsiteSettingsController extends AbstractController
