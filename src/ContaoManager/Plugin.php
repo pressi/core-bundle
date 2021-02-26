@@ -20,7 +20,7 @@ use Contao\CalendarBundle\ContaoCalendarBundle;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
+//use Contao\ManagerPlugin\Bundle\Config\ConfigInterface;
 use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 use Contao\ManagerPlugin\Config\ConfigPluginInterface;
 
@@ -35,16 +35,14 @@ use Symfony\Component\Config\Loader\LoaderInterface;
  *
  * @author Stephan Preßl <development@prestep.at>
  */
-//class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPluginInterface
-class Plugin implements BundlePluginInterface, RoutingPluginInterface
-//final class Plugin implements BundlePluginInterface
+class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPluginInterface
 {
     /**
      * {@inheritdoc}
      */
     public function getBundles(ParserInterface $parser): array
     {
-        $loadAfter  = [ContaoCoreBundle::class];
+        $loadAfter  = [TwigBundle::class, ContaoCoreBundle::class];
         $vendorPath = preg_replace('/2do\/core-bundle\/src\/ContaoManager/', '', __DIR__);
 
         if( is_dir( $vendorPath . 'contao/news-bundle') )
@@ -83,16 +81,21 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface
      */
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
     {
-        $file = __DIR__ . '/../Resources/config/routes.yml';
+        $file = '@IIDOCoreBundle/Resources/config/routes.yml';
+        $loader = $resolver->resolve( $file );
 
-        return $resolver->resolve($file)->load($file);
+        if( false === $loader )
+        {
+            throw new \RuntimeException('Could not load IIDO Core routing configuration.');
+        }
+
+        return $loader->load( $file );
     }
 
 
 
-//    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig)
-//    {
-//        $loader->load(__DIR__ . '/../Resources/config/config.yml');
-//        $loader->load('@IIDOCoreBundle/Resources/config/config.yml');
-//    }
+    public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
+    {
+        $loader->load('@IIDOCoreBundle/Resources/config/config.yml');
+    }
 }
