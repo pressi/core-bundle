@@ -1,3 +1,7 @@
 #twig:
 #  paths:
 #    '%kernel.project_dir%/vendor/2do/core-bundle/src/Resources/views': IIDOCore
+
+iido_core:
+  themeDesigner:
+    disabled: false
