@@ -49,7 +49,7 @@ class IIDOCoreExtension extends Extension
 //     */
 //    public function prepend(ContainerBuilder $container): void
 //    {
-//        $rootDir = $container->getParameter('kernel.root_dir');
+//        $rootDir = $container->getParameter('kernel.project_dir');
 //
 //        if (file_exists($rootDir . '/config/parameters.yml') || !file_exists($rootDir . '/config/parameters.yml.dist'))
 //        {
