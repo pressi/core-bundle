@@ -103,7 +103,7 @@ class TwigTemplatesExtension extends AbstractExtension
 //
 ////    public function checkIfMasterStylesheetExists( $text )
 ////    {
-////        $rootDir    = dirname(\System::getContainer()->getParameter('kernel.root_dir'));
+////        $rootDir    = dirname(\System::getContainer()->getParameter('kernel.project_dir'));
 ////        $fileName   = trim( strtolower( preg_replace(array('/ \/ /', '/ \(HTC\)/'), array('/', '.htc'), $text) ) );
 ////
 ////        if( !preg_match('/.htc$/', $fileName) )
@@ -124,7 +124,7 @@ class TwigTemplatesExtension extends AbstractExtension
 ////        $file       = preg_replace(array('/\s\(([A-Za-z0-9\s\-]{1,})\)/'), array(''), $text);
 ////        $fileName   = trim( strtolower( preg_replace(array('/ \/ /'), array('/'), $file) ) );
 ////
-////        $rootDir        = dirname(\System::getContainer()->getParameter('kernel.root_dir'));
+////        $rootDir        = dirname(\System::getContainer()->getParameter('kernel.project_dir'));
 ////        $arrTemplates   = $this->getTemplateFolders();
 ////        $websiteDir     = 'global';
 ////
