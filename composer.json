@@ -13,11 +13,12 @@
             "role"      : "Developer"
         }
     ],
-    "version": "0.2.6",
+    "version": "0.2.7",
     "require":
     {
         "php": ">=7.4",
         "contao/core-bundle": ">=4.0 || <=5.0",
+        "twig/twig": "^2.7 || ^3.0",
         "codefog/contao-haste": "^4.24",
         "madeyourday/contao-rocksolid-custom-elements": "^2.2.17"
     },
@@ -63,6 +64,7 @@
 
         "classmap":
         [
+            "src/Resources/contao",
             "src/DataContainer/DC_YamlConfigFile.php"
         ],
 
@@ -77,16 +79,12 @@
     },
     "require-dev":
     {
-        "contao/manager-plugin": "^2.0",
-        "phpunit/phpunit": "^8.5"
-    },
-    "extra":
-    {
-        "contao-manager-plugin": "IIDO\\CoreBundle\\ContaoManager\\Plugin"
-    },
-    "config":
-    {
-        "preferred-install": "dist"
+        "contao/easy-coding-standard": "^3.0",
+        "contao/manager-plugin": "^2.3",
+        "contao/test-case": "^4.0",
+        "phpunit/phpunit": "^8.5",
+        "symfony/http-client": "4.4.*",
+        "symfony/phpunit-bridge": "4.4.*"
     },
     "autoload-dev":
     {
@@ -94,5 +92,9 @@
         {
             "IIDO\\CoreBundle\\Tests\\": "tests/"
         }
+    },
+    "extra":
+    {
+        "contao-manager-plugin": "IIDO\\CoreBundle\\ContaoManager\\Plugin"
     }
 }
