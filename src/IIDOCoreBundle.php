@@ -26,4 +26,9 @@ class IIDOCoreBundle extends Bundle
     {
         return new IIDOCoreExtension();
     }
+
+//    public function getPath(): string
+//    {
+//        return \dirname(__DIR__);
+//    }
 }
