@@ -37,7 +37,10 @@ class WebsiteSettingsController extends AbstractController
 
         $templateConfig =
         [
-            'settings'      => $settings
+            'settings'      => $settings,
+
+            'error'         => ['message'=>''],
+            'headline'      => ['sub'=>'']
         ];
 
         return $this->render( '@IIDOCore/Backend/website_settings.html.twig', $templateConfig);
@@ -68,7 +71,9 @@ class WebsiteSettingsController extends AbstractController
 //            'backlink'  => $table ? '' : $router->generate( WebsiteSettingsController::class ),
             'backlink'  => $router->generate( WebsiteSettingsController::class ),
             'headline'  => ['sub' => $setting['name'] ],
-            'content'   => call_user_func( [System::importStatic( $callback[0] ), $callback[1]] )
+            'content'   => call_user_func( [System::importStatic( $callback[0] ), $callback[1]] ),
+
+            'error'         => ['message'=>'']
         ];
 
         return $this->render( '@IIDOCore/Backend/website_settings-details.html.twig', $templateConfig);
