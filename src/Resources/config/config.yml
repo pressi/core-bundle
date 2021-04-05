@@ -3,5 +3,6 @@
 #    '%kernel.project_dir%/vendor/2do/core-bundle/src/Resources/views': IIDOCore
 
 iido_core:
+  previewMode: true
   themeDesigner:
     disabled: false
