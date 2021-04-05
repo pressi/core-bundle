@@ -9,7 +9,7 @@
 
 $strConfTable = \IIDO\CoreBundle\Config\BundleConfig::getFileTable( __FILE__ );
 $objConfTable = new \IIDO\CoreBundle\Dca\Table( $strConfTable );
-$objConfTable->setDataContainer('YamlConfigFile');
+$objConfTable->setDataContainer(\IIDO\CoreBundle\DataContainer\DC_YamlConfigFile::class);
 $objConfTable->setWithoutSQL();
 
 //$objTable->setTableListener('iido.basic.dca.iido_config');
