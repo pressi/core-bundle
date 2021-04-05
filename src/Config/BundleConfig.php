@@ -279,6 +279,7 @@ class BundleConfig
 
     public static function getRootDir( bool $includeSlash = false ): string
     {
-        return dirname(System::getContainer()->getParameter('kernel.project_dir')) . ($includeSlash ? '/' : '');
+//        return dirname(System::getContainer()->getParameter('kernel.project_dir')) . ($includeSlash ? '/' : '');
+        return System::getContainer()->getParameter('kernel.project_dir') . ($includeSlash ? '/' : '');
     }
 }
