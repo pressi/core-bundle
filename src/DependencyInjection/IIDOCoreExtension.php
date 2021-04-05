@@ -28,6 +28,13 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 //class IIDOCoreExtension extends Extension implements PrependExtensionInterface
 class IIDOCoreExtension extends Extension
 {
+//    public function getAlias()
+//    {
+//        return 'iido_core';
+//    }
+
+
+
     /**
      * {@inheritdoc}
      *
@@ -38,6 +45,12 @@ class IIDOCoreExtension extends Extension
         $loader = new YamlFileLoader( $container, new FileLocator(__DIR__ . '/../Resources/config') );
 
         $loader->load('services.yml');
+
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter('iido_core.themeDesigner', $config['themeDesigner']);
+        $container->setParameter('iido_core.previewMode', $config['previewMode']);
     }
 
 
