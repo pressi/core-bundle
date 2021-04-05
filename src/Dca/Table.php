@@ -458,7 +458,7 @@ class Table
         {
             $this->addPublishedFieldsToTable();
         }
-//if( $this->strTable === "tl_content" )
+//if( $this->strTable === "tl_iido_theme_designer" )
 //{
 //    echo "<pre>";
 //    print_r( $GLOBALS['TL_DCA'][ $this->strTable ] );
@@ -1326,46 +1326,77 @@ class Table
 
     public function addFieldToPalette( $strPalette, $strNewField, $strReplaceField, $fieldPosition = 'after')
     {
-        if( isset($this->arrPalettes[ $strPalette ]) )
+        if( is_array($strPalette) )
         {
-            $seperator = ',';
-
-            if( 0 === strpos($strNewField, '{') )
+            foreach( $strPalette as $palette )
             {
-                $seperator = ';';
+                $this->addFieldToPalette( $palette, $strNewField, $strReplaceField, $fieldPosition );
             }
-
-            $strReplacement = ',' . $strReplaceField . $seperator . $strNewField;
-
-            if( $fieldPosition === 'before' )
+        }
+        else
+        {
+            if( isset($this->arrPalettes[ $strPalette ]) )
             {
-                $seperatorNext = ',';
-
-                if( 0 === strpos($strReplaceField, '{') )
-                {
-                    $seperatorNext = ';';
-                }
+                $sepStart = ',';
+                $seperator = ',';
 
                 if( 0 === strpos($strNewField, '{') )
                 {
-                    $seperator = '';
+                    $seperator = ';';
                 }
 
-                $strReplacement = $seperator . $strNewField . $seperatorNext . $strReplaceField;
+                if( 0 === strpos($strReplaceField, '{') )
+                {
+                    $sepStart = '';
+                }
+
+                if( preg_match('/\}$/', $strReplaceField) )
+                {
+                    if( 0 === strpos($strNewField, '{') && $fieldPosition === 'after')
+                    {
+                        $seperator = '$1;';
+                    }
+                }
+
+                $strReplacement = $sepStart . $strReplaceField . $seperator . $strNewField;
+
+                if( $fieldPosition === 'before' )
+                {
+                    $seperatorNext = ',';
+
+                    if( 0 === strpos($strReplaceField, '{') )
+                    {
+                        $seperatorNext = ';';
+                    }
+
+                    if( 0 === strpos($strNewField, '{') )
+                    {
+                        $seperator = '';
+                    }
+
+                    $strReplacement = $seperator . $strNewField . $seperatorNext . $strReplaceField;
+                }
+
+                $sepRep = ',';
+
+                if( 0 === strpos($strReplaceField, '{') )
+                {
+                    $sepRep = '';
+
+                    if( preg_match('/\}$/', $strReplaceField) && $fieldPosition === 'after' )
+                    {
+                        $strReplaceField .= '([A-Za-z0-9\-_,]+);';
+                    }
+                }
+
+                //echo "<pre>"; print_r( preg_quote($sepRep . $strReplaceField, '/') );
+                //echo "<br>"; print_r( $strReplacement );
+
+                //            echo "<br>"; print_r( $this->arrPalettes[ $strPalette ] );
+                //echo "</pre>";
+                $this->arrPalettes[ $strPalette ] = preg_replace('/' . $sepRep . $strReplaceField . '/', $strReplacement, $this->arrPalettes[ $strPalette ]);
+                //            echo "<pre>"; print_r( $this->arrPalettes[ $strPalette ] ); exit;
             }
-
-            $sepRep = ',';
-
-            if( 0 === strpos($strReplaceField, '{') )
-            {
-                $sepRep = '';
-            }
-
-//echo "<pre>"; print_r( $strReplaceField );
-//echo "<br>"; print_r( $strReplacement );
-//exit;
-            $this->arrPalettes[ $strPalette ] = preg_replace('/' . $sepRep . $strReplaceField . '/', $strReplacement, $this->arrPalettes[ $strPalette ]);
-//            echo "<pre>"; print_r( $this->arrPalettes[ $strPalette ] ); exit;
         }
     }
 
@@ -1708,20 +1739,20 @@ class Table
             foreach($this->arrPalettes as $strPalette => $fields )
             {
                 $fields = $strPalette === '__selector__' ? $fields : $this->renderPaletteFields( $fields );
-
+//echo "<pre>";
                 if( $this->tableExists )
                 {
                     if( !isset($GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $strPalette ]) )
                     {
                         $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $strPalette ] = $fields;
                     }
-//                    else
-//                    {
-//                        if( $fields !== $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $strPalette ] )
-//                        {
-//                            $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $strPalette ] = $fields;
-//                        }
-//                    }
+                    else
+                    {
+                        if( $fields !== $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $strPalette ] )
+                        {
+                            $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $strPalette ] = $fields;
+                        }
+                    }
                 }
                 else
                 {
@@ -1729,7 +1760,9 @@ class Table
                 }
             }
         }
-
+//        echo "<pre>"; print_r( $this->arrPalettes ); echo "</pre>";
+//        echo "<pre>"; print_r( $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'] ); echo "</pre>";
+//        exit;
         if( count($this->arrRemoveFieldsFromPaelette) )
         {
             foreach($this->arrRemoveFieldsFromPaelette as $palette => $fields )
