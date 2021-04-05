@@ -22,6 +22,24 @@ services:
             - [setContainer, ['@service_container']]
 
 
+    # frontend ajax controller
+    IIDO\CoreBundle\Controller\Frontend\AjaxController:
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+
+
+    # entity
+#    IIDO\CoreBundle\Entity\ThemeDesignerEntity: ~
+
+    # repository
+    IIDO\CoreBundle\Repository\ThemeDesignerRepository:
+        tags:
+            - { name: doctrine.repository_service }
+
+
+    # model
+#    IIDO\CoreBundle\Model\ThemeDesignerModel: ~
+
 
     # twig
     IIDO\CoreBundle\Twig\TwigTemplatesExtension:
@@ -33,6 +51,9 @@ services:
     # classes
     iido.core.website-settings.settings:
         class: IIDO\CoreBundle\Backend\WebsiteSettings
+
+    iido.core.website-settings.themeDesigner:
+        class: IIDO\CoreBundle\Backend\ThemeDesigner
 
 
     # event listener
@@ -47,6 +68,9 @@ services:
             - "@contao.framework"
 
     IIDO\CoreBundle\EventListener\BackendTemplateListener: ~
+    IIDO\CoreBundle\EventListener\FrontendTemplateListener: ~
+    IIDO\CoreBundle\EventListener\InsertTagsListener: ~
+    IIDO\CoreBundle\EventListener\PageListener: ~
 
 
     # dca tables listener
@@ -57,3 +81,8 @@ services:
     IIDO\CoreBundle\EventSubscriber\KernelRequestSubscriber:
         arguments:
             - "@contao.routing.scope_matcher"
+
+
+    # service
+    iido.core.service.file_uploader:
+        class: IIDO\CoreBundle\Services\FileUploader
