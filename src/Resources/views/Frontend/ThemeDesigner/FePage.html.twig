@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>{{ pageTitle }}</title>
+    <base href="{{ baseUrl }}">
+
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="description" content="">
+    <meta name="generator" content="Contao Open Source CMS">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap" rel="stylesheet" type="text/css">
+    <link href="{{ "{{asset::css/dropzone.min.css::contao-components/dropzone}}" }}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+    {{ headStyles|raw }}
+
+    <script src="{{ "{{asset::js/jquery.min.js::contao-components/jquery}}" }}"></script>
+{#    <script src="{{ "{{asset::js/jquery-ui.min.js::contao-components/jquery-ui}}" }}"></script>#}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{ "{{asset::js/dropzone.min.js::contao-components/dropzone}}" }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    {{ headScripts|raw }}
+</head>
+<body id="top" class="standardpage homepage active-theme-designer" data-page-id="{{ pageId }}">
+<div id="wrapper">
+    <header id="header">
+        <div class="inside">
+            <div class="logo">
+                <svg height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><g id="Outline"><path d="m479.244 97.994a24.148 24.148 0 0 1 .756 6.006v248h-448v-248a24.028 24.028 0 0 1 24-24h8v256h16v-280a24.028 24.028 0 0 1 24-24h304a24.056 24.056 0 0 1 6 .756l4-15.494a40.059 40.059 0 0 0 -10-1.262h-304a40.045 40.045 0 0 0 -40 40v8h-8a40.045 40.045 0 0 0 -40 40v288a40.045 40.045 0 0 0 40 40h148.456l-18 48h-18.456v16h176v-16h-18.456l-18-48h148.456a40.045 40.045 0 0 0 40-40v-288a40.113 40.113 0 0 0 -1.262-9.994zm-170.788 382.006h-104.912l18-48h68.912zm171.544-88a24.028 24.028 0 0 1 -24 24h-400a24.028 24.028 0 0 1 -24-24v-24h448z"/><path d="m432 152h16v184h-16z"/><path d="m104 48h16v16h-16z"/><path d="m136 48h16v16h-16z"/><path d="m168 48h16v16h-16z"/><path d="m96 88v240a8 8 0 0 0 8 8h304a8 8 0 0 0 8-8v-128h-16v52.686l-26.343-26.343-11.314 11.314 37.657 37.657v44.686h-288v-43.719l64-42.666 19.562 13.042 8.876-13.313-24-16a8 8 0 0 0 -8.876 0l-59.562 39.708v-161.052h224v-16h-232a8 8 0 0 0 -8 8z"/><path d="m152 156a44 44 0 1 0 44-44 44.049 44.049 0 0 0 -44 44zm72 0a28 28 0 1 1 -28-28 28.032 28.032 0 0 1 28 28z"/><path d="m274.542 185.5-22.142 8.308a60.848 60.848 0 0 0 -39.141 64.732 38.019 38.019 0 0 1 -10.911 31.8 8 8 0 0 0 5.652 13.66h54.582a60.958 60.958 0 0 0 59.224-46.241l5.142-20.566a311.1 311.1 0 0 0 93.752-84.372l70.219-95.3a26.064 26.064 0 0 0 -36.444-36.443l-95.295 70.222a311.14 311.14 0 0 0 -84.638 94.2zm22.19-5.457 35.222 35.222c-3.5 2.3-7.049 4.547-10.663 6.709l-31.269-31.269q3.245-5.416 6.71-10.659zm-73.099 107.957a53.97 53.97 0 0 0 5.5-31.445 44.957 44.957 0 0 1 5.583-27.992l3.544.591a11.621 11.621 0 0 1 9.741 11.5 27.618 27.618 0 0 0 20.95 26.832l5.041 1.26a11.71 11.71 0 0 1 8.6 9.023l1.008 5.031a44.979 44.979 0 0 1 -21.02 5.2zm73.811-16.507a27.791 27.791 0 0 0 -19.572-18.271l-5.042-1.261a11.64 11.64 0 0 1 -8.83-11.309 27.557 27.557 0 0 0 -17.311-25.652 45.34 45.34 0 0 1 11.325-6.207l19.971-7.49 33.156 33.155-4.857 19.425a45 45 0 0 1 -8.84 17.61zm166.523-237.531a10.064 10.064 0 0 1 14.071 14.072l-70.219 95.3a295.253 295.253 0 0 1 -62.519 62.652l-39.286-39.286a295.3 295.3 0 0 1 62.656-62.52z"/><path d="m387.6 129.3-9.6-12.8c-4.655 3.493-9.258 7.165-13.68 10.917l10.35 12.2c4.176-3.542 8.53-7.017 12.93-10.317z"/><path d="m340.357 174.534a270.233 270.233 0 0 1 22.743-24.515l-11.033-11.588a286.273 286.273 0 0 0 -24.09 25.972z"/></g></svg>
+                <div class="label">ThemeDesigner</div>
+            </div>
+            <div class="navigation">
+
+                <ul class="level_1">
+                    <li>
+                        <span title="Logo" class="item LOGO clickable" data-section="LOGO" data-clickable="1">Logo</span>
+                    </li>
+                    <li>
+                        <span title="Top" class="item TOP not_clickable" data-section="TOP" data-clickable="0">Top</span>
+                        <ul class="level_2">
+                            <li>
+                                <span title="Layout" class="item topLayout clickable" data-section="topLayout" data-clickable="1">Layout</span>
+                            </li>
+                            <li>
+                                <span title="Items" class="item topItems clickable" data-section="topItems" data-clickable="1">Items</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span title="Header" class="item HEADER not_clickable" data-section="HEADER" data-clickable="0">Header</span>
+                        <ul class="level_2">
+                            <li>
+                                <span title="Layout" class="item headerLayout clickable" data-section="headerLayout" data-clickable="1">Layout</span>
+                            </li>
+                            <li>
+                                <span title="Items" class="item headerItems clickable" data-section="headerItems" data-clickable="1">Items</span>
+                            </li>
+                            <li class="seperator">
+                                <span title="Sticky Header" class="item headerSticky clickable" data-section="headerSticky" data-clickable="1">Sticky Header</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span title="Footer" class="item FOOTER not_clickable" data-section="FOOTER" data-clickable="0">Footer</span>
+                        <ul class="level_2">
+                            <li>
+                                <span title="Layout" class="item footerLayout clickable" data-section="footerLayout" data-clickable="1">Layout</span>
+                            </li>
+                            <li>
+                                <span title="Items" class="item footerItems clickable" data-section="footerItems" data-clickable="1">Items</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span title="Bottom" class="item BOTTOM not_clickable" data-section="BOTTOM" data-clickable="0">Bottom</span>
+                        <ul class="level_2">
+                            <li>
+                                <span title="Layout" class="item bottomLayout clickable" data-section="bottomLayout" data-clickable="1">Layout</span>
+                            </li>
+                            <li>
+                                <span title="Items" class="item bottomItems clickable" data-section="bottomItems" data-clickable="1">Items</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span title="Layout" class="item LAYOUT not_clickable" data-section="LAYOUT" data-clickable="0">Layout</span>
+                        <ul class="level_2">
+                            <li>
+                                <span title="Boxed" class="item layoutBoxed clickable" data-section="layoutBoxed" data-clickable="1">Boxed</span>
+                            </li>
+                            <li>
+                                <span title="Einstellungen" class="item layoutSettings clickable" data-section="layoutSettings" data-clickable="1">Einstellungen</span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="status">
+                <div class="status-badge">saved</div>
+            </div>
+            <div class="actions">
+                <div class="toggler" id="toggleThemeDesigner">{{ websiteIcon('visibility.svg') }}</div>
+                <div class="reset" id="resetThemeDesigner">{{ websiteIcon('reset.svg') }}</div>
+            </div>
+        </div>
+    </header>
+
+    <div id="container">
+        <main id="main">
+            <div class="inside">
+                <iframe seamless id="themeDesignerIframe" src="?iido_themeDesigner_frame=1" width="100%" height="100%"></iframe>
+            </div>
+        </main>
+        <aside id="left">
+            <div class="inside">
+                <div class="viewport"></div>
+
+                <div class="nav-sections">
+
+<!-- LOGO ### START -->
+                    <div class="nav-section section_LOGO" data-section="LOGO">
+                        <div class="title">
+                            <div class="title-label">LOGO</div>
+                        </div>
+
+                        <div class="options">
+
+                            <!-- DESKTOP -->
+                            <div class="option accordion">
+                                <div class="toggler">Desktop</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enableLogo',
+                                            checked: themeModel.enableLogo,
+                                            label: 'Logo',
+                                            info: 'Logo im Desktop Layout',
+                                            field: true,
+                                            fieldType: 'upload',
+                                            fieldName: 'logo',
+                                            fieldValue: themeModel.logo,
+                                            pageId: pageId,
+                                            enableFilesManager: enableFilesManager
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- MOBILE -->
+                            <div class="option accordion">
+                                <div class="toggler">Mobile</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enableMobileLogo',
+                                            checked: themeModel.enableMobileLogo,
+                                            label: 'Logo',
+                                            info: 'Logo im Mobilen Layout',
+                                            field: true,
+                                            fieldType: 'upload',
+                                            fieldName: 'mobileLogo',
+                                            pageId: pageId
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- STICKY -->
+                            <div class="option accordion">
+                                <div class="toggler">Sticky Header</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enableStickyLogo',
+                                            checked: themeModel.enableStickyLogo,
+                                            label: 'Logo',
+                                            info: 'Logo fpr den Sticky Header',
+                                            field: true,
+                                            fieldType: 'upload',
+                                            fieldName: 'stickyLogo',
+                                            pageId: pageId
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- MOBILE STICKY -->
+                            <div class="option accordion">
+                                <div class="toggler">Mobile Sticky Header</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enableStickyMobileLogo',
+                                            checked: themeModel.enableStickyMobileLogo,
+                                            label: 'Logo',
+                                            info: 'Logo für den Mobilen Sticky Header',
+                                            field: true,
+                                            fieldType: 'upload',
+                                            fieldName: 'stickyMobileLogo',
+                                            pageId: pageId
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- LOGO ### ENDE -->
+
+
+<!-- TOP: Layout ### START -->
+                    <div class="nav-section section_topLayout" data-section="topLayout">
+                        <div class="title">
+                            <div class="title-label">TOP: Layout</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Layout</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_fullwidth',
+                                            checked: themeModel.topFullwidth,
+                                            label: 'Fullwidth',
+                                            info: 'Topbar in voller Breite darstellen'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_padding',
+                                            checked: themeModel.topEnablePadding,
+                                            label: 'Padding',
+                                            info: 'Das Padding oben und unten',
+                                            field: true,
+                                            fieldType: 'size',
+                                            fieldName: 'top_padding',
+                                            fieldRange: [1, 50, 1],
+                                            fieldValue: themeModel.topPadding,
+                                            pageId: pageId
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_border',
+                                            checked: themeModel.topEnableBorder,
+                                            label: 'Rahmen (unten)',
+                                            info: 'Der Rahmen unterhalb der Topbar',
+                                            field: true,
+                                            fieldType: 'color',
+                                            fieldName: 'top_border_color',
+                                            fieldValue: themeModel.topBorderColor,
+                                            pageId: pageId
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_shadow',
+                                            checked: themeModel.topEnableShadow,
+                                            label: 'Schatten',
+                                            info: 'Der Schatten unterhalb der Topbar',
+                                            field: true,
+                                            fieldType: 'size',
+                                            fieldName: 'top_shadow',
+                                            fieldRange: [1, 20, 1],
+                                            fieldValue: themeModel.topShadow,
+                                            pageId: pageId
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- TOP: Layout ### ENDE -->
+
+
+<!-- TOP: Items ### START -->
+                    <div class="nav-section section_topItems" data-section="topItems">
+                        <div class="title">
+                            <div class="title-label">TOP: Items</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Show / Hide</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_disabled',
+                                            checked: themeModel.topDisabled,
+                                            label: 'Hide: TopBar',
+                                            info: 'Topbar nicht anzeigen'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_phone',
+                                            checked: themeModel.topEnablePhone,
+                                            label: 'SHOW: Telefon',
+                                            info: 'Telefon anzeigen'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_email',
+                                            checked: themeModel.topEnableEmail,
+                                            label: 'SHOW: E-Mail',
+                                            info: 'E-Mail-Adresse anzeigen'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_navmeta',
+                                            checked: themeModel.topEnableNavmeta,
+                                            label: 'SHOW: Meta-Nav',
+                                            info: 'Meta-Navigtion anzeigen'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_login',
+                                            checked: themeModel.topEnableLogin,
+                                            label: 'SHOW: Login',
+                                            info: 'Login anzeigen'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_socials',
+                                            checked: themeModel.topEnableSocials,
+                                            label: 'SHOW: Socials',
+                                            info: 'Socialmedia Icons anzeigen'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_langswitcher',
+                                            checked: themeModel.topEnableLangswitcher,
+                                            label: 'SHOW: Sprachenwechsler',
+                                            info: 'Sprachenwechsler anzeigen'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'top_enable_canvastrigger',
+                                            checked: themeModel.topEnableCanvastrigger,
+                                            label: 'SHOW: Canvas-Trigger',
+                                            info: 'Canvasbereich (versteckt oberhalb) Trigger anzeigen'
+                                        } %}
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+<!-- TOP: Items ### ENDE -->
+
+
+<!-- HEADER: Layout ### START -->
+                    <div class="nav-section section_headerLayout" data-section="headerLayout">
+                        <div class="title">
+                            <div class="title-label">HEADER: Layout</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Layout</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/selector_option.html.twig' with {
+                                            name: 'header_enable_layout',
+                                            value: themeModel.headerEnableLayout,
+                                            checked: themeModel.headerEnableLayout,
+                                            label: 'Layout',
+                                            info: 'Kopfzeilen Layout',
+                                            options: fieldOptions.headerLayouts,
+                                            buttonLabel: 'Layout auswählen',
+                                            fieldName: 'header_layout',
+                                            fieldValue: themeModel.headerLayout,
+                                            pageId: pageId
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- HEADER: Layout ### ENDE -->
+
+
+<!-- HEADER: Items ### START -->
+                    <div class="nav-section section_headerItems" data-section="headerItems">
+                        <div class="title">
+                            <div class="title-label">HEADER: Items</div>
+                        </div>
+
+                        <div class="options">
+
+                            <!-- DESKTOP -->
+                            <div class="option accordion">
+                                <div class="toggler">Show / Hide</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'header_disabled',
+                                            checked: themeModel.headerDisabled,
+                                            label: 'HIDE: Header',
+                                            info: 'Kopfzeile ausblenden'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'header_enable_search',
+                                            checked: themeModel.headerEnableSearch,
+                                            label: 'SHOW: Search',
+                                            info: 'Suche einblenden'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'header_enable_langswitcher',
+                                            checked: themeModel.headerEnableLangswitcher,
+                                            label: 'SHOW: Sprachenwechsler',
+                                            info: 'Sprachenwechsler einblenden'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'header_enable_socials',
+                                            checked: themeModel.headerEnableSocials,
+                                            label: 'SHOW: Socials',
+                                            info: 'Socialmedia Icons einblenden'
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- HEADER: Items ### ENDE -->
+
+
+<!-- HEADER: Sticky Header ### START -->
+                    <div class="nav-section section_headerSticky" data-section="headerSticky">
+                        <div class="title">
+                            <div class="title-label">STICKY HEADER</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Show / Hide</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'stickyHeader_disabled',
+                                            checked: themeModel.stickyHeaderDisabled,
+                                            label: 'HIDE: Sticky Header',
+                                            info: 'Sticky Header ausblenden'
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- HEADER: Sticky Header ### ENDE -->
+
+
+<!-- FOOTER: Layout ### START -->
+                    <div class="nav-section section_footerLayout" data-section="footerLayout">
+                        <div class="title">
+                            <div class="title-label">FOOTER: Layout</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Layout</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'footer_enable_columns',
+                                            checked: themeModel.footerEnableColumns,
+                                            label: 'Spalten',
+                                            info: 'Spalten anpassen',
+                                            field: true,
+                                            fieldType: 'select',
+                                            fieldName: 'footer_columns',
+                                            options: fieldOptions.footerColumns,
+                                            fieldValue: themeModel.footerColumns,
+                                            pageId: pageId
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'footer_enable_padding',
+                                            checked: themeModel.footerEnablePadding,
+                                            label: 'Padding',
+                                            info: 'Das Padding oben und unten',
+                                            field: true,
+                                            fieldType: 'size',
+                                            fieldName: 'footer_padding',
+                                            fieldRange: [10, 250, 1],
+                                            fieldValue: themeModel.footerPadding,
+                                            pageId: pageId
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'footer_enable_border',
+                                            checked: themeModel.footerEnableBorder,
+                                            label: 'Rahmen (oben)',
+                                            info: 'Der Rahmen oberhalb des Footers',
+                                            field: true,
+                                            fieldType: 'color',
+                                            fieldName: 'footer_border_color',
+                                            fieldValue: themeModel.footerBorderColor,
+                                            pageId: pageId
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- FOOTER: Layout ### ENDE -->
+
+
+<!-- FOOTER: Items ### START -->
+                    <div class="nav-section section_footerItems" data-section="footerItems">
+                        <div class="title">
+                            <div class="title-label">FOOTER: Items</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Show / Hide</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'footer_disabled',
+                                            checked: themeModel.footerDisabled,
+                                            label: 'HIDE: Fußzeile',
+                                            info: 'Fußzeile ausblenden'
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- FOOTER: Items ### ENDE -->
+
+
+<!-- BOTTOM: Layout ### START -->
+                    <div class="nav-section section_bottomLayout" data-section="bottomLayout">
+                        <div class="title">
+                            <div class="title-label">BOTTOM: Layout</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Layout</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'bottom_enable_padding',
+                                            checked: themeModel.bottomEnablePadding,
+                                            label: 'Padding',
+                                            info: 'Das Padding oben und unten',
+                                            field: true,
+                                            fieldType: 'size',
+                                            fieldName: 'bottom_padding',
+                                            fieldRange: [10, 250, 1],
+                                            fieldValue: themeModel.bottomPadding,
+                                            pageId: pageId
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'bottom_enable_border',
+                                            checked: themeModel.bottomEnableBorder,
+                                            label: 'Rahmen (oben)',
+                                            info: 'Der Rahmen oberhalb der BottomBar',
+                                            field: true,
+                                            fieldType: 'color',
+                                            fieldName: 'bottom_border_color',
+                                            fieldValue: themeModel.bottomBorderColor,
+                                            pageId: pageId
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- BOTTOM: Layout ### ENDE -->
+
+
+<!-- BOTTOM: Items ### START -->
+
+                    <div class="nav-section section_bottomItems" data-section="bottomItems">
+                        <div class="title">
+                            <div class="title-label">BOTTOM: Items</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Show / Hide</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'bottom_disabled',
+                                            checked: themeModel.bottomDisabled,
+                                            label: 'HIDE: BottomBar',
+                                            info: 'BottomBar ausblenden'
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'bottom_center',
+                                            checked: themeModel.bottomCenter,
+                                            label: 'Bottom: Zentriert',
+                                            info: 'BottomBar Zentriert'
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- BOTTOM: Items ### ENDE -->
+
+
+<!-- LAYOUT: Boxed ### START -->
+                    <div class="nav-section section_layoutBoxed" data-section="layoutBoxed">
+                        <div class="title">
+                            <div class="title-label">LAYOUT: Boxed</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Boxed Layout</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_boxed_layout',
+                                            checked: themeModel.enableBoxedLayout,
+                                            label: 'Layout',
+                                            info: 'Boxed Layout aktivieren',
+                                            field: true,
+                                            fieldType: 'select',
+                                            fieldName: 'boxed_layout',
+                                            options: fieldOptions.boxedLayouts,
+                                            fieldValue: themeModel.boxedLayout,
+                                            pageId: pageId
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'boxed_enable_shadow',
+                                            checked: themeModel.boxedEnableShadow,
+                                            label: 'Schatten',
+                                            info: 'Seiten Schatten aktivieren',
+                                            dependsOn: {'parent': 'enable_boxed_layout', 'field': 'boxed_layout', 'value': 'layout01'}
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_boxed_margin_top',
+                                            checked: themeModel.enableBoxedMarginTop,
+                                            label: 'Abstand oben',
+                                            info: 'margin-top',
+                                            field: true,
+                                            fieldType: 'size',
+                                            fieldName: 'boxed_margin_top',
+                                            fieldRange: [1, 300, 1],
+                                            fieldValue: themeModel.boxedMarginTop,
+                                            pageId: pageId,
+                                            dependsOn: {parent:'enable_boxed_layout', field:'boxed_layout', value:'layout01'}
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_boxed_margin_top_negativ',
+                                            checked: themeModel.enableBoxedMarginTopNegativ,
+                                            label: 'Inhaltsverschiebung (negativ)',
+                                            info: 'Content: margin-top (negativ)',
+                                            field: true,
+                                            fieldType: 'size',
+                                            fieldName: 'boxed_margin_top_negativ',
+                                            fieldRange: [1, 300, 1],
+                                            fieldValue: themeModel.boxedMarginTopNegativ,
+                                            pageId: pageId,
+                                            dependsOn: {parent:'enable_boxed_layout', field:'boxed_layout', value:'layout02'}
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_boxed_margin',
+                                            checked: themeModel.enableBoxedMargin,
+                                            label: 'Seiten Abstand (außen)',
+                                            info: 'Der Abstand der Seite zum Browser Rand',
+                                            field: true,
+                                            fieldType: 'size',
+                                            fieldName: 'boxed_margin',
+                                            fieldRange: [1, 300, 1],
+                                            fieldValue: themeModel.boxedMargin,
+                                            pageId: pageId,
+                                            dependsOn: {parent:'enable_boxed_layout', field:'boxed_layout', value:'layout03'}
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- LAYOUT: Boxed ### ENDE -->
+
+
+<!-- LAYOUT: Settings ### START -->
+                    <div class="nav-section section_layoutSettings" data-section="layoutSettings">
+                        <div class="title">
+                            <div class="title-label">LAYOUT: Einstellungen</div>
+                        </div>
+
+                        <div class="options">
+
+                            <div class="option accordion">
+                                <div class="toggler">Hintergrund</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_page_background_color',
+                                            checked: themeModel.enablePageBackgroundColor,
+                                            label: 'Hintergrund-Farbe',
+                                            info: 'Website Hintergrundfarbe',
+                                            field: true,
+                                            fieldType: 'color',
+                                            fieldName: 'page_background_color',
+                                            fieldValue: themeModel.pageBackgroundColor,
+                                            pageId: pageId
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_page_background_image',
+                                            checked: themeModel.enablePageBackgroundImage,
+                                            label: 'Hintergrund-Bild',
+                                            info: 'Seiten Hintergrund-Bild',
+                                            field: true,
+                                            fieldType: 'upload',
+                                            fieldName: 'page_background_image',
+                                            fieldValue: themeModel.pageBackgroundImage,
+                                            pageId: pageId,
+                                            enableFilesManager: enableFilesManager
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_page_background_repeat',
+                                            checked: themeModel.enablePageBackgroundRepeat,
+                                            label: 'Hintergrund-Wiederholung',
+                                            info: 'Hintergrund-Bild Wiederholung',
+                                            field: true,
+                                            fieldType: 'select',
+                                            fieldName: 'page_background_repeat',
+                                            options: fieldOptions.repeat,
+                                            fieldValue: themeModel.pageBackgroundRepeat,
+                                            pageId: pageId,
+                                            dependsOn: {'parent':'enable_page_background_image'}
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_page_background_position',
+                                            checked: themeModel.enablePageBackgroundPosition,
+                                            label: 'Hintergrund-Position',
+                                            info: 'Hintergrund-Bild Position',
+                                            field: true,
+                                            fieldType: 'select',
+                                            fieldName: 'page_background_position',
+                                            options: fieldOptions.position,
+                                            fieldValue: themeModel.pageBackgroundPosition,
+                                            pageId: pageId,
+                                            dependsOn: {'parent':'enable_page_background_image'}
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_page_background_size',
+                                            checked: themeModel.enablePageBackgroundSize,
+                                            label: 'Hintergrund-Größe',
+                                            info: 'cover: Vollflächig, abgeschnitten / contain: Komplettes Bild',
+                                            field: true,
+                                            fieldType: 'sizeSelect',
+                                            fieldName: 'page_background_size',
+                                            options: fieldOptions.backgroundSize,
+                                            fieldValue: themeModel.pageBackgroundSize,
+                                            pageId: pageId,
+                                            dependsOn: {'parent':'enable_page_background_image'}
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'fixed_page_background_attachment',
+                                            checked: themeModel.fixedPageBackgroundAttachment,
+                                            label: 'Fixiertes Hintergrund-Bild',
+                                            info: 'background-attachment:fixed',
+                                            dependsOn: {'parent': 'enable_page_background_image'}
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="option accordion">
+                                <div class="toggler">Seite</div>
+                                <div class="content">
+
+                                    <div class="option-list">
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_page_content_width',
+                                            checked: themeModel.enablePageContentWidth,
+                                            label: 'Inhaltsbreite',
+                                            info: 'Die Breite des Seiten-Inhalts',
+                                            field: true,
+                                            fieldType: 'size',
+                                            fieldName: 'page_content_width',
+                                            fieldRange: [500, 1500, 1],
+                                            fieldValue: themeModel.pageContentWidth,
+                                            pageId: pageId
+                                        } %}
+
+                                        {% include '@IIDOCore/Frontend/ThemeDesigner/Field/checkbox_option.html.twig' with {
+                                            name: 'enable_page_width',
+                                            checked: themeModel.enablePageWidth,
+                                            label: 'Seitenbreite',
+                                            info: 'Die Breite der Seite',
+                                            field: true,
+                                            fieldType: 'size',
+                                            fieldName: 'page_width',
+                                            fieldRange: [500, 1500, 1],
+                                            fieldValue: themeModel.pageWidth,
+                                            pageId: pageId
+                                        } %}
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- LAYOUT: Settings ### ENDE -->
+
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+<script>jQuery.noConflict();</script>
+<script src="{{ "{{asset::js/mootools.min.js::contao-components/mootools}}" }}"></script>
+</body>
+</html>
