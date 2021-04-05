@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+    <file datatype="php" original="src/Resources/contao/languages/en/iido.php" source-language="en" target-language="de">
+        <body>
+
+
+            <trans-unit id="IIDO.layouts.header.layout01">
+                <source>Layout 01</source>
+                <target>Layout 01</target>
+            </trans-unit>
+            <trans-unit id="IIDO.layouts.header.layout02">
+                <source>Layout 02</source>
+                <target>Layout 02</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="IIDO.layouts.boxed.none">
+                <source>Fullwidth / Volle Breite</source>
+                <target>Fullwidth / Volle Breite</target>
+            </trans-unit>
+            <trans-unit id="IIDO.layouts.boxed.layout01">
+                <source>Layout 01</source>
+                <target>Layout 01</target>
+            </trans-unit>
+            <trans-unit id="IIDO.layouts.boxed.layout02">
+                <source>Layout 02</source>
+                <target>Layout 02</target>
+            </trans-unit>
+            <trans-unit id="IIDO.layouts.boxed.layout03">
+                <source>Layout 03</source>
+                <target>Layout 03</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="IIDO.options.repeat.repeat">
+                <source>Kacheln</source>
+                <target>Kacheln</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.repeat.no-repeat">
+                <source>Keine Wiederholung</source>
+                <target>Keine Wiederholung</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.repeat.repeat-x">
+                <source>Horizontal Wiederholen</source>
+                <target>Horizontal Wiederholen</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.repeat.repeat-y">
+                <source>Vertikal Wiederholen</source>
+                <target>Vertikal Wiederholen</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="IIDO.options.backgroundSize.cover">
+                <source>cover</source>
+                <target>cover</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.backgroundSize.contain">
+                <source>contain</source>
+                <target>contain</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="IIDO.options.position.left top">
+                <source>Links Oben</source>
+                <target>Links Oben</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.position.center top">
+                <source>Oben Zentriert</source>
+                <target>Oben Zentriert</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.position.right top">
+                <source>Rechts Oben</source>
+                <target>Rechts Oben</target>
+            </trans-unit>
+
+            <trans-unit id="IIDO.options.position.left center">
+                <source>Links Mitte</source>
+                <target>Links Mitte</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.position.center center">
+                <source>Zentriert</source>
+                <target>Zentriert</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.position.right center">
+                <source>Rechts Mitte</source>
+                <target>Rechts Mitte</target>
+            </trans-unit>
+
+            <trans-unit id="IIDO.options.position.left bottom">
+                <source>Links Unten</source>
+                <target>Links Unten</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.position.center bottom">
+                <source>Unten Zentriert</source>
+                <target>Unten Zentriert</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.position.right bottom">
+                <source>Rechts Unten</source>
+                <target>Rechts Unten</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="IIDO.options.footerColumns.4">
+                <source>4 Spalten</source>
+                <target>4 Spalten</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.footerColumns.3">
+                <source>3 Spalten</source>
+                <target>3 Spalten</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.footerColumns.2">
+                <source>2 Spalten</source>
+                <target>2 Spalten</target>
+            </trans-unit>
+            <trans-unit id="IIDO.options.footerColumns.1">
+                <source>1ne Spalte</source>
+                <target>1ne Spalte</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>
