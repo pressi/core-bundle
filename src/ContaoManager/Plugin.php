@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace IIDO\CoreBundle\ContaoManager;
 
 
+//use Contao\ManagerPlugin\Config\ContainerBuilder;
+//use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
 use IIDO\CoreBundle\IIDOCoreBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\NewsBundle\ContaoNewsBundle;
@@ -35,6 +37,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
  *
  * @author Stephan Preßl <development@prestep.at>
  */
+//class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPluginInterface, ExtensionPluginInterface
 class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPluginInterface
 {
     /**
@@ -82,6 +85,7 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
     {
         $file = '@IIDOCoreBundle/Resources/config/routes.yml';
+//        $file = __DIR__ . '/../Resources/config/routes.yml';
         $loader = $resolver->resolve( $file );
 
         if( false === $loader )
@@ -97,5 +101,32 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
         $loader->load('@IIDOCoreBundle/Resources/config/config.yml');
+//        $loader->load(__DIR__ . '/../Resources/config/config.yml');
     }
+
+
+
+//    public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container)
+//    {
+//        if( 'iido_core' !== $extensionName )
+//        {
+//            return $extensionConfigs;
+//        }
+//
+////        $config = $container->getExtensionConfig('iido_core');
+////        $config = array_merge(...$config);
+//
+////        echo "<pre>"; print_r( $config );
+////        echo "<br>"; print_r( $extensionConfigs );
+////        exit;
+//
+////        $config['storage'] = array_filter($config['storage'] ?? [], fn ($input) => 'Encrypted' !== $input['type']);
+////        if (empty($config['storage'])) {
+////            return $extensionConfigs;
+////        }
+//
+////        $extensionConfigs[0]['storage'] += $config['storage'];
+//
+//        return $extensionConfigs;
+//    }
 }
