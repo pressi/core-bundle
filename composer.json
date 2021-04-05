@@ -19,8 +19,10 @@
         "php": ">=7.4",
         "contao/core-bundle": ">=4.0 || <=5.0",
         "twig/twig": "^2.7 || ^3.0",
+        "doctrine/dbal": "^2.12 || ^3.0",
         "codefog/contao-haste": "^4.24",
-        "madeyourday/contao-rocksolid-custom-elements": "^2.2.17"
+        "madeyourday/contao-rocksolid-custom-elements": "^2.2.17",
+        "contao-components/dropzone": "^5.7.2"
     },
     "replace":
     {
