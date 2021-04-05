@@ -27,20 +27,33 @@ class WebsiteSettingsUtil
 
     public static function getBackendWebsiteSettings()
     {
-        $router = System::getContainer()->get('router');
+        $container  = System::getContainer();
+        $router     = $container->get('router');
+        $defaultSettings = [];
+
         Controller::loadLanguageFile('website-settings');
 
-        $defaultSettings =
-       [
-           'settings' =>
-           [
-               'name'       => $GLOBALS['TL_LANG']['IIDO']['website-settings']['settings']['name'],
-               'icon'       => 'settings.svg',
-               'href'       => $router->generate('iido.core.website-settings.details', ['settingAlias'=>'settings']),
-               'table'      => 'tl_iido_core_settings',
-               'callback'   => ['iido.core.website-settings.settings', 'renderSettings']
-           ]
-       ];
+        $themeDesignerConfig = $container->getParameter('iido_core.themeDesigner');
+
+        if( !$themeDesignerConfig['disabled'] )
+        {
+            $defaultSettings['themeDesigner'] =
+            [
+                'name'       => $GLOBALS['TL_LANG']['IIDO']['website-settings']['themeDesigner']['name'],
+                'icon'       => 'theme-designer.svg',
+                'href'       => $router->generate('iido.core.website-settings.details', ['settingAlias'=>'themeDesigner']),
+                'callback'   => ['iido.core.website-settings.themeDesigner', 'renderThemeDesigner']
+            ];
+        }
+
+        $defaultSettings['settings'] =
+        [
+            'name'       => $GLOBALS['TL_LANG']['IIDO']['website-settings']['settings']['name'],
+            'icon'       => 'settings.svg',
+            'href'       => $router->generate('iido.core.website-settings.details', ['settingAlias'=>'settings']),
+            'table'      => 'tl_iido_core_settings',
+            'callback'   => ['iido.core.website-settings.settings', 'renderSettings']
+        ];
 
         $settings = Services::getEventDispatcher()->dispatch(EventDispatcher::WEBSITE_SETTINGS, $defaultSettings );
 
