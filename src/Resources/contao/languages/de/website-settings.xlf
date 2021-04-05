@@ -8,6 +8,12 @@
                 <target>Einstellungen</target>
             </trans-unit>
 
+
+            <trans-unit id="IIDO.website-settings.themeDesigner.name">
+                <source>Theme Designer</source>
+                <target>Theme Designer</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>
