@@ -98,7 +98,8 @@ class WebsiteSettingsController extends AbstractController
                 $classPath  = '\IIDO\CoreBundle\DataContainer';
             }
 
-            $tableMode  = $classPath . '\DC_' . $dataContainer;
+//            $tableMode  = $classPath . '\DC_' . $dataContainer;
+            $tableMode  = $dataContainer;
             $objTable   = new $tableMode( $table );
 
             $objAjax = new Ajax( Input::post('action') );
