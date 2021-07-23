@@ -72,6 +72,7 @@ class AjaxListener extends Backend
      */
     public function onExecutePostActions( string $action, DataContainer $dc )
     {
+
 //        if( 'reloadNewsAreasOfApplicationWidget' === $action )
 //        {
 //            $this->reloadNewsAreasOfApplicationWidget($dc);
@@ -107,16 +108,16 @@ class AjaxListener extends Backend
         {
             $val = (Input::post('state') == 1);
 
-            WebsiteSettingsUtil::updateWebsiteSetting($dc->table, Input::post('field'), $val);
+            WebsiteSettingsUtil::updateWebsiteSetting(Input::post('field'), $dc->table, $val);
 
             if( Input::post('load') )
             {
-//                WebsiteSettingsUtil::updateWebsiteSetting($dc->table, Input::post('field'), $val);
+                //                WebsiteSettingsUtil::updateWebsiteSetting(Input::post('field'), $dc->table, $val);
 
                 throw new ResponseException( $this->convertToResponse($dc->edit(false, Input::post('id'))) );
             }
 
-//            throw new NoContentResponseException();
+            throw new NoContentResponseException();
         }
     }
 

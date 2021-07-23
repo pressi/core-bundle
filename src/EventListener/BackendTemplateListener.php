@@ -35,8 +35,17 @@ class BackendTemplateListener
     {
         if( "be_welcome" === $template )
         {
+            $content = preg_replace('/<div id="([A-Za-z0-9\s\-_]+)">/', '<div id="$1"><div class="inside">', $content, -1, $count);
+
+            if( $count )
+            {
+                $content = preg_replace('/<\/div>/', '</div></div>', $content);
+            }
+
+
             preg_match_all('/<p>(.*?)<\/p>/', $content, $matches);
-            $introMessage = '<div id="tl_intro"><div class="inside"><p>' . $matches[0][0] . '</p></div></div>';
+
+            $introMessage = '<div id="tl_intro"><div class="inside">' . $matches[0][0] . '</div></div>';
 
             $content = preg_replace('/<p>(.*?)<\/p>/', '', $content, 1);
             $content = str_replace('<div id="tl_messages">', $introMessage . '<div id="tl_messages">', $content);
@@ -47,7 +56,15 @@ class BackendTemplateListener
 
             if( count($matches[0]) <= 1 )
             {
-                $content = preg_replace('/<div id="tl_messages">([\n\s]{0,})<h2>([A-Za-z0-9\s\-,;.:_öäüÖÄÜß!?]+)<\/h2>/', '<div id="tl_messages">$1<h2>$2</h2>' . $noMessages, $content);
+                $content = preg_replace('/<div id="tl_messages"><div class="inside">([\n\s]{0,})<h2>([A-Za-z0-9\s\-,;.:_öäüÖÄÜß!?]+)<\/h2>/', '<div id="tl_messages"><div class="inside">$1<h2>$2</h2>' . $noMessages, $content);
+            }
+        }
+
+        elseif( "be_main" === $template )
+        {
+            if( str_contains($content, 'Dashboard') )
+            {
+                $content = str_replace('class="content"', 'class="content dashboard"', $content);
             }
         }
 

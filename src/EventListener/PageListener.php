@@ -11,25 +11,72 @@ namespace IIDO\CoreBundle\EventListener;
 
 
 use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\FrontendTemplate;
 use Contao\PageRegular;
 use Contao\LayoutModel;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\StyleSheets;
 use Contao\Template;
+use IIDO\CoreBundle\Config\BundleConfig;
 use IIDO\CoreBundle\Config\ThemeDesignerConfig;
+use IIDO\CoreBundle\Util\PageUtil;
 
 
 class PageListener
 {
+    protected PageUtil $pageUtil;
+
+
+
+
+    public function __construct( PageUtil $pageUtil )
+    {
+        $this->pageUtil = $pageUtil;
+    }
+
+
 
     /**
      * @Hook("generatePage")
      */
     public function onGeneratePage( PageModel $pageModel, LayoutModel $layout, PageRegular $pageRegular ): void
     {
+        $this->pageUtil->addDefaultPageStyleSheets();
+        $this->pageUtil->addDefaultPageScripts();
+
         $themeDesigner = ThemeDesignerConfig::loadCurrentThemeDesigner();
         $styles = [];
+
+        //TODO:
+        $GLOBALS['TL_JAVASCRIPT']['aos'] = 'bundles/iidocore/scripts/library/aos/2.3.4/aos.min.js|static';
+        $GLOBALS['TL_CSS']['aos'] = 'bundles/iidocore/styles/library/aos/2.3.4/aos.min.css||static';
+
+
+        //TODO:
+        $GLOBALS['TL_JAVASCRIPT']['fancybox'] = 'bundles/iidocore/scripts/library/fancybox/3.2.10/jquery.fancybox.min.js|static';
+        $GLOBALS['TL_CSS']['fancybox'] = 'bundles/iidocore/styles/library/fancybox/3.2.10/jquery.fancybox.min.css||static';
+
+        $template = new FrontendTemplate('script_fancybox');
+        $GLOBALS['TL_JQUERY']['fancybox'] = $template->parse();
+
+
+        //TODO:
+        $GLOBALS['TL_CSS']['hamburgers'] = 'bundles/iidocore/styles/library/hamburgers/1.1.3/hamburgers.scss||static';
+
+
+        //TODO:
+        $GLOBALS['TL_JAVASCRIPT']['smoothscroll'] = 'bundles/iidocore/scripts/library/smoothscroll/1.5.3/jquery.smoothscroll.min.js|static';
+
+
+        //TODO:
+        $GLOBALS['TL_JAVASCRIPT']['iido_page'] = 'bundles/iidocore/scripts/iido/IIDO.Page.js|static';
+
+
+        if( !$themeDesigner )
+        {
+            return;
+        }
 
         if( !$themeDesigner->getTopDisabled() )
         {
@@ -106,7 +153,10 @@ class PageListener
                 }
                 else
                 {
-                    $style['selector'] = $selector;
+                    if( !isset($style['selector']) || $style['selector'] == '' )
+                    {
+                        $style['selector'] = $selector;
+                    }
 
                     $strStyles .= $styleSheet->compileDefinition( $style, true );
                 }
@@ -122,7 +172,7 @@ class PageListener
     {
         $alpha = '';
 
-        if( false !== strpos($color, 'rgb') )
+        if( str_contains($color, 'rgb') )
         {
             $parts = StringUtil::trimsplit(',', preg_replace('/^rgb(a|)\(([0-9\s,.]+)\)/', '$2', trim($color)) );
 
@@ -135,5 +185,20 @@ class PageListener
         }
 
         return [preg_replace('/^#/', '', $color), $alpha];
+    }
+
+
+
+    /**
+     * @Hook("getPageStatusIcon")
+     */
+    public function onGetPageStatusIcon( $page, string $image ): string
+    {
+        if( 'global_element' === $page->type )
+        {
+            return 'bundles/iidocore/images/icons/folder.svg';
+        }
+
+        return $image;
     }
 }

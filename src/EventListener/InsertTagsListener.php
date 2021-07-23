@@ -11,6 +11,8 @@ namespace IIDO\CoreBundle\EventListener;
 
 
 use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\StringUtil;
+use Contao\System;
 use IIDO\CoreBundle\Renderer\SectionRenderer;
 use Terminal42\ServiceAnnotationBundle\ServiceAnnotationInterface;
 
@@ -19,6 +21,9 @@ class InsertTagsListener implements ServiceAnnotationInterface
 {
 
     private const TAG = 'iido';
+
+
+    protected string $iconPath = 'files/%s/Uploads/Icons/';
 
 
 
@@ -37,25 +42,80 @@ class InsertTagsListener implements ServiceAnnotationInterface
                 case "section":
                     $return = '';
 
-                    if( $chunks[2] === 'header' )
+                    switch( $chunks[2] )
                     {
-                        $return = SectionRenderer::renderHeader();
+                        case "header":
+                            $return = SectionRenderer::renderHeader();
+                            break;
+
+                        case "footer":
+                            $return = SectionRenderer::renderFooter();
+                            break;
+
+                        case "footer_bottom":
+                        case "footerbottom":
+                        case "footer-bottom":
+                            $return = SectionRenderer::renderFooterBottom();
+                            break;
+
+                        case "fixed-elements":
+                            $return = SectionRenderer::renderFixedElements();
+                            break;
+
+                        case "offset-navigation":
+                            $return = SectionRenderer::renderOffsetNavigation();
+                            break;
+
+                        case "canvas-top":
+//                            $return = SectionRenderer::renderCanvasTop();
+                            break;
                     }
-                    break;
             }
         }
 
-//        if( $chunks[0] === 'icon' )
-//        {
-//            $rootDir    = BasicHelper::getRootDir( true );
-//            $iconPath   = 'files/' . BasicHelper::getFilesCustomerDir() . '/Uploads/Icons/';
-//            $iconName   = ucfirst($chunks[1]) . '.svg';
-//
-//            if( file_exists( $rootDir . $iconPath . $iconName ) )
-//            {
-//                $return = file_get_contents( $rootDir . $iconPath . $iconName );
-//            }
-//        }
+        if( $chunks[0] === 'icon' )
+        {
+            $basicUtil  = System::getContainer()->get('iido.core.util.basic');
+            $pageUtil   = System::getContainer()->get('iido.core.util.page');
+
+            $rootDir    = $basicUtil->getRootDir( true );
+            $iconPath   = sprintf($this->iconPath, $pageUtil->getRootPageAlias( true ));
+            $iconName   = ucfirst($chunks[1]) . '.svg';
+
+            if( file_exists( $rootDir . $iconPath . $iconName ) )
+            {
+                $return = file_get_contents( $rootDir . $iconPath . $iconName );
+            }
+        }
+
+
+
+        elseif( $chunks[0] === 'company' )
+        {
+            $company    = System::getContainer()->get('iido.core.util.company')->getCurrentCompanyData();
+
+            if( $company )
+            {
+                if( $chunks[1] === 'name' )
+                {
+                    $chunks[1] = 'company';
+                }
+
+                $return = $company->{$chunks[1]};
+
+                if( $chunks[1] === 'phone' )
+                {
+                    $basicUtil  = System::getContainer()->get('iido.core.util.basic');
+
+                    $return = '<a href="tel:' . $basicUtil->renderPhoneNumber( $return ) . '">' . $return . '</a>';
+                }
+
+                elseif( $chunks[1] === 'email' )
+                {
+                    $return = '{{email::' . $return . '}}';
+                }
+            }
+        }
 
         return $return;
     }

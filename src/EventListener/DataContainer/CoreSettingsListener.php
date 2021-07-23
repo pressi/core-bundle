@@ -22,6 +22,42 @@ class CoreSettingsListener
     protected $strTable = 'tl_iido_core_settings';
 
 
+
+    /**
+     * @Callback(table="tl_iido_config", target="config.onload")
+     */
+    public function loadTable( DataContainer $dc ): void
+    {
+        $count = 2;
+
+        if( BundleConfig::isActiveBundle('contao/news-bundle') )
+        {
+            $count++;
+        }
+
+        if( BundleConfig::isActiveBundle('contao/calendar-bundle') )
+        {
+            $count++;
+        }
+
+        if( BundleConfig::isActiveBundle('delahaye/dlh_googlemaps') )
+        {
+            $count++;
+        }
+
+        if( BundleConfig::isActiveBundle('madeyourday/contao-rocksolid-slider') )
+        {
+            $count++;
+        }
+
+//        $GLOBALS['TL_DCA']['tl_iido_config']['fields']['navLabels']['eval']['multiColumnEditor']['minRowCount'] = $count;
+//        $GLOBALS['TL_DCA']['tl_iido_config']['fields']['navLabels']['eval']['multiColumnEditor']['maxRowCount'] = $count;
+        $GLOBALS['TL_DCA']['tl_iido_config']['fields']['navLabels']['eval']['minCount'] = $count;
+        $GLOBALS['TL_DCA']['tl_iido_config']['fields']['navLabels']['eval']['maxCount'] = $count;
+    }
+
+
+
     /**
      * @Callback(table="tl_iido_core_settings", target="fields.navLabels.load")
      */

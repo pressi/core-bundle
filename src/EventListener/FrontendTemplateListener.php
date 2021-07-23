@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /*******************************************************************
- * (c) 2020 Stephan Preßl, www.prestep.at <development@prestep.at>
+ * (c) 2021 Stephan Preßl, www.prestep.at <development@prestep.at>
  * All rights reserved
  * Modification, distribution or any other action on or with
  * this file is permitted unless explicitly granted by IIDO
@@ -15,38 +15,116 @@ namespace IIDO\CoreBundle\EventListener;
 use Contao\ArticleModel;
 use Contao\Controller;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\Database;
 use Contao\Environment;
-use Contao\FrontendTemplate;
+use Contao\StringUtil;
 use Contao\Template;
 use Haste\Input\Input;
 use Contao\PageModel;
-use Contao\StringUtil;
 use Contao\System;
 use IIDO\CoreBundle\Config\BundleConfig;
 use IIDO\CoreBundle\Config\ThemeDesignerConfig;
-use IIDO\CoreBundle\Entity\ThemeDesignerEntity;
-use Terminal42\ServiceAnnotationBundle\ServiceAnnotationInterface;
+use IIDO\CoreBundle\Util\StylesUtil;
+
+
+//use IIDO\CoreBundle\Entity\ThemeDesignerEntity;
+//use Terminal42\ServiceAnnotationBundle\ServiceAnnotationInterface;
 //use IIDO\BasicBundle\Renderer\ArticleTemplateRenderer;
 
 
-class FrontendTemplateListener implements ServiceAnnotationInterface
+class FrontendTemplateListener
 {
+    protected StylesUtil $stylesUtil;
 
-//    /**
-//     * Hook("parseFrontendTemplate")
-//     */
-//    public function onParseFrontendTemplate($strBuffer, $templateName): string
-//    {
-//        /* @var \PageModel $objPage */
-//        global $objPage;
-//
-//        if( 0 === strpos($templateName, 'mod_article') )
-//        {
+
+
+    public function __construct( StylesUtil $stylesUtil )
+    {
+        $this->stylesUtil = $stylesUtil;
+    }
+
+
+
+    /**
+     * @Hook("parseFrontendTemplate")
+     */
+    public function onParseFrontendTemplate( string $buffer, string $templateName ): string
+    {
+        global $objPage;
+        /* @var \PageModel $objPage */
+
+        if( str_starts_with($templateName, 'mod_article') )
+        {
+            if( str_starts_with($templateName, 'mod_articlenav') )
+            {
+                return $buffer;
+            }
+
+            $article = false;
+
+            preg_match_all('/id="([A-Za-z0-9\-_]{0,})"/', $buffer, $idMatches, );
+
+            if( is_array($idMatches) && count($idMatches[0]) > 0 )
+            {
+                $idOrAlias = $idMatches[1][0];
+
+                if( str_starts_with($idOrAlias, 'article-') )
+                {
+                    $idOrAlias = preg_replace('/^article-/', '', $idOrAlias);
+                }
+
+                $article = ArticleModel::findByPk( $idOrAlias );
+
+                if( !$article )
+                {
+//                    $article = ArticleModel::findByPk(1);
+                    $result = Database::getInstance()->query('SELECT * FROM tl_article WHERE pid=' . $objPage->id . " AND cssID LIKE '%\"" . $idOrAlias . "\"%' LIMIT 1");
+
+                    if( $result && $result->count() > 0 )
+                    {
+                        $article = ArticleModel::findByPk( $result->id );
+                    }
+                }
+            }
+
+            if( $article && $article->noContent )
+            {
+                return '';
+            }
+
+
+            $cssID = StringUtil::deserialize($article->cssID, TRUE);
+
+            $articleClasses = [];
 //            $strBuffer = ArticleTemplateRenderer::parseTemplate( $strBuffer, $templateName );
-//        }
-//
-//        return $strBuffer;
-//    }
+
+            $buffer = \preg_replace('/<div([A-Za-z0-9\s\-,;.:\(\)?!_\{\}="]+)class="mod_article([A-Za-z0-9\s\-,;.:\(\)?!_\{\}]{0,})"([A-Za-z0-9\s\-,;.:\(\)?!_\{\}="]{0,})>/', '<section$1class="mod_article' . ($articleClasses ? ' ' . implode(' ', $articleClasses) : '') . '$2"$3><div class="article-inside">', $buffer, 1, $count);
+
+            if( $count )
+            {
+                $buffer .= '</section>';
+            }
+
+            if( $article )
+            {
+                $styles = $this->stylesUtil->getStyles( $article );
+
+                if( strlen($styles) )
+                {
+                    $articleID = 'article-' . $article->id;
+
+                    if( $cssID[0] )
+                    {
+                        $articleID = $cssID[0];
+                    }
+
+                    $GLOBALS['TL_HEAD']['article_styles_' . $article->id] = Template::generateInlineStyle('.mod_article#' . $articleID . $styles);
+                }
+            }
+        }
+
+        return $buffer;
+    }
 
 
 
@@ -55,19 +133,21 @@ class FrontendTemplateListener implements ServiceAnnotationInterface
      */
     public function onOutputFrontendTemplate(string $content, string $template): string
     {
-        /** @var \PageModel $objPage */
         global $objPage;
+        /** @var \PageModel $objPage */
 
         $objRootPage = PageModel::findByPk( $objPage->rootId );
         $themeDesigner = ThemeDesignerConfig::loadCurrentThemeDesigner();
         $container = System::getContainer();
 
-        if( 0 === strpos($template, 'fe_page') )
+        if( str_starts_with($template, 'fe_page') )
         {
+            $this->updateMainStylesheet();
+
+            $themeDesignerConfig = $container->getParameter('iido_core.themeDesigner');
+
             if( Input::get('iido_themeDesigner_frame') !== '1' )
             {
-                $themeDesignerConfig = $container->getParameter('iido_core.themeDesigner');
-
                 if( !$themeDesignerConfig['disabled'] && !$objRootPage->disableThemeDesigner )
                 {
                     Controller::loadLanguageFile('iido');
@@ -117,17 +197,17 @@ class FrontendTemplateListener implements ServiceAnnotationInterface
             }
 
             //HEADER
-            if( $objPage->removeHeader )
+            if( $objPage->hideHeader )
             {
                 $content = preg_replace('/<header([A-Za-z0-9öäüÖÄÜß\s="\-:\/\\.,;:_>\n<\{\}]{0,})<\/header>/', '', $content);
             }
             else
             {
-                $headerLayout = $themeDesigner->getHeaderLayout() ?: 'layout01';
+                $headerLayout = (!$themeDesignerConfig['disabled'] && $themeDesigner && $themeDesigner->getHeaderLayout()) ? $themeDesigner->getHeaderLayout() : 'layout01';
 
                 if( preg_match('/<header([A-Za-z0-9\s\-,;.:_\(\)\{\}\/="]+)class="/', $content) )
                 {
-                    $content = $content;
+                    $content = preg_replace('/<header([A-Za-z0-9\s\-,;.:_\(\)\{\}\/="]+)class="/', '<header$1class="layout-' . $headerLayout . ' ', $content);
                 }
                 else
                 {
@@ -135,10 +215,20 @@ class FrontendTemplateListener implements ServiceAnnotationInterface
                 }
             }
 
-//            if( $themeDesigner->getTopDisabled() || !$themeDesigner->getTopEnableCanvastrigger() )
-//            {
-//                $content = preg_replace('/<div id="canvasTop">([\s\n]{0,})<div class="inside">([A-Za-z0-9\s\n\-:_\{\}]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
-//            }
+
+            if( $objPage->hideFooter )
+            {
+                $content = preg_replace('/<footer([A-Za-z0-9öäüÖÄÜß\s="\-:\/\\.,;:_>\n<\{\}]{0,})<\/footer>/', '', $content);
+            }
+
+
+            if( !$themeDesignerConfig['disabled'] || !$themeDesigner || $themeDesigner->getTopDisabled() || !$themeDesigner->getTopEnableCanvastrigger() )
+            {
+                $content = preg_replace('/<div id="canvasTop">([\s\n]{0,})<div class="inside">([A-Za-z0-9\s\n\-:_\{\}]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+            }
+
+            // REMOVE empty PIT LANE // TODO
+            $content = preg_replace('/<div id="pitLane">([\s\n]{0,})<div class="inside">([A-Za-z0-9\s\n\-:_\{\}]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
 
 
             // REMOVE EMPTY "custom" CONTAINER
@@ -146,43 +236,26 @@ class FrontendTemplateListener implements ServiceAnnotationInterface
 
 
             // ENABLE PREVIEW MODE OPTIONS
-            if( $container->getParameter('iido_core.previewMode') )
+            if( $container->getParameter('iido_core.previewMode') || $objRootPage->enablePreviewMode || $objPage->enablePreviewMode )
             {
                 $content = preg_replace('/<meta name="robots" content="([a-z,]+)">/', '<meta name="robots" content="noindex,nofollow">', $content);
             }
 
-//            if( IIDOConfig::get('previewMode') )
-//            {
-//                $strBuffer = preg_replace('/<meta name="robots" content="([a-z,]+)">/', '<meta name="robots" content="noindex,nofollow">', $strBuffer);
-//            }
+            if( str_contains($content, 'id="offsetNavigation"') )
+            {
+                $label = '{{iflng::de}}Menü{{iflng}}{{ifnlng::de}}Menu{{ifnlng}}';
+                $mode = 'arrowalt'; // TODO (squeeze)
 
-//            if( Input::get('mode') == 'dev' )
-//            {
-//                $folderName = $objPage->rootAlias;
-//
-//                if( $objPage->languageMain )
-//                {
-//                    $objLangPage    = PageModel::findByPk( $objPage->languageMain );
-//                    $folderName     = $objLangPage->rootAlias;
-//                }
-//
-//                $mainScssFile = BasicHelper::getRootDir(true ) . "files/{$folderName}/styles/main.scss";
-//
-//                if( file_exists($mainScssFile) )
-//                {
-//                    $mainScssFileContent = file_get_contents($mainScssFile);
-//
-//                    if (strpos($mainScssFileContent, "\n\n//cachebuster"))
-//                    {
-//                        $mainScssFileContent = str_replace("\n\n//cachebuster", "", $mainScssFileContent);
-//                    }
-//                    else
-//                    {
-//                        $mainScssFileContent = "$mainScssFileContent\n\n//cachebuster";
-//                    }
-//                    file_put_contents($mainScssFile, $mainScssFileContent);
-//                }
-//            }
+                $navTogglerClasses = ' light'; // TODO
+
+                $toggler = '<div class="offset-navigation-toggler hamburger hamburger--' . $mode . ' hamburger-accessible js-hamburger' . $navTogglerClasses . '">
+<div class="hamburger-box"><div class="hamburger-inner"></div></div>
+<div class="hamburger-label">' . $label . '</div>
+</div>
+<div class="offset-navigation-overlay"></div>';
+
+                $content = str_replace('</body>', $toggler . '</body>', $content);
+            }
 
 //            if( ScriptHelper::hasPageFullPage( true ) )
 //            {
@@ -594,6 +667,41 @@ class FrontendTemplateListener implements ServiceAnnotationInterface
 //        }
 //
 //        return $strBuffer;
+    }
+
+
+
+    protected function updateMainStylesheet()
+    {
+        global $objPage;
+
+        if( Input::get('mode') == 'dev' )
+        {
+            $folderName = $objPage->rootAlias;
+
+            if( $objPage->languageMain )
+            {
+                $objLangPage    = PageModel::findByPk( $objPage->languageMain );
+                $folderName     = $objLangPage->rootAlias;
+            }
+
+            $mainScssFile = System::getContainer()->get('iido.core.util.basic')->getRootDir(true ) . "files/{$folderName}/styles/main.scss";
+
+            if( file_exists($mainScssFile) )
+            {
+                $mainScssFileContent = file_get_contents($mainScssFile);
+
+                if (strpos($mainScssFileContent, "\n\n//cachebuster"))
+                {
+                    $mainScssFileContent = str_replace("\n\n//cachebuster", "", $mainScssFileContent);
+                }
+                else
+                {
+                    $mainScssFileContent = "$mainScssFileContent\n\n//cachebuster";
+                }
+                file_put_contents($mainScssFile, $mainScssFileContent);
+            }
+        }
     }
 
 }
