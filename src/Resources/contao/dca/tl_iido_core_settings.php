@@ -9,7 +9,7 @@
 
 $strConfTable = \IIDO\CoreBundle\Config\BundleConfig::getFileTable( __FILE__ );
 $objConfTable = new \IIDO\CoreBundle\Dca\Table( $strConfTable );
-$objConfTable->setDataContainer(\IIDO\CoreBundle\DataContainer\DC_YamlConfigFile::class);
+$objConfTable->setDataContainer(IIDO\CoreBundle\DataContainer\DC_YamlConfigFile::class);
 $objConfTable->setWithoutSQL();
 
 //$objTable->setTableListener('iido.basic.dca.iido_config');
@@ -180,35 +180,55 @@ $objConfTable->addSubpalette('loginShowPublisherLink', 'loginPublisher');
 
 // BACKEND
 
-\IIDO\CoreBundle\Dca\Field::create('navLabels', 'multiColumnEditor')
-    ->addEval('multiColumnEditor',
-          [
-              'sortable'      => false,
-              'class'         => 'nav-labels',
-              'minRowCount'   => 0,
-              'maxRowCount'   => 0,
-              'skipCopyValuesOnAdd' => false,
-              'palettes' =>
-              [
-                  'default' => 'value,label'
-              ],
-              'fields' =>
-              [
-                  'value' =>
-                  [
-                      'label'         => ['Wert'],
-                      'inputType'     => 'text',
-                      'eval'          => ['readonly'=>true,'groupStyle' => 'width:150px']
-                  ],
+//\IIDO\CoreBundle\Dca\Field::create('navLabels', 'multiColumnEditor')
+//    ->addEval('multiColumnEditor',
+//              [
+//                  'sortable'      => false,
+//                  'class'         => 'nav-labels',
+//                  'minRowCount'   => 0,
+//                  'maxRowCount'   => 0,
+//                  'skipCopyValuesOnAdd' => false,
+//                  'palettes' =>
+//                      [
+//                          'default' => 'value,label'
+//                      ],
+//                  'fields' =>
+//                      [
+//                          'value' =>
+//                              [
+//                                  'label'         => ['Wert'],
+//                                  'inputType'     => 'text',
+//                                  'eval'          => ['readonly'=>true,'groupStyle' => 'width:150px']
+//                              ],
+//
+//                          'label' =>
+//                              [
+//                                  'label'         => ['Bezeichnung'],
+//                                  'inputType'     => 'text',
+//                                  'eval'          => ['groupStyle' => 'width:250px']
+//                              ]
+//                      ]
+//              ])
+//    ->addToTable( $objConfTable );
 
-                  'label' =>
-                  [
-                      'label'         => ['Bezeichnung'],
-                      'inputType'     => 'text',
-                      'eval'          => ['groupStyle' => 'width:250px']
-                  ]
-              ]
+\IIDO\CoreBundle\Dca\Field::create('navLabels', 'multiColumnWizard')
+    ->addEval('columnFields',
+          [
+             'value' =>
+             [
+                 'label'         => ['Wert'],
+                 'inputType'     => 'text',
+                 'eval'          => ['readonly' => true, 'groupStyle' => 'width:150px']
+             ],
+
+             'label' =>
+             [
+                 'label'         => ['Bezeichnung'],
+                 'inputType'     => 'text',
+                 'eval'          => ['groupStyle' => 'width:250px']
+             ]
           ])
+    ->addEval('hideButtons', true)
     ->addToTable( $objConfTable );
 
 
