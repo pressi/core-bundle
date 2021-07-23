@@ -23,7 +23,7 @@ class FlashMessage
 
 
 
-    public function puke( string $id ): string|null
+    public function puke( string $id ): ?string
     {
         $message = null;
 
