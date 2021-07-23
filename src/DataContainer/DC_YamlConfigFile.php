@@ -214,7 +214,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 
 					$this->strField = $vv;
 					$this->strInputName = $vv;
-                    $this->varValue = WebsiteSettingsUtil::getWebsiteSettings( $this->strTable, $this->strField );
+                    $this->varValue = WebsiteSettingsUtil::getWebsiteSettings( $this->strField, $this->strTable );
 
 					// Handle entities
 					if( $GLOBALS['TL_DCA'][ $this->strTable ]['fields'][ $this->strField ]['inputType'] == 'text' || $GLOBALS['TL_DCA'][ $this->strTable ]['fields'][ $this->strField ]['inputType'] == 'textarea' )
@@ -454,10 +454,10 @@ class DC_YamlConfigFile extends DataContainer implements \editable
         // Save the value if there was no error
 		if( $strCurrent != $varValue && (\strlen($varValue) || !$arrData['eval']['doNotSaveEmpty']) )
 		{
-            WebsiteSettingsUtil::updateWebsiteSetting( $this->strTable, $this->strField, $varValue );
+		    WebsiteSettingsUtil::updateWebsiteSetting( $this->strField, $this->strTable, $varValue );
 
 			$deserialize = StringUtil::deserialize($varValue);
-			$fileValue = WebsiteSettingsUtil::getWebsiteSettings( $this->strTable, $this->strField );
+			$fileValue = WebsiteSettingsUtil::getWebsiteSettings( $this->strField, $this->strTable );
 			$prior = \is_bool($fileValue) ? ($fileValue ? 'true' : 'false') : $fileValue;
 
 			// Add a log entry
@@ -477,7 +477,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 
 			// Set the new value so the input field can show it
 			$this->varValue = $deserialize;
-            WebsiteSettingsUtil::updateWebsiteSetting( $this->strTable, $this->strField, $deserialize );
+            WebsiteSettingsUtil::updateWebsiteSetting( $this->strField, $this->strTable, $deserialize );
 		}
 	}
 
@@ -496,7 +496,7 @@ class DC_YamlConfigFile extends DataContainer implements \editable
 
 			foreach ($GLOBALS['TL_DCA'][$this->strTable]['palettes']['__selector__'] as $name)
 			{
-			    $trigger = WebsiteSettingsUtil::getWebsiteSettings( $this->strTable, $name );
+			    $trigger = WebsiteSettingsUtil::getWebsiteSettings( $name, $this->strTable );
 
 				// Overwrite the trigger if the page is not reloaded
 				if (Input::post('FORM_SUBMIT') == $this->strTable)
