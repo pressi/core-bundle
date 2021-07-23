@@ -151,7 +151,7 @@ class WebsiteSettingsUtil
 
 
 
-    public static function getWebsiteSettings( string $table = '', string $name = '' )
+    public static function getWebsiteSettings( string $name = '', string $table = '' )
     {
         $settings = self::getConfigFileValue();
 
@@ -167,7 +167,7 @@ class WebsiteSettingsUtil
 
         if( !$table && $name )
         {
-            //TODO: ERROR name without table does not work!
+            $settings = $settings[ 'tl_iido_core_settings' ][ $name ];
         }
 
         return $settings ?? null;
@@ -175,7 +175,7 @@ class WebsiteSettingsUtil
 
 
 
-    public static function updateWebsiteSetting( string $table, string $name, $value = '' )
+    public static function updateWebsiteSetting( string $name, string $table, $value = '' )
     {
         $settings = self::getWebsiteSettings();
 
