@@ -16,11 +16,11 @@ use Contao\System;
 
 class BundleConfig
 {
-    static $namespace           = 'IIDO';
-    static $subNamespace        = 'CoreBundle';
+    static string $namespace    = 'IIDO';
+    static string $subNamespace = 'CoreBundle';
 
-    static $bundleName          = "core-bundle";
-    static $bundleGroup         = "2do";
+    static string $bundleName   = "core-bundle";
+    static string $bundleGroup  = "2do";
 
 
 
@@ -42,7 +42,7 @@ class BundleConfig
      *
      * @return string
      */
-    public static function getBundleConfig( string $funcName, $funcVar = null ): string
+    public static function getBundleConfig( string $funcName, ?string $funcVar = null ): string
     {
         $functionName = 'get' . $funcName;
 
@@ -235,7 +235,7 @@ class BundleConfig
         $classParts    = explode("\\", Model::getClassFromTable($strTable));
         $tableClass    = preg_replace(array('/^Iido/', '/Model$/'), '', array_pop($classParts));
         $arrClass      = preg_split('/(?=[A-Z])/', lcfirst($tableClass));
-        $iidoTable     = ((preg_match('/^tl_iido/', $strTable)) ? TRUE : FALSE);
+        $iidoTable     = (bool) preg_match('/^tl_iido/', $strTable);
         $newTableClass = (($iidoTable) ? 'IIDO\\' : 'IIDO\\' . self::getSubNamespace() . '\\Table\\');
 
         foreach( $arrClass as $i => $class)
