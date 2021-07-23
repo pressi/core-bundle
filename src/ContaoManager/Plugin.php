@@ -14,6 +14,7 @@ namespace IIDO\CoreBundle\ContaoManager;
 
 //use Contao\ManagerPlugin\Config\ContainerBuilder;
 //use Contao\ManagerPlugin\Config\ExtensionPluginInterface;
+use HeimrichHannot\FieldpaletteBundle\HeimrichHannotContaoFieldpaletteBundle;
 use IIDO\CoreBundle\IIDOCoreBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\NewsBundle\ContaoNewsBundle;
@@ -46,7 +47,9 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
     public function getBundles(ParserInterface $parser): array
     {
         $loadAfter  = [TwigBundle::class, ContaoCoreBundle::class];
-        $vendorPath = preg_replace('/2do\/core-bundle\/src\/ContaoManager/', '', __DIR__);
+
+        $vendorPath = \preg_replace('/2do\/core-bundle\/src\/ContaoManager/', '', __DIR__);
+        $vendorPath = \preg_replace('/develop\/bundles\/core-bundle\/src\/ContaoManager/', 'vendor/', $vendorPath);
 
         if( is_dir( $vendorPath . 'contao/news-bundle') )
         {
@@ -69,6 +72,11 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
             $loadAfter[] = \Codefog\NewsCategoriesBundle\CodefogNewsCategoriesBundle::class;
         }
 
+        if( is_dir( $vendorPath . 'heimrichhannot/contao-fieldpalette-bundle') )
+        {
+            $loadAfter[] = HeimrichHannotContaoFieldpaletteBundle::class;
+        }
+//echo "<pre>"; print_r( $loadAfter ); exit;
         return [
             BundleConfig::create( IIDOCoreBundle::class )
                 ->setLoadAfter( $loadAfter )
