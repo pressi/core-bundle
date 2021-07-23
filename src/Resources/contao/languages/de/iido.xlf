@@ -122,6 +122,49 @@
                 <target>1ne Spalte</target>
             </trans-unit>
 
+
+
+            <trans-unit id="IIDO.field.enableAnimation.0">
+                <source>Animationen aktivieren</source>
+                <target>Animationen aktivieren</target>
+            </trans-unit>
+            <trans-unit id="IIDO.field.overrideAnimation.0">
+                <source>Animationen überschreiben</source>
+                <target>Animationen überschreiben</target>
+            </trans-unit>
+            <trans-unit id="IIDO.field.disableAnimation.0">
+                <source>Animationen deaktivieren</source>
+                <target>Animationen deaktivieren</target>
+            </trans-unit>
+            <trans-unit id="IIDO.field.animationType.0">
+                <source>Animation</source>
+                <target>Animation</target>
+            </trans-unit>
+            <trans-unit id="IIDO.field.animationDuration.0">
+                <source>Dauer</source>
+                <target>Dauer</target>
+            </trans-unit>
+            <trans-unit id="IIDO.field.animationEasing.0">
+                <source>Easing</source>
+                <target>Easing</target>
+            </trans-unit>
+            <trans-unit id="IIDO.field.animationOffset.0">
+                <source>Offset</source>
+                <target>Offset</target>
+            </trans-unit>
+            <trans-unit id="IIDO.field.animationDelay.0">
+                <source>Delay</source>
+                <target>Delay</target>
+            </trans-unit>
+            <trans-unit id="IIDO.field.animationAnchor.0">
+                <source>Anchor</source>
+                <target>Anchor</target>
+            </trans-unit>
+            <trans-unit id="IIDO.field.animationAnchorPlacement.0">
+                <source>Anchor Placement</source>
+                <target>Anchor Placement</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

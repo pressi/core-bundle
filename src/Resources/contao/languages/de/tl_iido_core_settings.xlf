@@ -72,7 +72,7 @@
 
             <trans-unit id="tl_iido_core_settings.enableLayout.0">
                 <source>Spalten (Grid) Layout aktiviern</source>
-                <target>Spalten (Grid) Layout aktiviern</target>
+                <target><![CDATA[Spalten (Grid) Layout aktiviern <span style="color:#006494;">TODO: zum Layout Bundle!</span>]]></target>
             </trans-unit>
 
 
@@ -188,6 +188,14 @@
                 <source>FullPage</source>
                 <target>FullPage</target>
             </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.pageFields.animation">
+                <source>Animation</source>
+                <target>Animation</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.pageFields.navigation">
+                <source>Navigation</source>
+                <target>Navigation</target>
+            </trans-unit>
 
 
 
@@ -207,6 +215,14 @@
                 <source>Height</source>
                 <target>Höhe</target>
             </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.margin">
+                <source>margin</source>
+                <target>Außenabstand (oben/unten)</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.padding">
+                <source>padding</source>
+                <target>Innenabstand (oben/unten)</target>
+            </trans-unit>
             <trans-unit id="tl_iido_core_settings.options.articleFields.bg_color">
                 <source>Background Color</source>
                 <target>Hintergrundfarbe</target>
@@ -222,6 +238,10 @@
             <trans-unit id="tl_iido_core_settings.options.articleFields.animation">
                 <source>Animation</source>
                 <target>Animation</target>
+            </trans-unit>
+            <trans-unit id="tl_iido_core_settings.options.articleFields.columns">
+                <source>Spalten</source>
+                <target>Spalten</target>
             </trans-unit>
 
         </body>
