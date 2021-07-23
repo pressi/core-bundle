@@ -14,12 +14,59 @@ services:
         public: true
 
 
+    # config
+    iido.core.config:
+        class: IIDO\CoreBundle\Config\IIDOConfig
+        arguments:
+            - '@iido.core.util.basic'
+
+
+    # utils
+    iido.core.util.basic:
+        class: IIDO\CoreBundle\Util\BasicUtil
+
+    iido.core.util.company:
+        class: IIDO\CoreBundle\Util\CompanyUtil
+
+    iido.core.util.content:
+        class: IIDO\CoreBundle\Util\ContentUtil
+
+    iido.core.util.text:
+        class: IIDO\CoreBundle\Util\TextUtil
+
+    iido.core.util.styles:
+        class: IIDO\CoreBundle\Util\StylesUtil
+        arguments:
+            - '@iido.core.util.basic'
+            - '@iido.core.util.color'
+            - '@doctrine.orm.entity_manager'
+
+    iido.core.util.page:
+        class: IIDO\CoreBundle\Util\PageUtil
+        arguments:
+            - '@iido.core.util.basic'
+
+    iido.core.util.color:
+        class: IIDO\CoreBundle\Util\ColorUtil
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+
+
+    # pages
+    IIDO\CoreBundle\Controller\Page\GlobalElementPageController: ~
+
 
 
     # backend controller
     IIDO\CoreBundle\Controller\Backend\WebsiteSettingsController:
         calls:
             - [setContainer, ['@service_container']]
+
+    IIDO\CoreBundle\Controller\Backend\CompanyController:
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+
 
 
     # frontend ajax controller
@@ -33,6 +80,18 @@ services:
 
     # repository
     IIDO\CoreBundle\Repository\ThemeDesignerRepository:
+        tags:
+            - { name: doctrine.repository_service }
+
+    IIDO\CoreBundle\Repository\WebsiteColorRepository:
+        tags:
+            - { name: doctrine.repository_service }
+
+    IIDO\CoreBundle\Repository\WebsiteFontRepository:
+        tags:
+            - { name: doctrine.repository_service }
+
+    IIDO\CoreBundle\Repository\WebsiteSizeRepository:
         tags:
             - { name: doctrine.repository_service }
 
@@ -62,19 +121,47 @@ services:
             - "@router"
             - "@request_stack"
 
+    IIDO\CoreBundle\EventListener\FilterPageTypeListener:
+        arguments:
+            - "@database_connection"
+
     IIDO\CoreBundle\EventListener\AjaxListener:
         arguments:
             - "@monolog.logger.contao"
             - "@contao.framework"
 
+    IIDO\CoreBundle\EventListener\PageListener:
+        arguments:
+            - '@iido.core.util.page'
+
+    IIDO\CoreBundle\EventListener\FrontendTemplateListener:
+        arguments:
+            - '@iido.core.util.styles'
+
     IIDO\CoreBundle\EventListener\BackendTemplateListener: ~
-    IIDO\CoreBundle\EventListener\FrontendTemplateListener: ~
     IIDO\CoreBundle\EventListener\InsertTagsListener: ~
-    IIDO\CoreBundle\EventListener\PageListener: ~
+    IIDO\CoreBundle\EventListener\ArticleListener: ~
+    IIDO\CoreBundle\EventListener\ContentListener:
+        arguments:
+            - '@iido.core.util.content'
+            - '@iido.core.util.page'
 
 
     # dca tables listener
     IIDO\CoreBundle\EventListener\DataContainer\CoreSettingsListener: ~
+
+    IIDO\CoreBundle\EventListener\DataContainer\ContentListener:
+        arguments:
+            - '@request_stack'
+
+    IIDO\CoreBundle\EventListener\DataContainer\ArticleListener:
+        arguments:
+            - '@iido.core.util.color'
+            - '@request_stack'
+
+    IIDO\CoreBundle\EventListener\DataContainer\PageListener:
+        arguments:
+            - '@request_stack'
 
 
     # event subscriber
@@ -86,3 +173,13 @@ services:
     # service
     iido.core.service.file_uploader:
         class: IIDO\CoreBundle\Services\FileUploader
+
+
+    # permission checker
+    iido.core.backend.permission_checker:
+        class: IIDO\CoreBundle\Permission\BackendPermissionChecker
+        public: true
+        arguments:
+            - "@database_connection"
+            - "@security.token_storage"
+            - "@iido.core.config"
