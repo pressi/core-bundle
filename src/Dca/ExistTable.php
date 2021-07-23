@@ -26,7 +26,7 @@ class ExistTable extends Table
         $this->strTable     = $tableName;
         $this->withoutSQL   = $withoutSQL;
 
-        $sorting = $GLOBALS['TL_DCA'][ $tableName ]['list']['sorting'];
+//        $sorting = $GLOBALS['TL_DCA'][ $tableName ]['list']['sorting']??[];
 
 //        if( $sorting && is_array($sorting) && count($sorting) )
 //        {

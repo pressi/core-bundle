@@ -109,7 +109,7 @@ class Field
      *
      * @var string
      */
-    protected $defaultTableListener     = 'iido.basic.table.default';
+    protected $defaultTableListener     = 'iido.core.table.default';
 
 
 
@@ -259,7 +259,7 @@ class Field
 
 
 
-    public function addConfig( $name, $value )
+    public function addConfig( $name, $value ): self
     {
         $this->arrConfig[ $name ] = $value;
 
@@ -268,7 +268,7 @@ class Field
 
 
 
-    public function removeConfig( $name )
+    public function removeConfig( $name ): self
     {
         unset( $this->arrConfig[ $name ] );
 
@@ -282,7 +282,16 @@ class Field
 
 
 
-    public function addEval( $name, $value, $override = false )
+    public function addRegex( $regex ): self
+    {
+        $this->arrEval['rgxp'] = $regex;
+
+        return $this;
+    }
+
+
+
+    public function addEval( $name, $value, $override = false ): self
     {
         if( $name === 'tl_class' && $override )
         {
@@ -311,7 +320,7 @@ class Field
     {
         if( $name )
         {
-            return $this->arrEval[ $name ];
+            return $this->arrEval[ $name ]??'';
         }
 
         return $this->arrEval;
@@ -364,7 +373,7 @@ class Field
 
     public function getDefault()
     {
-        return $this->arrConfig['default'];
+        return $this->arrConfig['default']??'';
     }
 
 
@@ -440,7 +449,7 @@ class Field
         (
             'label'         => $this->renderLabel(),
             'inputType'     => preg_replace('/^multiFile/', 'file', $this->type),
-            'exclude'       => $this->arrConfig['exclude']?:true,
+            'exclude'       => $this->arrConfig['exclude']??true,
             'eval'          => $this->arrEval,
         );
 
@@ -460,21 +469,32 @@ class Field
             $arrFieldConfig[ $key ] = $value;
         }
 
-        if( ($this->type === "select" || $this->type === "radio" || $this->type === "checkboxWizard"|| $this->type === "layoutWizard" || ($this->type === 'checkbox' && $this->arrEval['multiple'])) && !isset($arrFieldConfig['options']) )
+        $multiple = $this->arrEval['multiple'] ?? false;
+
+        if( ($this->type === "select" || $this->type === "radio" || $this->type === "checkboxWizard"|| $this->type === "layoutWizard" || ($this->type === 'checkbox' && $multiple)) && !isset($arrFieldConfig['options']) )
         {
-            if($GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ]['options'][ $this->alternativeOptionLangName?:$this->name ] && count($GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ]['options'][ $this->alternativeOptionLangName?:$this->name ]) )
+            $options = $GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ]['options'][ $this->alternativeOptionLangName?:$this->name ]??[];
+
+            if($options && count($options) )
             {
                 $arrFieldConfig['options'] = $GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ]['options'][ $this->alternativeOptionLangName?:$this->name ];
             }
 
+            if( !isset($arrFieldConfig['options']) )
+            {
+                $arrFieldConfig['options'] = [];
+            }
+
             if( !is_array($arrFieldConfig['options']) || !count($arrFieldConfig['options']) )
             {
-                $arrFieldConfig['options'] = $GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ]['options_' . trim($this->alternativeOptionLangName?:$this->name) ];
+                $arrFieldConfig['options'] = $GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ]['options_' . trim($this->alternativeOptionLangName?:$this->name) ]??[];
             }
         }
 
-        if( ($this->type === "select" || $this->type === "radio" || $this->type === "checkboxWizard" || ($this->type === 'checkbox' && $this->arrEval['multiple'])) )
+        if( ($this->type === "select" || $this->type === "radio" || $this->type === "checkboxWizard" || ($this->type === 'checkbox' && $multiple)) )
         {
+            $fieldKeyName = '';
+
             if( !isset($arrFieldConfig['options']) )
             {
                 if( $arrFieldConfig['options'][0] === 'field' )
@@ -487,7 +507,12 @@ class Field
 
             if( !is_array($arrFieldConfig['options']) || !count($arrFieldConfig['options']) )
             {
-                $arrFieldConfig['options'] = $GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ]['options_' . $this->alternativeOptionLangName?:$fieldKeyName ];
+                $optionsLang = $this->alternativeOptionLangName?:$fieldKeyName;
+
+                if( $optionsLang )
+                {
+                    $arrFieldConfig['options'] = $GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ]['options_' . $optionsLang ]??[];
+                }
             }
         }
 
@@ -523,9 +548,9 @@ class Field
         {
             if( !$this->update )
             {
-                $strSQL = $this->arrSQL[ $SQLType ]?:$this->arrSQL[ $this->type ];
+                $strSQL = isset($this->arrSQL[ $SQLType ]) ? ($this->arrSQL[ $SQLType ] ? : $this->arrSQL[ $this->type ]) : '';
 
-                if( $this->type === "checkbox" && $this->arrEval['multiple'] )
+                if( $this->type === "checkbox" && $multiple )
                 {
                     if( $arrFieldConfig['default'] )
                     {
@@ -559,6 +584,29 @@ class Field
 //{
 //    echo "<pre>"; print_r( $arrFieldConfig ); exit;
 //}
+
+        if( $this->isSelector() )
+        {
+
+            if( !in_array($this->getName(), $GLOBALS['TL_DCA'][ $this->strTable ]['palettes']['__selector__']) )
+            {
+                $GLOBALS['TL_DCA'][ $this->strTable ]['palettes']['__selector__'][] = $this->getName();
+            }
+        }
+
+        if( $this->isAddedToSelector() )
+        {
+            $subPalette = $GLOBALS['TL_DCA'][ $this->strTable ]['subpalettes'][ $this->selector ]??'';
+
+            if( !str_contains($subPalette, $this->getName()) )
+            {
+                if( 'end' === $this->subpalettePosition )
+                {
+                    $GLOBALS['TL_DCA'][ $this->strTable ]['subpalettes'][ $this->selector ] = $subPalette . (strlen($subPalette) ? ',' : '') . $this->getName();
+                }
+            }
+        }
+
         if( $returnAsArray )
         {
             return $arrFieldConfig;
@@ -791,11 +839,11 @@ class Field
         }
         else
         {
-            $arrOptions = $GLOBALS['TL_LANG'][ $this->strTable ]['options'][ $this->name ];
+            $arrOptions = $GLOBALS['TL_LANG'][ $this->strTable ]['options'][ $this->name ]??[];
 
             if( !is_array($arrOptions) || !count($arrOptions) )
             {
-                $arrOptions = $GLOBALS['TL_LANG'][ $this->strTable ]['options_' . $this->name ];
+                $arrOptions = $GLOBALS['TL_LANG'][ $this->strTable ]['options_' . $this->name ]??[];
             }
 
             $this->addConfig('options', $arrOptions );
@@ -965,11 +1013,11 @@ class Field
             $fieldName = $this->alternativeLabelLangName;
         }
 
-        $strLabel = $GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ][ $fieldName ];
+        $strLabel = $GLOBALS['TL_LANG'][ $this->strLangTable?:$this->strTable ][ $fieldName ]??'';
 
         if( !$strLabel )
         {
-            $strLabel = $GLOBALS['TL_LANG']['DEF'][ $fieldName ];
+            $strLabel = $GLOBALS['TL_LANG']['DEF'][ $fieldName ]??'';
         }
 
         if( $this->labelPrefix )
@@ -989,9 +1037,9 @@ class Field
 
 
     /**
-     * @param \IIDO\BasicBundle\Dca\Table|\IIDO\BasicBundle\Dca\ExistTable $objTable
+     * @param Table|ExistTable $objTable
      *
-     * @return \IIDO\BasicBundle\Dca\Field
+     * @return self
      */
     public function addFieldToTable( $objTable )
     {
@@ -1001,12 +1049,8 @@ class Field
     }
 
 
-    /**
-     * @param \IIDO\BasicBundle\Dca\Table|\IIDO\BasicBundle\Dca\ExistTable $objTable
-     *
-     * @return \IIDO\BasicBundle\Dca\Field
-     */
-    public function addToTable( $objTable )
+
+    public function addToTable( ExistTable|Table $objTable ): self
     {
         $this->setTable( $objTable );
 
@@ -1130,7 +1174,7 @@ class Field
 
 
 
-    public function addToSelector( $strSelector, $position = 'end', $replaceField = '' )
+    public function addToSelector( $strSelector, $position = 'end', $replaceField = '' ): self
     {
         $this->addedToSelector  = true;
         $this->selector         = $strSelector;
@@ -1143,21 +1187,28 @@ class Field
 
 
 
-    public function addToSubpalette( $strSubpalette, $position = 'end', $replaceField = '' )
+    public function addToSubpalette( $strSubpalette, $position = 'end', $replaceField = '' ): self
     {
         return $this->addToSelector( $strSubpalette, $position, $replaceField );
     }
 
 
 
-    public function isAddedToSelector()
+    public function isAddedToSelector(): bool
     {
         return $this->addedToSelector;
     }
 
 
 
-    public function getSelector()
+    public function setAddToSelector( bool $addToSelector ): void
+    {
+        $this->addedToSelector  = $addToSelector;
+    }
+
+
+
+    public function getSelector(): string
     {
         return $this->selector;
     }

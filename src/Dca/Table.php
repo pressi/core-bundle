@@ -11,15 +11,32 @@ namespace IIDO\CoreBundle\Dca;
 
 
 use Contao\Controller;
+use Contao\Input;
+use Contao\StringUtil;
+use Contao\ArrayUtil;
 
 
 /**
  * Class Table
  *
  * @package IIDO\BasicBundle\Dca
+ *          TODO: rework class!!!
  */
 class Table
 {
+//    protected string $table;
+
+//    protected string $dataContainer = 'Table';
+
+//    protected bool $withoutSQL = false;
+
+//    protected string $listener = '';
+
+//    protected string $defaultListener = 'iido.core.table.default';
+
+
+
+
     /**
      * Table name "tl_"
      *
@@ -206,7 +223,7 @@ class Table
             $this->dataContainer    = 'File';
         }
 
-        if( is_array($GLOBALS['TL_LANG']['DEF']) && isset($GLOBALS['TL_LANG']['DEF']) && count($GLOBALS['TL_LANG']['DEF']) )
+        if( isset($GLOBALS['TL_LANG']['DEF']) && is_array($GLOBALS['TL_LANG']['DEF']) && count($GLOBALS['TL_LANG']['DEF']) )
         {
             foreach( $GLOBALS['TL_LANG']['DEF'] as $key => $value )
             {
@@ -217,6 +234,24 @@ class Table
         if( $addPublished )
         {
             $this->addPublishedFields();
+        }
+
+        if( Input::get('act') === 'edit' )
+        {
+            $model = 'ContentModel';
+
+            switch( $this->strTable )
+            {
+                case "tl_page":
+                    $model = 'PageModel';
+                    break;
+
+                case "tl_article":
+                    $model = 'ArticleModel';
+                    break;
+            }
+
+            $this->element = $model::findByPk( Input::get('id') );
         }
     }
 
@@ -819,7 +854,7 @@ class Table
     public function addGlobalOperation( $name, $arrConfig )
     {
         $index = (count( $this->arrGlobalOperations ) - 1);
-        array_insert($this->arrGlobalOperations, $index, [
+        ArrayUtil::arrayInsert($this->arrGlobalOperations, $index, [
             $name => $arrConfig
         ]);
     }
@@ -941,14 +976,14 @@ class Table
                             $editKeyIndex   = array_search('edit', $arrKeys);
 
 
-                            array_insert($GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations'], ($editKeyIndex + 1), [
+                            ArrayUtil::arrayInsert($GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations'], ($editKeyIndex + 1), [
                                 'editheader' => $arrEditHeader
                             ]);
                         }
                         else
                         {
 //                            $GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations']['editheader'] = $arrEditHeader;
-                            array_insert($GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations'], 0, [
+                            ArrayUtil::arrayInsert($GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations'], 0, [
                                 'editheader' => $arrEditHeader
                             ]);
                         }
@@ -1032,7 +1067,7 @@ class Table
                             $copyKeyIndex   = array_search('copy', $arrKeys);
 
 
-                            array_insert($GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations'], ($copyKeyIndex + 1), [
+                            ArrayUtil::arrayInsert($GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations'], ($copyKeyIndex + 1), [
                                 'copyChilds' => $arrCopyChilds
                             ]);
                         }
@@ -1175,7 +1210,7 @@ class Table
 
             if( !isset($GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations']['toggle']) )
             {
-                array_insert($GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations'], $intIndex, array
+                ArrayUtil::arrayInsert($GLOBALS['TL_DCA'][ $this->strTable ]['list']['operations'], $intIndex, array
                 (
                     'toggle' => array
                     (
@@ -1326,6 +1361,8 @@ class Table
 
     public function addFieldToPalette( $strPalette, $strNewField, $strReplaceField, $fieldPosition = 'after')
     {
+//        $this->loadCurrentPalettes();
+
         if( is_array($strPalette) )
         {
             foreach( $strPalette as $palette )
@@ -1340,19 +1377,19 @@ class Table
                 $sepStart = ',';
                 $seperator = ',';
 
-                if( 0 === strpos($strNewField, '{') )
+                if( str_starts_with($strNewField, '{') )
                 {
                     $seperator = ';';
                 }
 
-                if( 0 === strpos($strReplaceField, '{') )
+                if( str_starts_with($strReplaceField, '{') )
                 {
                     $sepStart = '';
                 }
 
                 if( preg_match('/\}$/', $strReplaceField) )
                 {
-                    if( 0 === strpos($strNewField, '{') && $fieldPosition === 'after')
+                    if( str_starts_with($strNewField, '{') && $fieldPosition === 'after')
                     {
                         $seperator = '$1;';
                     }
@@ -1364,12 +1401,12 @@ class Table
                 {
                     $seperatorNext = ',';
 
-                    if( 0 === strpos($strReplaceField, '{') )
+                    if( str_starts_with($strReplaceField, '{') )
                     {
                         $seperatorNext = ';';
                     }
 
-                    if( 0 === strpos($strNewField, '{') )
+                    if( str_starts_with($strNewField, '{') )
                     {
                         $seperator = '';
                     }
@@ -1379,7 +1416,7 @@ class Table
 
                 $sepRep = ',';
 
-                if( 0 === strpos($strReplaceField, '{') )
+                if( str_starts_with($strReplaceField, '{') )
                 {
                     $sepRep = '';
 
@@ -1522,7 +1559,7 @@ class Table
      *
      * @return string
      */
-    public function renderLegendFields( $strFields, $strLegend, $replaceLegend = false, $replacePosition = 'after' )
+    public function renderLegendFields( $strFields, $strLegend, $replaceLegend = false, $replacePosition = 'after' ): string
     {
         if( $replaceLegend )
         {
@@ -1738,7 +1775,9 @@ class Table
         {
             foreach($this->arrPalettes as $strPalette => $fields )
             {
-                $fields = $strPalette === '__selector__' ? $fields : $this->renderPaletteFields( $fields );
+                if( $strPalette === '__selector__') continue;
+
+                $fields = $this->renderPaletteFields( $fields );
 //echo "<pre>";
                 if( $this->tableExists )
                 {
@@ -1808,6 +1847,11 @@ class Table
 
     public function addSubpalette( $subpalette, $fields )
     {
+        if( is_array($fields) )
+        {
+            $fields = implode(',', $fields);
+        }
+
         $this->arrSubpalettes[ $subpalette ] = $fields;
     }
 
@@ -1817,6 +1861,7 @@ class Table
     {
         if( count($this->arrSubpalettes) )
         {
+//            echo "<pre>"; print_r( $this->arrSubpalettes ); exit;
             foreach($this->arrSubpalettes as $strPalette => $fields )
             {
                 $GLOBALS['TL_DCA'][ $this->strTable ]['subpalettes'][ $strPalette ] = $this->renderPaletteFields( $fields );
@@ -1914,7 +1959,8 @@ class Table
                     continue;
                 }
 
-                $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $palette ] = preg_replace('/' . preg_quote($replacedField, '/') . '/', $replaceFields, $fields);
+//                $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $palette ] = preg_replace('/' . preg_quote($replacedField, '/') . '/', $replaceFields, $fields);
+                $this->arrPalettes[ $palette ] = preg_replace('/' . preg_quote($replacedField, '/') . '/', $replaceFields, $fields);
             }
         }
         else
@@ -1928,6 +1974,7 @@ class Table
             {
                 $excludes = array($excludes);
             }
+//            echo "<pre>"; print_r( $palettes );
 
             foreach($palettes as $palette)
             {
@@ -1935,9 +1982,19 @@ class Table
                 {
                     continue;
                 }
+//                echo "<br>"; print_r( $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $palette ] );
+//                echo "<br>"; print_r( $replacedField );
+//                echo "<br>"; print_r( $replaceFields );
+//                $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $palette ] = preg_replace('/' . preg_quote($replacedField, '/') . '/', $replaceFields, $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $palette ]);
+                $strPalette = preg_replace('/' . preg_quote($replacedField, '/') . '/', $replaceFields, $this->arrPalettes[ $palette ]);
 
-                $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $palette ] = preg_replace('/' . preg_quote($replacedField, '/') . '/', $replaceFields, $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $palette ]);
+                $this->arrPalettes[ $palette ] = str_replace(',,', ',', $strPalette);
+
+//                echo "<br>"; print_r( $GLOBALS['TL_DCA'][ $this->strTable ]['palettes'][ $palette ] );
             }
+//echo "<pre>"; print_r( $this->arrPalettes );
+//exit;
+//            echo "</pre>";
         }
     }
 
@@ -2320,13 +2377,15 @@ class Table
 
 
     /**
-     * @param string|\IIDO\BasicBundle\Dca\Field $strField
-     * @param string|\IIDO\BasicBundle\Dca\Field $strSubpalette
+     * @param string|\IIDO\CoreBundle\Dca\Field $strField
+     * @param string|\IIDO\CoreBundle\Dca\Field $strSubpalette
      * @param string $position
-     * @param string|\IIDO\BasicBundle\Dca\Field $replaceField
+     * @param string|\IIDO\CoreBundle\Dca\Field $replaceField
      */
     public function addFieldToSubpalette( $strField, $strSubpalette, $position = 'end', $replaceField = '' )
     {
+        $field = $strField;
+
         if( $strSubpalette instanceof Field )
         {
             $strSubpalette = $strSubpalette->getName();
@@ -2378,13 +2437,18 @@ class Table
         }
 
         $this->arrSubpalettes[ $strSubpalette ] = preg_replace('/^,/', '', $this->arrSubpalettes[ $strSubpalette ]);
+
+        if( $field instanceof Field )
+        {
+            $field->setAddToSelector( false );
+        }
     }
 
 
 
     public function getField( $strName )
     {
-        return $this->arrFields[ $strName ]?:$GLOBALS['TL_DCA'][ $this->getTableName() ]['fields'][ $strName ];
+        return $this->arrFields[ $strName ] ?? $GLOBALS['TL_DCA'][ $this->getTableName() ]['fields'][ $strName ];
     }
 
 
@@ -2396,7 +2460,7 @@ class Table
 
 
 
-    public function fieldExists( $strName )
+    public function fieldExists( $strName ): bool
     {
         $exists = false;
 
@@ -2427,6 +2491,225 @@ class Table
 //        print_r( $this );
 //        exit;
         return '';
+    }
+
+
+
+    public function addLegend( string $name, string $parent = '', string $position = 'after', string $palette = 'default'): void
+    {
+        $parts  = StringUtil::trimsplit(':', $name);
+        $name   = $parts[0];
+
+        if( !str_ends_with($name, '_legend') )
+        {
+            $name .= '_legend';
+        }
+
+        if( count($parts) > 1 )
+        {
+            $name = $name . $parts[1];
+        }
+
+        if( $parent )
+        {
+            if( !str_ends_with($parent, '_legend') )
+            {
+                $parent .= '_legend';
+            }
+        }
+
+        if( $palette === 'all' )
+        {
+            foreach( $this->arrPalettes as $paletteName => $paletteFields )
+            {
+                if( $paletteName === '__selector__' ) continue;
+
+                if( $parent )
+                {
+                    if( 'after' === $position )
+                    {
+                        $paletteFields = \preg_replace('/\{' . $parent . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $parent . '$1},$2;{' . $name . '},;', $paletteFields);
+                    }
+                    else if( 'before' === $position )
+                    {
+                        $paletteFields = \preg_replace('/\{' . $parent . '/', '{' . $name . '},;{' . $parent, $paletteFields);
+                    }
+                }
+                else
+                {
+                    $paletteFields .= '{' . $name . '},;';
+                }
+
+                $this->arrPalettes[ $paletteName ] = $paletteFields;
+            }
+        }
+        else
+        {
+            $strPalette = $this->arrPalettes[ $palette ];
+
+            if( $parent )
+            {
+                if( 'after' === $position )
+                {
+                    $strPalette = \preg_replace('/\{' . $parent . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $parent . '$1},$2;{' . $name . '},;', $strPalette);
+                }
+                else if( 'before' === $position )
+                {
+                    $strPalette = \preg_replace('/\{' . $parent . '/', '{' . $name . '},;{' . $parent, $strPalette);
+                }
+            }
+            else
+            {
+                $strPalette .= '{' . $name . '},;';
+            }
+
+            $this->arrPalettes[ $palette ] = $strPalette;
+        }
+    }
+
+
+
+    public function addFieldToLegend( string|array $name, string $legend, string $position = 'append', string $palette = 'default' ): void
+    {
+        if( !str_ends_with($legend, '_legend') )
+        {
+            $legend .= '_legend';
+        }
+
+        $fields = $name;
+
+        if( !is_array($fields) )
+        {
+            $fields = [$fields];
+        }
+
+        if( $palette === 'all' )
+        {
+            foreach( $this->arrPalettes as $paletteName => $paletteFields )
+            {
+                if( 'append' === $position )
+                {
+
+                    $paletteFields = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},$2,' . implode(',', $fields) . ';', $paletteFields);
+                }
+
+                elseif( 'prepand' === $position )
+                {
+                    $paletteFields = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},' . implode(',', $fields) . ',$2;', $paletteFields);
+                }
+
+                $this->arrPalettes[ $paletteName ] = str_replace(',,', ',', $paletteFields);
+            }
+        }
+        else
+        {
+            $strPalette = $this->arrPalettes[ $palette ];
+
+            if( 'append' === $position )
+            {
+                $strPalette = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},$2,' . implode(',', $fields) . ';', $strPalette);
+            }
+
+            elseif( 'prepand' === $position )
+            {
+                $strPalette = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},' . implode(',', $fields) . ',$2;', $strPalette);
+            }
+
+            $this->arrPalettes[ $palette ] = str_replace(',,', ',', $strPalette);
+        }
+    }
+
+
+
+    public function addField( string|array $name, string $parent, string $position = 'after', string $palette = '' ): void
+    {
+        if( !$palette || $palette === 'all' )
+        {
+            foreach( $this->arrPalettes as $key => $strPalette )
+            {
+                $strPalette = \preg_replace('/,' . $parent . '/', (('before' === $position) ? ',' . $name : '') . ',' . $parent . (('after' === $position) ? ',' . $name : ''), $strPalette);
+
+                $this->arrPalettes[ $key ] = $strPalette;
+            }
+        }
+        else
+        {
+            $this->arrPalettes[ $palette ] = \preg_replace('/,' . $parent . '/', (('before' === $position) ? ',' . $name : '') . ',' . $parent . (('after' === $position) ? ',' . $name : ''), $this->arrPalettes[ $palette ]);
+        }
+    }
+
+
+
+    /**
+     * Add Published Fields to the table
+     *
+     * @throws \Exception
+     */
+    public function addAnimationsFields( $includeDisabled = false )
+    {
+        Controller::loadLanguageFile('iido');
+        $langField = isset($GLOBALS['TL_LANG']['IIDO']) ? $GLOBALS['TL_LANG']['IIDO']['field'] : [];
+
+        $animation = new Field('enableAnimation', 'checkbox');
+        $animation->setLabel( $langField['enableAnimation']??[] );
+        $animation->setAsSelector();
+        $animation->createDca( $this->strTable );
+
+//        if( $this->strTable === 'tl_page' )
+//        {
+//            if( $this->element )
+//            {
+                //TODO: override animation label if in parent element is active! => in dca load callback
+//            }
+//        }
+
+
+        $type = new Field('animationType', 'select');
+        $type->setLabel( $langField['animationType']??[] );
+        $type->addToSubpalette('enableAnimation');
+        $type->createDca( $this->strTable);
+
+        $duration = new Field('animationDuration');
+        $duration->setLabel( $langField['animationDuration']??[] );
+        $duration->addRegex('natural');
+        $duration->addToSubpalette('enableAnimation');
+        $duration->createDca( $this->strTable );
+
+        $easing = new Field('animationEasing', 'select');
+        $easing->setLabel( $langField['animationEasing']??[] );
+        $easing->addToSubpalette('enableAnimation');
+        $easing->createDca( $this->strTable );
+
+        $offset = new Field('animationOffset');
+        $offset->setLabel( $langField['animationOffset']??[] );
+        $offset->addRegex('natural');
+        $offset->addToSubpalette('enableAnimation');
+        $offset->createDca( $this->strTable );
+
+        $delay = new Field('animationDelay');
+        $delay->setLabel( $langField['animationDelay']??[] );
+        $delay->addRegex('natural');
+        $delay->addToSubpalette('enableAnimation');
+        $delay->createDca( $this->strTable );
+
+        $anchor =  new Field('animationAnchor');
+        $anchor->setLabel( $langField['animationAnchor']??[] );
+        $anchor->addToSubpalette('enableAnimation');
+        $anchor->createDca( $this->strTable );
+
+        $anchorPlacement = new Field('animationAnchorPlacement', 'select');
+        $anchorPlacement->addDefault('top-bottom');
+        $anchorPlacement->setLabel( $langField['animationAnchorPlacement']??[] );
+        $anchorPlacement->addEval('includeBlankOption', true);
+        $anchorPlacement->addToSubpalette('enableAnimation');
+        $anchorPlacement->createDca( $this->strTable );
+
+        if( $includeDisabled )
+        {
+            $disabled = new Field('disableAnimation', 'checkbox');
+            $disabled->setLabel( $langField['disableAnimation']??[] );
+            $disabled->createDca( $this->strTable);
+        }
     }
 
 }
