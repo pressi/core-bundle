@@ -10,15 +10,27 @@
 namespace IIDO\CoreBundle\Backend;
 
 
+use Contao\Ajax;
 use Contao\Controller;
+use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\Environment;
 use Contao\Input;
 use Contao\System;
 use IIDO\CoreBundle\Config\BundleConfig;
 use IIDO\CoreBundle\Dispatcher\EventDispatcher;
 use IIDO\CoreBundle\Services\Services;
 use IIDO\CoreBundle\Util\WebsiteSettingsUtil;
+use Psr\Log\LogLevel;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 
+/**
+ * Class WebsiteSettings
+ *
+ * @property Ajax $objAjax
+ *
+ * @package IIDO\CoreBundle\Backend
+ */
 class WebsiteSettings
 {
     public function renderSettings()
@@ -26,7 +38,7 @@ class WebsiteSettings
 //        $this->processForm();
 
         $table      = Input::get('table');
-        $twig       = System::getContainer()->get('twig');
+//        $twig       = System::getContainer()->get('twig');
 //        $values     = WebsiteSettingsUtil::getConfigFileValue();
 //        $legends    = $this->getFormFields( $values );
 
@@ -46,14 +58,24 @@ class WebsiteSettings
             $classPath  = '\IIDO\CoreBundle\DataContainer';
         }
 
-        $tableMode  = $classPath . '\DC_' . $dataContainer;
+        $tableMode  = $classPath . $dataContainer; //'\DC_' . $dataContainer;
         $objTable   = new $tableMode( $table );
+
+//        if( $_POST && Environment::get('isAjaxRequest') )
+//        {
+//            $this->objAjax = new Ajax(Input::post('action'));
+//            $this->objAjax->executePreActions();
+//
+//            $logger = System::getContainer()->get('monolog.logger.contao');
+//            $logger->log(LogLevel::ERROR, 'HU', array('contao' => new ContaoContext(__METHOD__, TL_ERROR)));
+//
+//            $this->objAjax->executePostActions( $objTable );
+//        }
 
 //        $config =
 //        [
 //            'tableContent' => $objTable->edit(),
-
-
+//
 //            'formToken' => REQUEST_TOKEN,
 //            'fieldsets' => $legends,
 //            'fs'        => $fs
