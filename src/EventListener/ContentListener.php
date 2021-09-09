@@ -74,6 +74,11 @@ class ContentListener
         $pageUtil       = $this->pageUtil; //System::getContainer()->get('iido.core.util.page');
         $type           = $contentModel->type;
 
+        if( 'html' === $type )
+        {
+            return $buffer;
+        }
+
         $rootPage       = $pageUtil->getRootPage( $objPage );
 
         list($elementType, $insideClass, $tag) = $contentUtil->getContentElementData( $contentModel );
@@ -164,8 +169,22 @@ class ContentListener
                             $buffer = \preg_replace('/' . preg_quote($headline, '/') . '/', '', $buffer);
                         }
 
-                        $buffer = \str_replace('</figure>', '</figure><div class="text_container">' . $headline, $buffer);
-                        $buffer .= '</div>';
+                        $buffer = \preg_replace('/<figure([A-Za-z0-9\s\-,;.:_\(\)\{\}="]+)>/', '<figure$1><div class="ic-inside c-inside">', $buffer);
+                        $buffer = \str_replace('</figure>', '</div></figure><div class="text_container"><div class="tc-inside c-inside">' . $headline, $buffer);
+                        $buffer .= '</div></div>';
+                    }
+
+                    if( str_contains($cssID[1], 'image-100') )
+                    {
+                        $buffer = \str_replace('image_container', 'image_container ic-w-100', $buffer);
+                    }
+                    elseif( str_contains($cssID[1], 'image-cover') )
+                    {
+                        $buffer = \str_replace('image_container', 'image_container bg-image bg-cover', $buffer);
+
+                        $objImage = FilesModel::findByPk( $contentModel->singleSRC );
+
+                        $buffer = \preg_replace('/<figure([A-Za-z0-9\s\-,;.:_="\(\)\{\}]+)>/', '<figure$1style="background-image:url(' . \preg_replace('/\s/', '%20', $objImage->path) . ');">', $buffer);
                     }
                 }
             }
@@ -180,8 +199,39 @@ class ContentListener
                     $buffer .= '</div></div>';
                 }
 
-                $buffer = \preg_replace('/<\/figure>/', '</figure><div class="text_container">' . $addTCInside, $buffer);
-                $buffer .= '</div>';
+                if( $contentModel->addImage && $contentModel->singleSRC )
+                {
+                    $buffer = \preg_replace('/<\/figure>/', '</figure><div class="text_container">' . $addTCInside, $buffer);
+                    $buffer .= '</div>';
+
+                    if( str_contains($cssID[1], 'seperator-headline-text') )
+                    {
+                        $buffer = \preg_replace('/<figure([A-Za-z0-9\s\-,;.:_="\(\)\{\}]+)style="([A-Za-z0-9\s\-:;]{0,})"([A-Za-z0-9\-,;.:_="\(\)\{\}]{0,})>/', '<figure$1$3><div class="ic-inside">', $buffer, 1, $countFC);
+
+                        if( $countFC )
+                        {
+                            $buffer = \str_replace('</figure>', '</div></figure>', $buffer);
+                        }
+                        else
+                        {
+                            $buffer = \preg_replace('/<figure([A-Za-z0-9\s\-,;.:_="\(\)\{\}]+)>/', '<figure$1><div class="ic-inside">', $buffer);
+                            $buffer = \str_replace('</figure>', '</div></figure>', $buffer);
+                        }
+                    }
+                }
+                else
+                {
+                    $arrHeadline = StringUtil::deserialize( $contentModel->headline, true );
+
+                    $buffer = \preg_replace('/<\/' . $arrHeadline['unit'] . '>/', '</' . $arrHeadline['unit'] . '><div class="text_container">', $buffer, 1, $countHL);
+
+                    if( $countHL )
+                    {
+                        $buffer .= '</div>';
+                    }
+
+                    $elementClasses[] = 'no-image';
+                }
             }
         }
 
@@ -357,7 +407,7 @@ class ContentListener
 
         $insideTag = '';
 
-        if( !in_array($type, $this->skipInsideElement) && !$contentUtil->stringContains($cssID[1], $this->skipInsideElementClasses) )
+        if( !in_array($type, $this->skipInsideElement) && ($cssID[1] && !$contentUtil->stringContains($cssID[1], $this->skipInsideElementClasses)) )
         {
             $insideTag = '<div class="' . $insideClass . '-inside">';
         }
