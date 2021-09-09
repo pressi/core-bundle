@@ -248,6 +248,20 @@ class SectionRenderer
 
 
 
+    public static function renderPitLane(): string
+    {
+        $section = self::getSection('pit-lane');
+
+        if( $section )
+        {
+            return self::renderSection( $section );
+        }
+
+        return '';
+    }
+
+
+
     protected static function getSection( $name ): ?ArticleModel
     {
         global $objPage;
