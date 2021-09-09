@@ -41,6 +41,7 @@ IIDO.Page = IIDO.Page || {};
         if( offsetNavigation && offsetNavToggler.length )
         {
             let offsetClose = offsetNavigation.querySelector('.close');
+            let offsetOverlay = document.querySelector('.offset-navigation-overlay');
 
             if( offsetClose )
             {
@@ -56,6 +57,27 @@ IIDO.Page = IIDO.Page || {};
                         level2Open.classList.remove('open');
                     }
                     document.body.classList.remove("nav-main-submenu-open");
+
+                    // IIDO.Page.pauseNavVideo();
+                });
+            }
+
+            if( offsetOverlay )
+            {
+                offsetOverlay.addEventListener('click', function(e)
+                {
+                    offsetNavigation.classList.remove('open');
+                    document.body.classList.remove('open-offset-navigation');
+
+                    let level2Open = document.querySelector('.nav-main ul.level_2.open');
+
+                    if( level2Open )
+                    {
+                        level2Open.classList.remove('open');
+                    }
+
+                    document.body.classList.remove("nav-main-submenu-open");
+                    $(offsetNavToggler).removeClass('is-active');
 
                     // IIDO.Page.pauseNavVideo();
                 });
