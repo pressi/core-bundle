@@ -19,6 +19,7 @@ use IIDO\CoreBundle\Controller\Backend\CompanyController;
 use IIDO\CoreBundle\Controller\Backend\WebsiteSettingsController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Security;
 use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
 
@@ -29,18 +30,25 @@ class BackendMenuListener
 {
     protected RouterInterface $router;
     protected RequestStack $requestStack;
+    protected Security $security;
 
 
-    public function __construct( RouterInterface $router, RequestStack $requestStack )
+    public function __construct( RouterInterface $router, RequestStack $requestStack, Security $security )
     {
         $this->router = $router;
         $this->requestStack = $requestStack;
+        $this->security = $security;
     }
 
 
 
     public function __invoke( MenuEvent $event ): void
     {
+        if( !$this->security->isGranted('ROLE_ADMIN') )
+        {
+            return;
+        }
+
         $factory = $event->getFactory();
         $tree = $event->getTree();
 
