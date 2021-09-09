@@ -36,7 +36,7 @@ class ArticleListener
         $permission = System::getContainer()->get('iido.core.backend.permission_checker');
         /* @var $permission BackendPermissionChecker */
 
-        $classes    = $article->classes;
+        $classes    = $article->classes?:[];
         $cssID      = StringUtil::deserialize( $article->cssID, true );
         $classes[]  = 'article-element';
 
