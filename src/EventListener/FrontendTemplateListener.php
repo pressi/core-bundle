@@ -228,7 +228,13 @@ class FrontendTemplateListener
             }
 
             // REMOVE empty PIT LANE // TODO
-            $content = preg_replace('/<div id="pitLane">([\s\n]{0,})<div class="inside">([A-Za-z0-9\s\n\-:_\{\}]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+//            $content = preg_replace('/<div id="pitLane">([\s\n]{0,})<div class="inside">([A-Za-z0-9\s\n\-:_\{\}]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+            $content = preg_replace('/<div id="pitLane">([\s\n]{0,})<div class="inside">([\s\n]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+
+            if( $objPage->hidePitLane || str_contains($objPage->cssClass, 'hide-pit-lane') )
+            {
+                $content = preg_replace('/<div id="pitLane">([\s\n]{0,})<div class="inside">([A-Za-z0-9\s\n\-:_\{\}\[\]&;,öäüÖÄÜß+]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+            }
 
 
             // REMOVE EMPTY "custom" CONTAINER
@@ -244,7 +250,7 @@ class FrontendTemplateListener
             if( str_contains($content, 'id="offsetNavigation"') )
             {
                 $label = '{{iflng::de}}Menü{{iflng}}{{ifnlng::de}}Menu{{ifnlng}}';
-                $mode = 'arrowalt'; // TODO (squeeze)
+                $mode = 'squeeze'; // TODO (squeeze / arrowalt)
 
                 $navTogglerClasses = ' light'; // TODO
 
