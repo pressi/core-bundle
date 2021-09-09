@@ -39,6 +39,10 @@ class InsertTagsListener implements ServiceAnnotationInterface
         {
             switch( $chunks[1] )
             {
+                case "link_void":
+                    $return = 'javascript:void(0);';
+                    break;
+
                 case "section":
                     $return = '';
 
@@ -68,6 +72,10 @@ class InsertTagsListener implements ServiceAnnotationInterface
 
                         case "canvas-top":
 //                            $return = SectionRenderer::renderCanvasTop();
+                            break;
+
+                        case "pit-lane":
+                            $return = SectionRenderer::renderPitLane();
                             break;
                     }
             }
