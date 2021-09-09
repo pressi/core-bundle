@@ -17,6 +17,8 @@ use Contao\Image;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
+use IIDO\CoreBundle\Config\BundleConfig;
+use IIDO\CoreBundle\Util\BasicUtil;
 use IIDO\CoreBundle\Util\ColorUtil;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -142,7 +144,13 @@ class ArticleListener
                 {
                     $type = $GLOBALS['TL_LANG']['tl_article']['options']['articleType'][ $row['articleType'] ];
 
-                    $image  = 'bundles/iidocore/images/icons/articles/' . $row['articleType'];
+                    $rootDir = BundleConfig::getRootDir( true ) . 'web/';
+                    $imagePath  = 'bundles/iidocore/images/icons/articles/' . $row['articleType'];
+
+                    if( file_exists($rootDir . $imagePath . '.svg') || file_exists($rootDir . $imagePath . '.png') )
+                    {
+                        $image = $imagePath;
+                    }
 
                     $label = \preg_replace('/\[([A-Za-z0-9öäüÖÄÜß\s\-]+)\]/', '[' . $type . ']', $label);
                 }
