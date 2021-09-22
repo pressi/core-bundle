@@ -13,17 +13,20 @@
             "role"      : "Developer"
         }
     ],
-    "version": "0.2.9",
+    "version": "0.2.10",
     "require":
     {
         "php": ">=8.0",
         "contao/core-bundle": ">=4.0 || <=5.0",
+        "2do/utils-bundle": "^0.1",
         "twig/twig": "^2.7 || ^3.0",
         "doctrine/dbal": "^2.12 || ^3.0",
         "codefog/contao-haste": "^4.24",
         "madeyourday/contao-rocksolid-custom-elements": "^2.2.17",
         "contao-components/dropzone": "^5.7.2",
-        "mvo/contao-group-widget": "^v1.3.2"
+        "mvo/contao-group-widget": "^v1.3.2",
+        "heimrichhannot/contao-fieldpalette-bundle": "^0.5",
+        "menatwork/contao-multicolumnwizard-bundle": "^3.4"
     },
     "replace":
     {
@@ -37,9 +40,10 @@
     },
     "suggest":
     {
-        "2do/contao-master-connect-bundle": "IIDO Master Connection Bundle",
-        "2do/contao-projects-bundle": "IIDO Projects Bundle",
-        "2do/contao-hotel-bundle": "IIDO Hotel Bundle",
+        "2do/master-connect-bundle": "IIDO Master Connection Bundle",
+        "2do/projects-bundle": "IIDO Projects Bundle",
+        "2do/hotel-bundle": "IIDO Hotel Bundle",
+        "2do/shop-bundle": "IIDO Shop Bundle",
         "codefog/contao-cookiebar": "Cookiebar",
         "netzhirsch/cookie-opt-in-bundle": "Cookie Opt-In (Kommerziell)",
         "oveleon/contao-cookiebar": "Erweiterte Cookiebar",
@@ -49,14 +53,21 @@
         "terminal42/contao-geoip2-country": "Inhalte für Länder (GeoIP)",
         "terminal42/notification_center": "Notification Center",
         "madeyourday/contao-rocksolid-slider": "RockSolid Slider",
-        "heimrichhannot/contao-slick-bundle": "Slick Slider",
+        "heimrichhannot/contao-slick-bundle": "Slick Slider (OOD)",
+        "heimrichhannot/contao-tiny-slider-bundle": "Tiny Slider",
         "codefog/contao-news_categories": "News Kategorien",
         "madeyourday/contao-rocksolid-antispam": "Antispam",
         "do-while/contao-backupdb-bundle": "Datenbanksicherung",
         "fritzmg/contao-backend-documentation": "Backend Dokumentation",
         "heimrichhannot/contao-backend-lost-password-bundle": "Backend Login: Passwort vergessen",
         "oveleon/contao-advanced-form-bundle": "Mehrseitige Formulare",
-        "mvo/contao-group-widget": "BE: Group Widget (like RSCE)"
+        "mvo/contao-group-widget": "BE: Group Widget (like RSCE)",
+        "codefog/contao-events_subscriptions": "Event Registrierung (codefog)",
+        "inspiredminds/contao-event-registration": "Event Registrierung (inspiredminds)",
+        "heimrichhannot/contao-categories-bundle": "Kategorie Bundle",
+        "heimrichhannot/contao-categories-multilingual-bundle": "Multilingual für Kategorie Bundle",
+        "heimrichhannot/contao-filter-bundle": "Filter Bundle",
+        "terminal42/contao-conditionalformfields": "Abhängige Formularfelder"
     },
     "autoload":
     {
@@ -67,17 +78,12 @@
 
         "classmap":
         [
-            "src/Resources/contao",
             "src/DataContainer/DC_YamlConfigFile.php"
         ],
 
         "exclude-from-classmap":
         [
-            "tests/",
-            "src/Resources/contao/config/",
-            "src/Resources/contao/dca/",
-            "src/Resources/contao/languages/",
-            "src/Resources/contao/templates/"
+            "tests/"
         ]
     },
     "require-dev":
@@ -99,5 +105,10 @@
     "extra":
     {
         "contao-manager-plugin": "IIDO\\CoreBundle\\ContaoManager\\Plugin"
+    },
+    "support":
+    {
+        "issues": "https://github.com/pressi/core-bundle/issues",
+        "source": "https://github.com/pressi/core-bundle"
     }
 }
