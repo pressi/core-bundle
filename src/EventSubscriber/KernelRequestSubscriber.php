@@ -22,6 +22,7 @@ class KernelRequestSubscriber implements EventSubscriberInterface
     protected ScopeMatcher $scopeMatcher;
 
 
+
     public function __construct( ScopeMatcher $scopeMatcher )
     {
         $this->scopeMatcher = $scopeMatcher;
