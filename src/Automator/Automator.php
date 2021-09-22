@@ -14,6 +14,7 @@ use Contao\CalendarModel;
 use Contao\Database;
 use Contao\Date;
 use Contao\Model\Collection;
+use Contao\StringUtil;
 use NotificationCenter\Model\Notification;
 
 //@TODO ???????
@@ -144,7 +145,7 @@ class Automator
      */
     private function getEvents(CalendarModel $calendar)
     {
-        $days = array_map('intval', trimsplit(',', $calendar->subscription_days));
+        $days = array_map('intval', StringUtil::trimsplit(',', $calendar->subscription_days));
 
         if (count($days) < 1) {
             return [];
