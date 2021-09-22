@@ -16,16 +16,8 @@ use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\Image;
 use Contao\PageModel;
 use Contao\StringUtil;
-use Contao\System;
-use IIDO\CoreBundle\Config\BundleConfig;
-use IIDO\CoreBundle\Util\BasicUtil;
-use IIDO\CoreBundle\Util\ColorUtil;
+use IIDO\UtilsBundle\Util\ColorUtil;
 use Symfony\Component\HttpFoundation\RequestStack;
-
-
-//use Contao\PageModel;
-//use IIDO\BasicBundle\Helper\PageHelper;
-//use IIDO\BasicBundle\Helper\StyleSheetHelper;
 
 
 class ArticleListener
@@ -126,12 +118,10 @@ class ArticleListener
 //    }
 
 
-
     /**
      * @Callback(table="tl_article", target="list.label.label")
-     * @return string|array
      */
-    public function onLoadArticleLabel( array $row, string $label, DataContainer $dc, string $imageAttribute = '', bool $returnImage = false, ?bool $isProtected = null )
+    public function onLoadArticleLabel( array $row, string $label, DataContainer $dc, string $imageAttribute = '', bool $returnImage = false, ?bool $isProtected = null ): array|string
     {
         if( $label )
         {
