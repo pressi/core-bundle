@@ -11,13 +11,14 @@ namespace IIDO\CoreBundle\Util;
 
 
 use Contao\PageModel;
+use HeimrichHannot\FieldpaletteBundle\Model\FieldPaletteModel;
 use IIDO\CoreBundle\Model\CompanyModel;
 
 
 class CompanyUtil
 {
 
-    public static function getCurrentCompanyData(): ?CompanyModel
+    public static function getCurrentCompanyData(): ?FieldPaletteModel
     {
         global $objPage;
 
