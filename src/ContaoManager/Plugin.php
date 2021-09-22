@@ -76,10 +76,10 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
         {
             $loadAfter[] = HeimrichHannotContaoFieldpaletteBundle::class;
         }
-//echo "<pre>"; print_r( $loadAfter ); exit;
-        return [
-            BundleConfig::create( IIDOCoreBundle::class )
-                ->setLoadAfter( $loadAfter )
+
+        return
+        [
+            (new BundleConfig(IIDOCoreBundle::class))->setLoadAfter( $loadAfter ),
         ];
     }
 
@@ -92,7 +92,7 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
      */
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
     {
-        $file = '@IIDOCoreBundle/Resources/config/routes.yml';
+        $file = '@IIDOCoreBundle/config/routes.yml';
 //        $file = __DIR__ . '/../Resources/config/routes.yml';
         $loader = $resolver->resolve( $file );
 
@@ -108,7 +108,7 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
 
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
-        $loader->load('@IIDOCoreBundle/Resources/config/config.yml');
+        $loader->load('@IIDOCoreBundle/config/config.yml');
 //        $loader->load(__DIR__ . '/../Resources/config/config.yml');
     }
 
