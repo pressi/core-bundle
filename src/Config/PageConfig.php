@@ -11,22 +11,18 @@ namespace IIDO\CoreBundle\Config;
 
 
 use Contao\System;
-use Doctrine\ORM\EntityManager;
 use IIDO\CoreBundle\Entity\WebsiteColorEntity;
 use IIDO\CoreBundle\Entity\WebsiteFontEntity;
 use IIDO\CoreBundle\Entity\WebsiteSizeEntity;
-use IIDO\CoreBundle\Repository\WebsiteColorRepository;
-use IIDO\CoreBundle\Repository\WebsiteFontRepository;
-use IIDO\CoreBundle\Repository\WebsiteSizeRepository;
 
 
 class PageConfig
 {
-    protected static $pageConfig;
+    protected static array $pageConfig;
 
 
 
-    public static function loadCurrentPageConfig( $pageId = null )
+    public static function loadCurrentPageConfig( $pageId = null ): array
     {
         if( static::$pageConfig )
         {
@@ -41,18 +37,10 @@ class PageConfig
         }
 
         $doctrine = System::getContainer()->get('doctrine');
-//        $entityManager = $doctrine->getManager();
-//        /** @var $entityManager EntityManager */
-
-//        $repo = $entityManager->getRepository( WebsiteFontEntity::class );
-//        $fonts = $repo->findAll();
-//        $fonts = $repo->findBy(['parent' => 1]);
-
 
         $fontRepository     = $doctrine->getRepository( WebsiteFontEntity::class );
         $sizeRepository     = $doctrine->getRepository( WebsiteSizeEntity::class );
         $colorRepository    = $doctrine->getRepository( WebsiteColorEntity::class );
-
 
         $fonts  = $fontRepository->findByPage( $pageId );
         $sizes  = $sizeRepository->findByPage( $pageId );
@@ -64,8 +52,7 @@ class PageConfig
 //        }
 
         $pageConfig = ['fonts'=>$fonts, 'sizes'=>$sizes, 'colors'=>$colors];
-
-//        static::$pageConfig = $pageConfig;
+        static::$pageConfig = $pageConfig;
 
         return $pageConfig;
     }
