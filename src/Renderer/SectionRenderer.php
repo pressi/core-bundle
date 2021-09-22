@@ -225,7 +225,7 @@ class SectionRenderer
 
                         if( $company->phone )
                         {
-                            $basicUtil = System::getContainer()->get('iido.core.util.basic');
+                            $basicUtil = System::getContainer()->get('iido.utils.basic');
 
                             $phone = '<a href="tel:' . $basicUtil->renderPhoneNumber( $company->phone ) . '">' . $phone . '</a>';
                         }
