@@ -1,0 +1,35 @@
+{% import "@ContaoCore/Image/Studio/_macros.html.twig" as studio %}
+{% if enableHeaderTop %}
+    <div class="header-top-bar">
+        <div class="header-top-bar-inside">
+        </div>
+    </div>
+{% endif %}
+{% if enableHeader %}
+<div class="header-bar">
+    <div class="header-bar-inside">
+        <div class="logo">{% if logo %}{{- studio.figure( logo ) -}}{% else %}LOGO{% endif %}</div>
+    </div>
+    <div class="mobile-menu-trigger hamburger hamburger--{% if hamburgerEffect %}{{ hamburgerEffect}}{% else%}squeeze{% endif%} js-hamburger">
+        <div class="hamburger-box"><div class="hamburger-inner"></div></div>
+        <div class="hamburger-label">Menü</div>
+    </div>
+    {% if navLang and navLang.enabled %}
+    <div class="nav-lang">
+        {{ '{{insert_module::3}}' }}
+    </div>
+    {% endif %}
+    {% if search and search.enabled %}
+    <div class="search">
+
+    </div>
+    {% endif %}
+    {% if navMeta and navMeta.enabled %}
+    <div class="nav-main navigation">
+        {{ '{{insert_module::1}}' }}
+    </div>
+    {% endif %}
+    <!-- startmenu -->
+    <!-- nav meta -->
+</div>
+{% endif %}

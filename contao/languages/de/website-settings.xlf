@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+    <file datatype="php" original="contao/languages/en/website-settings.php" source-language="en" target-language="de">
+        <body>
+
+            <trans-unit id="IIDO.website-settings.settings.name">
+                <source>Settings</source>
+                <target>Einstellungen</target>
+            </trans-unit>
+
+
+            <trans-unit id="IIDO.website-settings.themeDesigner.name">
+                <source>Theme Designer</source>
+                <target>Theme Designer</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,96 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+
+    IIDO\CoreBundle\:
+        resource: ../src/*
+        exclude: ../src/{_Resources,Config,Permission,ContaoManager,Dca,DependencyInjection,Entity,Helper,Repository}
+
+
+    # classes
+    iido.core.website-settings.settings:
+        class: IIDO\CoreBundle\Backend\WebsiteSettings
+        public: true
+
+
+    # config
+    iido.core.config:
+        class: IIDO\CoreBundle\Config\IIDOConfig
+        public: true
+
+    IIDO\CoreBundle\Config\IIDOConfig: '@iido.core.config'
+
+
+    # backend controller
+    IIDO\CoreBundle\Controller\Backend\WebsiteSettingsController:
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+
+
+    # repository
+    IIDO\CoreBundle\Repository\ThemeDesignerRepository:
+        tags:
+            - { name: doctrine.repository_service }
+
+    IIDO\CoreBundle\Repository\WebsiteColorRepository:
+        tags:
+            - { name: doctrine.repository_service }
+
+    IIDO\CoreBundle\Repository\WebsiteFontRepository:
+        tags:
+            - { name: doctrine.repository_service }
+
+    IIDO\CoreBundle\Repository\WebsiteSizeRepository:
+        tags:
+            - { name: doctrine.repository_service }
+
+
+    # twig
+    IIDO\CoreBundle\Twig\TwigTemplatesExtension:
+        public: false
+        tags:
+            - { name: twig.extension }
+
+
+    # permission checker
+    iido.core.backend.permission_checker:
+        class: IIDO\CoreBundle\Permission\BackendPermissionChecker
+        public: true
+        arguments:
+            - "@database_connection"
+            - "@security.token_storage"
+            - "@iido.core.config"
+
+    IIDO\CoreBundle\Permission\BackendPermissionChecker: '@iido.core.backend.permission_checker'
+
+
+#    # pages
+#    IIDO\CoreBundle\Controller\Page\GlobalElementPageController: ~
+
+    # backend controller
+#    IIDO\CoreBundle\Controller\Backend\CompanyController:
+#        calls:
+#            - [ setContainer, [ '@service_container' ] ]
+
+#    # frontend ajax controller
+#    IIDO\CoreBundle\Controller\Frontend\AjaxController:
+#        calls:
+#            - [ setContainer, [ '@service_container' ] ]
+
+
+#    # entity
+##    IIDO\CoreBundle\Entity\ThemeDesignerEntity: ~
+
+
+
+#    # model
+##    IIDO\CoreBundle\Model\ThemeDesignerModel: ~
+
+
+#    iido.core.website-settings.themeDesigner:
+#        class: IIDO\CoreBundle\Backend\ThemeDesigner
+
+    # service
+#    iido.core.service.file_uploader:
+#        class: IIDO\CoreBundle\Services\FileUploader

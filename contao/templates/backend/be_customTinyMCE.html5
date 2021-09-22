@@ -1,0 +1,126 @@
+<?php $this->extend('be_tinyMCE'); ?>
+
+  <?php /* $this->block('content_css'); ?>
+    content_css: ['system/themes/<?= Backend::getTheme() ?>/tinymce.min.css', 'files/tinymce.css'],
+  <?php $this->endblock(); */ ?>
+
+  <?php /* $this->block('plugins'); ?>
+    plugins: 'autosave charmap code fullscreen image importcss link lists paste searchreplace stripnbsp tabfocus table visualblocks visualchars',
+  <?php $this->endblock(); */ ?>
+
+  <?php /* $this->block('valid_elements'); ?>
+    extended_valid_elements: 'q[cite|class|title],article,section,hgroup,figure,figcaption',
+  <?php $this->endblock(); */?>
+
+  <?php $this->block('menubar'); ?>
+    menubar: 'file edit insert view format',
+    menu: {
+        insert: { title: 'Einfügen', items: 'image link | charmap' },
+        format: { title: 'Format', items: 'underline strikethrough superscript subscript codeformat | formats fontformats fontsizes lineheight | removeformat' },
+    },
+  <?php $this->endblock(); ?>
+
+  <?php $this->block('toolbar'); ?>
+    toolbar: 'link unlink | image | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | code',
+  <?php $this->endblock();  ?>
+
+  <?php $this->block('custom');
+  $defaultFont = '';
+  $defaultFontSize = '';
+  $defaultLineHeights = '';
+
+  $fontsizes = '';
+  $fonts = '';
+  $textcolors = [];
+
+  if( \Input::get('table') === 'tl_content' )
+  {
+      $content = \Contao\ContentModel::findByPk( \Input::get('id') );
+      $article = \Contao\ArticleModel::findByPk( $content->pid );
+      $page = \Contao\PageModel::findByPk( $article->pid );
+
+      $rootPage = \Contao\System::getContainer()->get('iido.utils.page')->getRootPage( $page );
+
+      $config = \IIDO\CoreBundle\Config\PageConfig::loadCurrentPageConfig( $rootPage->id );
+
+      if( $config['colors'] && count($config['colors']) )
+      {
+          foreach( $config['colors'] as $color )
+          {
+              $textcolors[ '#' . $color->getColor() ] = $color->getLabel();
+          }
+      }
+
+      if( $config['fonts'] && count($config['fonts']) )
+      {
+          foreach( $config['fonts'] as $font )
+          {
+              $fonts .= (strlen($fonts) ? ';' : '') . $font->getLabel() . '=' . $font->getName();
+
+              if( $font->isDefault() )
+              {
+                  $defaultFont = $font->getName();
+              }
+          }
+      }
+
+      if( $config['sizes'] && count($config['sizes']) )
+      {
+          $config['sizes'] = array_reverse( $config['sizes'] );
+
+          foreach( $config['sizes'] as $size )
+          {
+              if( $size->isInText() )
+              {
+                  $fontsizes .= ' ' . $size->getSize() . 'px';
+
+                  if( $size->isDefault() )
+                  {
+                      $defaultFontSize = $size->getSize() . 'px';
+                  }
+              }
+
+          }
+      }
+      $fontsizes = trim( $fontsizes );
+  }
+
+  ?>
+    <?php if( $fonts ): ?>font_formats: "<?= $fonts ?>",<?php endif ?>
+    <?php if( $fontsizes ): ?>fontsize_formats: "<?= $fontsizes ?>",<?php endif ?>
+    lineheight_formats: '1 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2',
+    <?php if( $defaultFont ): ?>
+    content_style: "body { font-family: <?= $defaultFont ?>;<?php if( $defaultFontSize ): ?> font-size:<?= $defaultFontSize ?>;<?php endif ?> }",
+    <?php endif ?>
+    link_class_list:
+    [
+        {title: '--', value: ''},<?php /*= $strLinkClasses */ ?>
+        {title: 'Seite in Lightbox öffnen', value: 'open-page-in-lightbox'},
+        {title: 'Button', menu:
+        [
+            {title: 'Normaler Button', value: 'btn-def'},
+            {title: 'Normaler Button, öffnen in Lightbox', value: 'btn-def open-page-in-lightbox'}
+        ]}
+    ],
+    formats:
+    {
+        light: { inline: "span", attributes: { class: "text-light" }, exact: true }
+    },
+    <?php if( count($textcolors) ): ?>
+    style_formats_merge: true,
+    style_formats:
+    [
+        {
+            title : 'Farben',
+            items :
+            [
+                <?php $i=0; foreach( $textcolors as $color => $colorName ):
+                        $color = preg_replace('/&#35;/', '#', $color);
+                ?>
+                    <?= (($i > 0) ? ',' : '') ?>{title:'<?= $colorName ?>', inline: 'span', styles: { color: '<?= $color ?>'} }
+                <?php $i++; endforeach; ?>
+            ]
+        }
+    ],
+    <?php endif ?>
+<?php $this->endblock(); ?>

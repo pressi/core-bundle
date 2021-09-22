@@ -1,0 +1,304 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+    <file datatype="php" original="contao/languages/en/tl_page.php" source-language="en" target-language="de">
+        <body>
+
+            <trans-unit id="tl_page.hideHeader.0">
+                <source>Kopfzeile entfernen</source>
+                <target>Kopfzeile entfernen</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.hideFooter.0">
+                <source>Fußzeile entfernen</source>
+                <target>Fußzeile entfernen</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.enableFullPage.0">
+                <source>FullPage aktivieren</source>
+                <target>FullPage aktivieren</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.enableFullPage.0">
+                <source>FullPage aktivieren</source>
+                <target>FullPage aktivieren</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.enableOffsetNav.0">
+                <source>Offset Navigation aktivieren</source>
+                <target>Offset Navigation aktivieren</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.disableThemeDesigner.0">
+                <source>disable ThemeDesigner</source>
+                <target>ThemeDesigner deaktivieren</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.disableThemeDesignerStyles.0">
+                <source>disable complete ThemeDesigner styles</source>
+                <target>ThemeDesigner Styles deaktivieren</target>
+            </trans-unit>
+
+
+            <trans-unit id="tl_page.colors.0">
+                <source>Farben</source>
+                <target>Farben</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.fonts.0">
+                <source>Schriftarten</source>
+                <target>Schriftarten</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.sizes.0">
+                <source>Schrift-Größen</source>
+                <target>Schrift-Größen</target>
+            </trans-unit>
+
+
+            <trans-unit id="tl_page.company.0">
+                <source>Firmendaten</source>
+                <target>Firmendaten</target>
+            </trans-unit>
+
+
+
+<!-- ### LEGENDS ############################################################################################################ -->
+
+            <trans-unit id="tl_page.themedesigner_legend">
+                <source>IIDO ThemeDesigner</source>
+                <target>IIDO ThemeDesigner</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.animation_legend">
+                <source>Animation</source>
+                <target>Animation</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.design_legend">
+                <source>Design</source>
+                <target>Design</target>
+            </trans-unit>
+
+
+<!-- ### OPTIONS ############################################################################################################ -->
+
+            <trans-unit id="tl_page.options.animationAnchorPlacement.top-bottom">
+                <source>top bottom</source>
+                <target>Oben Unten (top bottom)</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationAnchorPlacement.top-top">
+                <source>top top</source>
+                <target>Oben Oben (top top)</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationAnchorPlacement.top-center">
+                <source>top center</source>
+                <target>Oben Mitte (top center)</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationAnchorPlacement.center-top">
+                <source>center top</source>
+                <target>Mitte Oben (center top)</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationAnchorPlacement.center-center">
+                <source>center center</source>
+                <target>Zentriert (center center)</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationAnchorPlacement.center-bottom">
+                <source>center bottom</source>
+                <target>Mitte Unten (center bottom)</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationAnchorPlacement.bottom-top">
+                <source>bottom top</source>
+                <target>Unten Oben (bottom top)</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationAnchorPlacement.bottom-center">
+                <source>bottom center</source>
+                <target>Unten Mitte (bottom center)</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationAnchorPlacement.bottom-bottom">
+                <source>bottom bottom</source>
+                <target>Unten Unten (bottom bottom)</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_page.options.animationEasing.linear">
+                <source>linear</source>
+                <target>linear</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease">
+                <source>ease</source>
+                <target>ease</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in">
+                <source>ease in</source>
+                <target>ease in</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-out">
+                <source>ease out</source>
+                <target>ease out</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-out">
+                <source>ease in out</source>
+                <target>ease in out</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-back">
+                <source>ease in back</source>
+                <target>ease in back</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-out-back">
+                <source>ease out back</source>
+                <target>ease out back</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-out-back">
+                <source>ease in out back</source>
+                <target>ease in out back</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-sine">
+                <source>ease in sine</source>
+                <target>ease in sine</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-out-sine">
+                <source>ease out sine</source>
+                <target>ease out sine</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-out-sine">
+                <source>ease in out sine</source>
+                <target>ease in out sine</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-quad">
+                <source>ease in quad</source>
+                <target>ease in quad</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-out-quad">
+                <source>ease out quad</source>
+                <target>ease out quad</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-out-quad">
+                <source>ease in out quad</source>
+                <target>ease in out quad</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-cubic">
+                <source>ease in cubic</source>
+                <target>ease in cubic</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-out-cubic">
+                <source>ease out cubic</source>
+                <target>ease out cubic</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-out-cubic">
+                <source>ease in out cubic</source>
+                <target>ease in out cubic</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-quart">
+                <source>ease in quart</source>
+                <target>ease in quart</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-out-quart">
+                <source>ease out quart</source>
+                <target>ease out quart</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationEasing.ease-in-out-quart">
+                <source>ease in out quart</source>
+                <target>ease in out quart</target>
+            </trans-unit>
+
+
+
+
+            <!-- FADE -->
+            <trans-unit id="tl_page.options.animationType.fade-up">
+                <source>fade up</source>
+                <target>fade up</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.fade-down">
+                <source>fade down</source>
+                <target>fade down</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.fade-right">
+                <source>fade right</source>
+                <target>fade right</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.fade-left">
+                <source>fade left</source>
+                <target>fade left</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.fade-up-right">
+                <source>fade up right</source>
+                <target>fade up right</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.fade-up-left">
+                <source>fade up left</source>
+                <target>fade up left</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.fade-down-right">
+                <source>fade down right</source>
+                <target>fade down right</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.fade-down-left">
+                <source>fade down left</source>
+                <target>fade down left</target>
+            </trans-unit>
+
+            <!-- FLIP -->
+            <trans-unit id="tl_page.options.animationType.flip-left">
+                <source>flip left</source>
+                <target>flip left</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.flip-right">
+                <source>flip right</source>
+                <target>flip right</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.flip-up">
+                <source>flip up</source>
+                <target>flip up</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.flip-down">
+                <source>flip down</source>
+                <target>flip down</target>
+            </trans-unit>
+
+            <!-- ZOOM -->
+            <trans-unit id="tl_page.options.animationType.zoom-in">
+                <source>zoom in</source>
+                <target>zoom in</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.zoom-in-up">
+                <source>zoom in up</source>
+                <target>zoom in up</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.zoom-in-down">
+                <source>zoom in down</source>
+                <target>zoom in down</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.zoom-in-left">
+                <source>zoom in left</source>
+                <target>zoom in left</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.zoom-in-right">
+                <source>zoom in right</source>
+                <target>zoom in right</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.zoom-out">
+                <source>zoom out</source>
+                <target>zoom out</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.zoom-out-up">
+                <source>zoom out up</source>
+                <target>zoom out up</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.zoom-out-down">
+                <source>zoom out down</source>
+                <target>zoom out down</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.zoom-out-right">
+                <source>zoom out right</source>
+                <target>zoom out right</target>
+            </trans-unit>
+            <trans-unit id="tl_page.options.animationType.zoom-out-left">
+                <source>zoom out left</source>
+                <target>zoom out left</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>

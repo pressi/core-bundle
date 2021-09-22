@@ -1,0 +1,194 @@
+<div class="option-item"{% if dependsOn %} data-dependson="{{ dependsOn|json_encode() }}"{% endif %}>
+    <input type="checkbox" class="hidden update-save" name="{{ name }}" id="{{ name }}"{% if checked %} checked{% endif %}>
+    <label class="label" for="{{ name }}"><span>{{ label }}</span></label>
+    {% if field %}
+        <div class="field type-{{ fieldType }}">
+            {% if fieldType == 'sizeSelect'  %}
+                <div class="size-select-container">
+                    <div class="select-tag-container{% if fieldValue.option %} not-editable{% endif %}">
+                        <select name="{{ fieldName }}['option']" class="select-input update-save save-multiple size-select size-select-select-tag" id="sizeSelect_option_{{ fieldName }}">
+                            <option value=""> - </option>
+                            {% for value, label in options %}
+                                <option value="{{ value }}"{% if fieldValue.option == value %} selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <input name="{{ fieldName }}['width']" class="update-save save-multiple size-select" value="{{ fieldValue.width }}" id="sizeSelect_width_{{ fieldName }}"{% if fieldValue.option %} disabled{% endif %}>
+                    <input name="{{ fieldName }}['height']" class="update-save save-multiple size-select" value="{{ fieldValue.height }}" id="sizeSelect_height_{{ fieldName }}"{% if fieldValue.option %} disabled{% endif %}>
+                </div>
+            {% elseif fieldType == 'select'  %}
+                <div class="select-tag-container">
+                    <select name="{{ fieldName }}" class="select-input update-save">
+                        {% for key, option in options %}
+                            <option value="{{ key }}"{% if fieldValue == key %} selected{% endif %}>{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% elseif fieldType == 'upload'  %}
+                <form action="_themeDesigner/upload" class="dropzone" id="form-{{ fieldName|renderId }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="field" value="{{ fieldName }}">
+                    <input type="hidden" name="page" value="{{ pageId }}">
+                </form>
+                {% if enableFilesManager %}
+                <button class="files-manager" id="filesManager{{ fieldName }}" data-value="{% if fieldValue %}{{ fieldValue.uuid|checkUUID }}{% endif %}" data-id="{{ fieldName }}">Dateiverwaltung</button>
+                <div class="modal-files-manager" id="filesManagerModal_{{ fieldName }}" data-label="{{ label }}">
+                </div>
+                {% endif %}
+                <script>
+                    Dropzone.options.form{{ fieldName|renderScriptVar }} =
+                        {
+                            paramName: '{{ fieldName }}',
+                            acceptFiles: 'image/*',
+                            maxFiles: 1,
+                            init: function()
+                            {
+                                this.on("addedfile", function( file ) { IIDO.ThemeDesigner.setStatus('saving'); });
+                                this.on("queuecomplete", function()
+                                {
+                                    IIDO.ThemeDesigner.setStatus();
+                                    {% if enableFilesManager %}
+                                    document.getElementById('filesManager{{ fieldName }}').setAttribute('data-value', '');
+                                    {% endif %}
+                                });
+                            }
+                        };
+                </script>
+            {% elseif fieldType == 'size'  %}
+                <div class="input">
+                    <input type="number" value="{% if fieldValue %}{{ fieldValue }}{% else %}{{ fieldRange.0 }}{% endif %}" min="{{ fieldRange.0 }}" max="{{ fieldRange.1 }}" step="{{ fieldRange.2 }}" id="size_range-{{ fieldName }}">
+                </div>
+                <div id="slider_range-{{ fieldName }}"></div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function()
+                    {
+                        var sliderTag = jQuery('#slider_range-{{ fieldName }}');
+                        var sizeInput = jQuery('#size_range-{{ fieldName }}');
+                        var upateDelay = 0;
+
+                        var sliderCont = sliderTag.slider({
+                            min: {{ fieldRange.0 }},
+                            max: {{ fieldRange.1 }},
+                            step: {{ fieldRange.2 }},
+                            range: "min",
+                            value: {% if fieldValue %}{{ fieldValue }}{% else %}{{ fieldRange.0 }}{% endif %},
+
+                            slide: function( event, ui )
+                            {
+                                sizeInput.val( ui.value );
+                            },
+
+                            change: function( event, ui )
+                            {
+                                IIDO.ThemeDesigner.updateField('{{ fieldName }}', ui.value);
+                            }
+                        });
+
+                        var intTimeout = 0;
+                        sizeInput.on('keyup change', function(event)
+                        {
+                            if( intTimeout > 0 )
+                            {
+                                clearTimeout( intTimeout );
+                            }
+
+                            var value = event.target.value;
+                            intTimeout = setTimeout( function()
+                            {
+                                sliderTag.slider("value", value);
+                            }, upateDelay);
+                        });
+
+                        sizeInput.val( sliderTag.slider("value") );
+                    });
+                </script>
+            {% elseif fieldType == 'colorpicker' or fieldType == 'color'  %}
+                <input type="text" class="color-input" name="{{ fieldName }}" value="{{ fieldValue }}" id="colorInput_{{ fieldName }}">
+                <div class="color-toggler" id="colorToggler_{{ fieldName }}"><div class="ct-inside"></div></div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function()
+                    {
+                        var element = document.getElementById('colorInput_{{ fieldName }}');
+
+                        jQuery(element).spectrum(
+                        {
+                            type: "component",
+                            togglePaletteOnly: true,
+                            hideAfterPaletteSelect: false,
+
+                            color: '{{ fieldValue }}',
+                            showInput: true,
+                            showAlpha: true,
+                            allowEmpty: true,
+                            showPalette: true,
+                            chooseText: 'Anwenden',
+                            showInitial: true,
+                            showSelectionPalette: false,
+                            preferredFormat: 'hex',
+                            palette:
+                            [
+                                ['#ffffff', '#1cbb9b', '#55add3', '#2b82c9', '#9164b7', '#475677'],
+                                ['#000000', '#01a280', '#3e8fba', '#2a69b0', '#553984', '#28314e'],
+                                ['#f8db65', '#faa026', '#ec6b56', '#e24939', '#a38f84', '#efefef'],
+                                ['#fac51f', '#f67936', '#d14840', '#b8312e', '#75706d', '#d1d4d9'],
+                                ['#e6e6e6', '#dadada', '#cdcdcd', '#b4b4b4', '#9a9a9a', '#747474'],
+                                ['#595959', '#3e3e3e', '#303030', '#212121', '#131313','#050505']
+                            ],
+
+                            showPaletteOnly: false,
+                            togglePaletteOnly: false,
+                            togglePaletteMoreText: 'Mehr',
+                            togglePaletteLessText: 'Weniger',
+
+                            selectionPalette: []
+                        });
+
+                        jQuery(element).on("change", function( event, params )
+                        {
+                            var objValue = jQuery(event.target).spectrum('get');
+                            var value = '';
+
+                            if( objValue && objValue._a >= 1 )
+                            {
+                                value = objValue.toHexString();
+                            }
+                            else
+                            {
+                                value = objValue ? objValue.toRgbString() : '';
+                            }
+
+                            if( params.selected )
+                            {
+                                value = params.selected;
+                            }
+
+                            {#jQuery('#colorPreview_{{ fieldName }}').css('background-color', value);#}
+                            jQuery('#colorInput_{{ fieldName }}').val( value );
+
+                            IIDO.ThemeDesigner.updateField('{{ fieldName }}', value);
+                        });
+
+                        {#jQuery('#colorPreview_{{ fieldName }}').css('background-color', '{{ fieldValue }}');#}
+
+                        jQuery('#colorInput_{{ fieldName }}').on('keyup', function( event )
+                        {
+                            if( event.target.value.length > 3 )
+                            {
+                                jQuery(element).spectrum('set', event.target.value);
+                                jQuery(element).trigger('change', {selected: event.target.value});
+                            }
+                        });
+
+                        jQuery('#colorToggler_{{ fieldName }}').on("click", function( event )
+                        {
+                            event.preventDefault();
+                            jQuery('#colorInput_{{ fieldName }}').spectrum("toggle");
+                            return false;
+                        });
+                    });
+                </script>
+            {% endif %}
+        </div>
+        <div class="overlay"></div>
+    {% endif %}
+    <div class="info"><div class="text">{{ info }}</div></div>
+</div>

@@ -1,0 +1,599 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+    <file datatype="php" original="contao/languages/en/tl_article.php" source-language="en" target-language="de">
+        <body>
+
+            <trans-unit id="tl_article.frontendTitle.0">
+                <source>frontend title</source>
+                <target>Frontend-Titel</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.navTitle.0">
+                <source>navigation title</source>
+                <target>Navigations-Titel</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.hideInNav.0">
+                <source>hide in navigation</source>
+                <target>nicht in der Navigations anzeigen</target>
+            </trans-unit>
+
+
+            <trans-unit id="tl_article.bgColor.0">
+                <source>Hintergrund-Farbe</source>
+                <target>Hintergrund-Farbe</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.addOwnBGColor.0">
+                <source>Eigene Hintergrund-Farbe</source>
+                <target>Eigene Hintergrund-Farbe</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.ownBGColor.0">
+                <source>Eigene Hintergrund-Farbe</source>
+                <target>Eigene Hintergrund-Farbe</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.gradientColors.0">
+                <source>Hintergrund-Verlauf Farben</source>
+                <target>Hintergrund-Verlauf Farben</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.gradientAngle.0">
+                <source>Hintergrund-Verlauf Winkel</source>
+                <target>Hintergrund-Verlauf Winkel</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.bgImage.0">
+                <source>Hintergrund-Bild</source>
+                <target>Hintergrund-Bild</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.bgPosition.0">
+                <source>Hintergrund-Bild Position</source>
+                <target>Hintergrund-Bild Position</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.bgRepeat.0">
+                <source>Hintergrund-Bild Wiederholung</source>
+                <target>Hintergrund-Bild Wiederholung</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.bgAttachment.0">
+                <source>Hintergrund-Bild Verhalten</source>
+                <target>Hintergrund-Bild Verhalten</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.bgSize.0">
+                <source>Hintergrund-Bild Größe</source>
+                <target>Hintergrund-Bild Größe</target>
+            </trans-unit>
+
+
+            <trans-unit id="tl_article.fullWidth.0">
+                <source>Volle Breite</source>
+                <target>Volle Breite</target>
+            </trans-unit>
+            <trans-unit id="tl_article.width.0">
+                <source>Breite</source>
+                <target>Breite</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.fullHeight.0">
+                <source>Volle Höhe</source>
+                <target>Volle Höhe</target>
+            </trans-unit>
+            <trans-unit id="tl_article.height.0">
+                <source>Höhe</source>
+                <target>Höhe</target>
+            </trans-unit>
+
+
+            <trans-unit id="tl_article.margin.0">
+                <source>margin</source>
+                <target>Außenabstand (oben/unten)</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.marginTop.0">
+                <source>margin</source>
+                <target>Außenabstand oben</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.marginBottom.0">
+                <source>margin</source>
+                <target>Außenabstand unten</target>
+            </trans-unit>
+
+
+            <trans-unit id="tl_article.padding.0">
+                <source>padding</source>
+                <target>Innenabstand (oben/unten)</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.paddingTop.0">
+                <source>padding</source>
+                <target>Innenabstand oben</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.paddingBottom.0">
+                <source>padding</source>
+                <target>Innenabstand unten</target>
+            </trans-unit>
+
+
+            <trans-unit id="tl_article.articleType.0">
+                <source>Type</source>
+                <target>Typ</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.extBGImage.0">
+                <source>Erweiterte Hintergrund-Einstellungen</source>
+                <target>Erweiterte Hintergrund-Einstellungen</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.layout.0">
+                <source>Layout</source>
+                <target>Layout</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.addAnimation.0">
+                <source>Animationen aktivieren</source>
+                <target>Animationen aktivieren</target>
+            </trans-unit>
+
+
+
+<!-- ### LEGENDS ############################################################################################################ -->
+
+            <trans-unit id="tl_article.design_legend">
+                <source>Design</source>
+                <target>Design</target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.dimensions_legend">
+                <source><![CDATA[Größen & Abstände]]></source>
+                <target><![CDATA[Größen & Abstände]]></target>
+            </trans-unit>
+
+            <trans-unit id="tl_article.animation_legend">
+                <source>Animationen</source>
+                <target>Animationen</target>
+            </trans-unit>
+
+
+
+<!-- ### OPTIONS ############################################################################################################ -->
+
+            <trans-unit id="tl_article.options.bgSize._cover">
+                <source>cover</source>
+                <target>Vollflächig (abgeschnitten)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgSize._contain">
+                <source>cover</source>
+                <target>Vollflächig (passend)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgSize.own">
+                <source>own</source>
+                <target>Eigene Größe</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_article.options.bgPosition.left top">
+                <source>left top</source>
+                <target>Links Oben</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgPosition.left center">
+                <source>left center</source>
+                <target>Links Mitte</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgPosition.left bottom">
+                <source>left bottom</source>
+                <target>Links Unten</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgPosition.center top">
+                <source>center top</source>
+                <target>Mitte Oben</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgPosition.center center">
+                <source>center center</source>
+                <target>Mitte Mitte (Zentriert)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgPosition.center bottom">
+                <source>center bottom</source>
+                <target>Mitte Unten</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgPosition.right top">
+                <source>right top</source>
+                <target>Rechts Oben</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgPosition.right center">
+                <source>right center</source>
+                <target>Rechts Mitte</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgPosition.right bottom">
+                <source>right bottom</source>
+                <target>Rechts Unten</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_article.options.bgRepeat.repeat">
+                <source>repeat</source>
+                <target>Wiederholung (Kacheln)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgRepeat.repeat-x">
+                <source>repeat x</source>
+                <target>Horizontale Wiederholung</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgRepeat.repeat-y">
+                <source>repeat y</source>
+                <target>Vertikale Wiederholung</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgRepeat.no-repeat">
+                <source>no repeat</source>
+                <target>Keine Wiederholung</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_article.options.bgAttachment.fixed">
+                <source>fixed</source>
+                <target>Fixiert</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.bgAttachment.scroll">
+                <source>scroll</source>
+                <target>Scroll</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_article.options.width.boxed">
+                <source>Boxed</source>
+                <target>Boxed</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.width.full-width">
+                <source>full width</source>
+                <target>Volle Breite</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_article.options.height.small">
+                <source>small</source>
+                <target>Small</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.height.medium">
+                <source>medium</source>
+                <target>Medium</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.height.large">
+                <source>large</source>
+                <target>Large</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.height.full">
+                <source>full height</source>
+                <target>Volle Höhe</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_article.options.articleType.default">
+                <source>Standard Artikel</source>
+                <target>Standard Artikel</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.topHeader">
+                <source>Header: Top Bar</source>
+                <target>Kopfzeile: Top Bar</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.header">
+                <source>Header</source>
+                <target>Kopfzeile</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.stickyHeader">
+                <source>Sticky Header</source>
+                <target>Sticky Kopfzeile</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.pitLane">
+                <source>Pit Lange</source>
+                <target>Boxengasse (Pit lane)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.footer">
+                <source>Footer</source>
+                <target>Fußzeile</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.footerBottom">
+                <source>Footer: Bottom Bar</source>
+                <target>Fußzeile: Bottom Bar</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.mobileMenu">
+                <source>Mobile Menü</source>
+                <target>Mobile Menü</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.navigationCont">
+                <source>Navigation: Container (offset)</source>
+                <target>Navigation: Container (offset)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.canvasTop">
+                <source>Canvas Top: Section in top (hidden)</source>
+                <target>Canvas Top: Bereich oben (versteckt)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.articleType.fixedElements">
+                <source>Fixed Elements: Buttons</source>
+                <target>Fixierte Elemente: Buttons</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_article.options.layout.top">
+                <source>top</source>
+                <target>Oben</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.layout.left">
+                <source>left</source>
+                <target>Links</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.layout.right">
+                <source>right</source>
+                <target>Rechts</target>
+            </trans-unit>
+
+
+
+
+            <trans-unit id="tl_article.options.distances.none">
+                <source>none</source>
+                <target>Keine Abstände</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.distances.XXS">
+                <source>XXS</source>
+                <target>XXS</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.distances.XS">
+                <source>XS</source>
+                <target>XS</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.distances.S">
+                <source>S</source>
+                <target>S</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.distances.M">
+                <source>M</source>
+                <target>M</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.distances.L">
+                <source>L</source>
+                <target>L</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.distances.XL">
+                <source>XL</source>
+                <target>XL</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.distances.XXL">
+                <source>XXL</source>
+                <target>XXL</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_article.options.animationAnchorPlacement.top-bottom">
+                <source>top bottom</source>
+                <target>Oben Unten (top bottom)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationAnchorPlacement.top-top">
+                <source>top top</source>
+                <target>Oben Oben (top top)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationAnchorPlacement.top-center">
+                <source>top center</source>
+                <target>Oben Mitte (top center)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationAnchorPlacement.center-top">
+                <source>center top</source>
+                <target>Mitte Oben (center top)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationAnchorPlacement.center-center">
+                <source>center center</source>
+                <target>Zentriert (center center)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationAnchorPlacement.center-bottom">
+                <source>center bottom</source>
+                <target>Mitte Unten (center bottom)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationAnchorPlacement.bottom-top">
+                <source>bottom top</source>
+                <target>Unten Oben (bottom top)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationAnchorPlacement.bottom-center">
+                <source>bottom center</source>
+                <target>Unten Mitte (bottom center)</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationAnchorPlacement.bottom-bottom">
+                <source>bottom bottom</source>
+                <target>Unten Unten (bottom bottom)</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_article.options.animationEasing.linear">
+                <source>linear</source>
+                <target>linear</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease">
+                <source>ease</source>
+                <target>ease</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in">
+                <source>ease in</source>
+                <target>ease in</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-out">
+                <source>ease out</source>
+                <target>ease out</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-out">
+                <source>ease in out</source>
+                <target>ease in out</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-back">
+                <source>ease in back</source>
+                <target>ease in back</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-out-back">
+                <source>ease out back</source>
+                <target>ease out back</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-out-back">
+                <source>ease in out back</source>
+                <target>ease in out back</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-sine">
+                <source>ease in sine</source>
+                <target>ease in sine</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-out-sine">
+                <source>ease out sine</source>
+                <target>ease out sine</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-out-sine">
+                <source>ease in out sine</source>
+                <target>ease in out sine</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-quad">
+                <source>ease in quad</source>
+                <target>ease in quad</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-out-quad">
+                <source>ease out quad</source>
+                <target>ease out quad</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-out-quad">
+                <source>ease in out quad</source>
+                <target>ease in out quad</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-cubic">
+                <source>ease in cubic</source>
+                <target>ease in cubic</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-out-cubic">
+                <source>ease out cubic</source>
+                <target>ease out cubic</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-out-cubic">
+                <source>ease in out cubic</source>
+                <target>ease in out cubic</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-quart">
+                <source>ease in quart</source>
+                <target>ease in quart</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-out-quart">
+                <source>ease out quart</source>
+                <target>ease out quart</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationEasing.ease-in-out-quart">
+                <source>ease in out quart</source>
+                <target>ease in out quart</target>
+            </trans-unit>
+
+
+
+
+            <!-- FADE -->
+            <trans-unit id="tl_article.options.animationType.fade-up">
+                <source>fade up</source>
+                <target>fade up</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.fade-down">
+                <source>fade down</source>
+                <target>fade down</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.fade-right">
+                <source>fade right</source>
+                <target>fade right</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.fade-left">
+                <source>fade left</source>
+                <target>fade left</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.fade-up-right">
+                <source>fade up right</source>
+                <target>fade up right</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.fade-up-left">
+                <source>fade up left</source>
+                <target>fade up left</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.fade-down-right">
+                <source>fade down right</source>
+                <target>fade down right</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.fade-down-left">
+                <source>fade down left</source>
+                <target>fade down left</target>
+            </trans-unit>
+
+            <!-- FLIP -->
+            <trans-unit id="tl_article.options.animationType.flip-left">
+                <source>flip left</source>
+                <target>flip left</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.flip-right">
+                <source>flip right</source>
+                <target>flip right</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.flip-up">
+                <source>flip up</source>
+                <target>flip up</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.flip-down">
+                <source>flip down</source>
+                <target>flip down</target>
+            </trans-unit>
+
+            <!-- ZOOM -->
+            <trans-unit id="tl_article.options.animationType.zoom-in">
+                <source>zoom in</source>
+                <target>zoom in</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.zoom-in-up">
+                <source>zoom in up</source>
+                <target>zoom in up</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.zoom-in-down">
+                <source>zoom in down</source>
+                <target>zoom in down</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.zoom-in-left">
+                <source>zoom in left</source>
+                <target>zoom in left</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.zoom-in-right">
+                <source>zoom in right</source>
+                <target>zoom in right</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.zoom-out">
+                <source>zoom out</source>
+                <target>zoom out</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.zoom-out-up">
+                <source>zoom out up</source>
+                <target>zoom out up</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.zoom-out-down">
+                <source>zoom out down</source>
+                <target>zoom out down</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.zoom-out-right">
+                <source>zoom out right</source>
+                <target>zoom out right</target>
+            </trans-unit>
+            <trans-unit id="tl_article.options.animationType.zoom-out-left">
+                <source>zoom out left</source>
+                <target>zoom out left</target>
+            </trans-unit>
+
+
+        </body>
+    </file>
+</xliff>

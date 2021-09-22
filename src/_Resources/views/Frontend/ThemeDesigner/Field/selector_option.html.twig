@@ -1,0 +1,25 @@
+<div class="option-item">
+    <input type="checkbox" class="hidden update-save" name="{{ name }}" id="{{ name }}"{% if checked %} checked{% endif %}>
+    <label class="label" for="{{ name }}"><span>{{ label }}</span></label>
+    <div class="field type-selector">
+        <div class="selector-preview">
+            <input type="hidden" name="{{ fieldName }}" value="{% if fieldValue %}{{ fieldValue }}{% else %}layout01{% endif %}" id="selectorInput_{{ fieldName }}">
+            {{ getLayout( fieldName, fieldValue ) }}
+        </div>
+        <div class="selector-chooser">
+            <button>{{ buttonLabel }}</button>
+        </div>
+        <div class="selector-container" data-name="{{ fieldName }}">
+            <div class="closer"></div>
+            <div class="selector-container-inside">
+                <div class="list">
+                    {% for key, layout in options %}
+                        {{ renderLayoutChooser( key, layout, fieldValue ) }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <div class="info"><div class="text">{{ info }}</div></div>
+</div>

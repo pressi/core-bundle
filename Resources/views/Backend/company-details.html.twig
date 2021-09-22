@@ -1,0 +1,79 @@
+{% extends "@ContaoCore/Backend/be_page.html.twig" %}
+
+{% block headline %}
+    <span>Firmendaten</span> <span>bearbeiten</span>
+{% endblock %}
+
+{% block error %}{% if error.message %}{{ error.message }}{% endif %}{% endblock %}
+
+{% block main %}
+    <div id="tl_buttons">
+        <a href="contao/company" class="header_back" title="" accesskey="b" onclick="Backend.getScrollOffset()">Zurück</a>
+    </div>
+
+    <form>
+        <div class="tl_formbody_edit">
+
+            <fieldset id="pal_default_legend" class="tl_tbox">
+                <legend onclick="AjaxRequest.toggleFieldset(this,'default_legend','tl_form')">Grunddaten</legend>
+
+                <div class="w50 widget">
+                    <h3><label for="ctrl_compamny"><span class="invisible">Pflichtfeld </span>Name<span class="mandatory">*</span></label></h3>
+                    <input type="text" name="compamny" id="ctrl_compamny" class="tl_text" value="{{ company.company }}" required maxlength="255" onfocus="Backend.getScrollOffset()">
+                    <p class="tl_help tl_tip" title="">Name der Firma</p>
+                </div>
+
+            </fieldset>
+
+            <fieldset id="pal_contact_legend" class="tl_tbox">
+                <legend onclick="AjaxRequest.toggleFieldset(this,'contact_legend','tl_form')">Kontakt</legend>
+
+                <div class="w50 widget">
+                    <h3><label for="ctrl_email">Email</label></h3>
+                    <input type="text" name="email" id="ctrl_email" class="tl_text" value="{{ company.email }}" maxlength="255" onfocus="Backend.getScrollOffset()">
+                </div>
+
+                <div class="w50 widget">
+                    <h3><label for="ctrl_phone">Telefon</label></h3>
+                    <input type="text" name="phone" id="ctrl_phone" class="tl_text" value="{{ company.phone }}" maxlength="255" onfocus="Backend.getScrollOffset()">
+                </div>
+
+                <div class="w50 widget">
+                    <h3><label for="ctrl_fax">Fax</label></h3>
+                    <input type="text" name="fax" id="ctrl_fax" class="tl_text" value="{{ company.phone }}" maxlength="255" onfocus="Backend.getScrollOffset()">
+                </div>
+
+            </fieldset>
+
+            <fieldset id="pal_address_legend" class="tl_tbox">
+                <legend onclick="AjaxRequest.toggleFieldset(this,'address_legend','tl_form')">Adresse</legend>
+
+                <div class="w50 widget">
+                    <h3><label for="ctrl_street">Straße</label></h3>
+                    <input type="text" name="street" id="ctrl_street" class="tl_text" value="{{ company.street }}" maxlength="255" onfocus="Backend.getScrollOffset()">
+                </div>
+
+                <div class="w50 widget">
+                    <h3><label for="ctrl_postal">Postleitzahl</label></h3>
+                    <input type="text" name="postal" id="ctrl_postal" class="tl_text" value="{{ company.postal }}" maxlength="255" onfocus="Backend.getScrollOffset()">
+                </div>
+
+                <div class="w50 widget">
+                    <h3><label for="ctrl_city">Ort</label></h3>
+                    <input type="text" name="city" id="ctrl_city" class="tl_text" value="{{ company.city }}" maxlength="255" onfocus="Backend.getScrollOffset()">
+                </div>
+
+                <div class="w50 widget">
+                    <h3><label for="ctrl_country">Land</label></h3>
+                    <select id="ctrl_country" class="tl_select">
+                        <option value="at">Österreich</option>
+                    </select>
+                </div>
+
+            </fieldset>
+        </div>
+        <div class="tl_formbody_submit">
+
+        </div>
+    </form>
+{% endblock %}

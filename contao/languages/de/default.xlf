@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<xliff version="1.1">
+    <file datatype="php" original="contao/languages/en/modules.php" source-language="en" target-language="de">
+        <body>
+
+            <trans-unit id="PTY.global_element.0">
+                <source>Global Elements</source>
+                <target>Global Elements</target>
+            </trans-unit>
+            <trans-unit id="PTY.global_element.1">
+                <source>Global Elements Page</source>
+                <target>Global Elements Page</target>
+            </trans-unit>
+
+
+
+<!-- ### MODULES ############################################################################################################ -->
+
+            <trans-unit id="MOD.website-settings.0">
+                <source>Website-Settings</source>
+                <target>Website-Einstellungen</target>
+            </trans-unit>
+            <trans-unit id="MOD.website-settings.1">
+                <source>Settings for the website</source>
+                <target>Einstellungen der Website</target>
+            </trans-unit>
+
+
+            <trans-unit id="MOD.company.0">
+                <source>Firmendaten</source>
+                <target>Firmendaten</target>
+            </trans-unit>
+
+
+        </body>
+    </file>
+</xliff>

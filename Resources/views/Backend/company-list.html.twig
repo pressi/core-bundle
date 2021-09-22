@@ -1,0 +1,32 @@
+{% extends "@ContaoCore/Backend/be_page.html.twig" %}
+
+{% block headline %}
+    <span>Firmendaten</span>
+{% endblock %}
+
+{% block error %}{% if error.message %}{{ error.message }}{% endif %}{% endblock %}
+
+{% block main %}
+    <div class="iido-backend-wrapper">
+        <div class="tl_listing_container list_view" id="tl_listing">
+
+            <table class="tl_listing">
+                <tbody>
+                {% for company in companies %}
+                    <tr class="even click2edit toggle_select hover-row">
+                        <td class="tl_file_list"><span class="name">{{ copmany.company }}</span> <span class="page"><img src="system/themes/flexible/icons/root.svg" width="18" height="18" alt="" data-icon="root.svg" data-icon-disabled="root_1.svg"> {{ company.page.title }}</span></td>
+                        <td class="tl_file_list tl_right_nowrap">
+                            <a href="{{ company.url }}" title="Firmendaten bearbeiten" class="editheader"><img src="system/themes/flexible/icons/header.svg" width="16" height="16" alt="Firmendaten bearbeiten"></a>
+{#                            <a href="contao?do=form&amp;act=edit&amp;id=1&amp;rt=7jByEbg_pZv48tKhIqjex7Dn5Tp-eaEynjTRW_qEsC8&amp;ref=mzH7i2jr" title="" class="editheader"><img src="system/themes/flexible/icons/header.svg" width="16" height="16" alt="Einstellungen des Formulars ID 1 bearbeiten"></a>#}
+{#                            <a href="contao?do=form&amp;act=copy&amp;id=1&amp;rt=7jByEbg_pZv48tKhIqjex7Dn5Tp-eaEynjTRW_qEsC8&amp;ref=mzH7i2jr" title="" class="copy"><img src="system/themes/flexible/icons/copy.svg" width="16" height="16" alt="Formular ID 1 duplizieren"></a>#}
+{#                            <a href="contao?do=form&amp;act=delete&amp;id=1&amp;rt=7jByEbg_pZv48tKhIqjex7Dn5Tp-eaEynjTRW_qEsC8&amp;ref=mzH7i2jr" title="" class="delete" onclick="if(!confirm('Soll das Element ID 1 wirklich gelöscht werden?'))return false;Backend.getScrollOffset()"><img src="system/themes/flexible/icons/delete.svg" width="16" height="16" alt="Formular ID 1 löschen"></a>#}
+{#                            <a href="contao?do=form&amp;act=show&amp;id=1&amp;popup=1&amp;rt=7jByEbg_pZv48tKhIqjex7Dn5Tp-eaEynjTRW_qEsC8&amp;ref=mzH7i2jr" title="" onclick="Backend.openModalIframe({'title':'Details des Formulars ID 1 anzeigen','url':this.href});return false" class="show"><img src="system/themes/flexible/icons/show.svg" width="16" height="16" alt="Details des Formulars ID 1 anzeigen"></a>#}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+{% endblock %}
