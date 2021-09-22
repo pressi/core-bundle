@@ -14,8 +14,10 @@ namespace IIDO\CoreBundle\Permission;
 
 
 use Contao\ArticleModel;
+use Contao\ContentModel;
 use Contao\CoreBundle\Framework\FrameworkAwareInterface;
 use Contao\CoreBundle\Framework\FrameworkAwareTrait;
+use Contao\Model;
 use Contao\StringUtil;
 use Doctrine\DBAL\Connection;
 use IIDO\CoreBundle\Config\IIDOConfig;
@@ -54,7 +56,7 @@ class BackendPermissionChecker implements FrameworkAwareInterface
 
 
 
-    public function hasFullAccessTo( $strTable, $fieldName, $model = false, $modelFieldName = '' ): bool
+    public function hasFullAccessTo( string $strTable, string $fieldName, bool|Model $model = false, string $modelFieldName = '' ): bool
     {
         $accessFieldName = $fieldsFieldName = $tableClassName = false;
 
@@ -66,6 +68,16 @@ class BackendPermissionChecker implements FrameworkAwareInterface
                 $accessFieldName    = 'includeArticleFields';
                 $fieldsFieldName    = 'articleFields';
                 $tableClassName     = ArticleModel::class;
+                break;
+
+            case "element":
+            case "content":
+            case "elements":
+            case "contents":
+            case "tl_content":
+                $accessFieldName    = 'includeElementFields';
+                $fieldsFieldName    = 'elementFields';
+                $tableClassName     = ContentModel::class;
                 break;
         }
 
