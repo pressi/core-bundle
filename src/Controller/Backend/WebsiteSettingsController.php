@@ -12,7 +12,6 @@ namespace IIDO\CoreBundle\Controller\Backend;
 
 use Contao\Ajax;
 use Contao\Controller;
-use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\Environment;
 use Contao\Input;
 use Contao\System;
