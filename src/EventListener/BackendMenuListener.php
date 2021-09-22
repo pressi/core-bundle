@@ -19,7 +19,6 @@ use IIDO\CoreBundle\Controller\Backend\CompanyController;
 use IIDO\CoreBundle\Controller\Backend\WebsiteSettingsController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Security;
 use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
 
@@ -44,10 +43,17 @@ class BackendMenuListener
 
     public function __invoke( MenuEvent $event ): void
     {
-        if( !$this->security->isGranted('ROLE_ADMIN') )
+        $enabled = System::getContainer()->getParameter('iido_core.enabled');
+
+        if( !$enabled )
         {
             return;
         }
+
+//        if( !$this->security->isGranted('ROLE_ADMIN') )
+//        {
+//            return;
+//        }
 
         $factory = $event->getFactory();
         $tree = $event->getTree();
@@ -57,18 +63,26 @@ class BackendMenuListener
             return;
         }
 
-        $systemNode = $tree->getChild('system');
+        if( $this->security->isGranted('ROLE_ADMIN') )
+        {
+//        $token  = System::getContainer()->get('security.token_storage')->getToken();
+//        $user   = $token->getUser();
 
-        $key = 'website-settings';
+//        if( $user->isAdmin )
+//        {
+            $systemNode = $tree->getChild('system');
+            $key        = 'website-settings';
 
-        $node = $factory->createItem( $key )
-            ->setUri( $this->router->generate(WebsiteSettingsController::class) )
-            ->setLabel( $GLOBALS['TL_LANG']['MOD'][ $key ][0] )
-            ->setLinkAttribute('title', $GLOBALS['TL_LANG']['MOD'][ $key ][0])
-            ->setLinkAttribute('class', $key)
-            ->setCurrent( (str_starts_with($this->requestStack->getCurrentRequest()->get('_controller'), WebsiteSettingsController::class)) );
+            $node = $factory->createItem($key)
+                ->setUri($this->router->generate(WebsiteSettingsController::class))
+                ->setLabel($GLOBALS['TL_LANG']['MOD'][ $key ][0])
+                ->setLinkAttribute('title', $GLOBALS['TL_LANG']['MOD'][ $key ][0])
+                ->setLinkAttribute('class', $key)
+                ->setCurrent((str_starts_with($this->requestStack->getCurrentRequest()->get('_controller'), WebsiteSettingsController::class)));
 
-        $systemNode->addChild( $node );
+            $systemNode->addChild($node);
+//        }
+        }
 
         $contentNode = $tree->getChild('content');
         $config = System::getContainer()->get('iido.core.config');

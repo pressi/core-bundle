@@ -20,7 +20,7 @@ use Contao\StyleSheets;
 use Contao\Template;
 use IIDO\CoreBundle\Config\BundleConfig;
 use IIDO\CoreBundle\Config\ThemeDesignerConfig;
-use IIDO\CoreBundle\Util\PageUtil;
+use IIDO\UtilsBundle\Util\PageUtil;
 
 
 class PageListener
@@ -45,7 +45,7 @@ class PageListener
         $this->pageUtil->addDefaultPageStyleSheets();
         $this->pageUtil->addDefaultPageScripts();
 
-        $themeDesigner = ThemeDesignerConfig::loadCurrentThemeDesigner();
+        $themeDesigner = false; //ThemeDesignerConfig::loadCurrentThemeDesigner();
         $styles = [];
 
         //TODO:

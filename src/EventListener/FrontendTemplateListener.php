@@ -24,7 +24,7 @@ use Contao\PageModel;
 use Contao\System;
 use IIDO\CoreBundle\Config\BundleConfig;
 use IIDO\CoreBundle\Config\ThemeDesignerConfig;
-use IIDO\CoreBundle\Util\StylesUtil;
+use IIDO\UtilsBundle\Util\StylesUtil;
 
 
 //use IIDO\CoreBundle\Entity\ThemeDesignerEntity;
@@ -137,64 +137,66 @@ class FrontendTemplateListener
         /** @var \PageModel $objPage */
 
         $objRootPage = PageModel::findByPk( $objPage->rootId );
-        $themeDesigner = ThemeDesignerConfig::loadCurrentThemeDesigner();
+        $themeDesigner = false; //ThemeDesignerConfig::loadCurrentThemeDesigner();
         $container = System::getContainer();
 
         if( str_starts_with($template, 'fe_page') )
         {
             $this->updateMainStylesheet();
 
-            $themeDesignerConfig = $container->getParameter('iido_core.themeDesigner');
+//            $themeDesignerConfig = $container->getParameter('iido_core.themeDesigner');
+//
+//            if( Input::get('iido_themeDesigner_frame') !== '1' )
+//            {
+//                if( !$themeDesignerConfig['disabled'] && !$objRootPage->disableThemeDesigner )
+//                {
+//                    Controller::loadLanguageFile('iido');
+//
+//                    $bundlePath = BundleConfig::getBundlePath(true, false);
+//                    $cssPath = $bundlePath . '/styles/themeDesigner.css';
+//                    $jsPath = $bundlePath . '/scripts/themeDesigner.js';
+//
+//                    $fileTime = filemtime( $cssPath );
+//                    $fileTimeJs = filemtime( $jsPath );
+//
+////                    $doctrine = $container->get('doctrine');
+////                    $entityManager = $doctrine->getManager();
+////                    $repository = $doctrine->getRepository(ThemeDesignerEntity::class);
+//
+////                    $model = $repository->findOneBy(['page'=>$objRootPage->id]);
+//                    $tokenChecker = $container->get('contao.security.token_checker');
+//
+//                    $beUserLoggedIn = $tokenChecker->hasBackendUser();
+//
+//                    $themeDesignerTemplateConfig =
+//                    [
+//                        'pageTitle' => 'THEME DESIGNER :: ' . $objRootPage->title,
+//                        'baseUrl'   => Environment::get('base'),
+//                        'pageId'    => $objRootPage->id,
+//                        'iconPath'  => '../' . BundleConfig::getBundlePath( true ) . '/images/icons/',
+//
+//                        'headStyles'    => Template::generateStyleTag( $cssPath, null, $fileTime ),
+//                        'headScripts'   => Template::generateScriptTag( $jsPath, false, $fileTimeJs ),
+//
+//                        'themeModel'            => $themeDesigner,
+//                        'enableFilesManager'    => $beUserLoggedIn,
+//
+//                        'fieldOptions'  =>
+//                        [
+//                            'repeat'            => $GLOBALS['TL_LANG']['IIDO']['options']['repeat'],
+//                            'position'          => $GLOBALS['TL_LANG']['IIDO']['options']['position'],
+//                            'backgroundSize'    => $GLOBALS['TL_LANG']['IIDO']['options']['backgroundSize'],
+//                            'boxedLayouts'      => $GLOBALS['TL_LANG']['IIDO']['layouts']['boxed'],
+//                            'headerLayouts'     => $GLOBALS['TL_LANG']['IIDO']['layouts']['header'],
+//                            'footerColumns'     => $GLOBALS['TL_LANG']['IIDO']['options']['footerColumns']
+//                        ]
+//                    ];
+//
+//                    return $container->get('twig')->render('@IIDOCore/Frontend/ThemeDesigner/FePage.html.twig', $themeDesignerTemplateConfig);
+//                }
+//            }
 
-            if( Input::get('iido_themeDesigner_frame') !== '1' )
-            {
-                if( !$themeDesignerConfig['disabled'] && !$objRootPage->disableThemeDesigner )
-                {
-                    Controller::loadLanguageFile('iido');
-
-                    $bundlePath = BundleConfig::getBundlePath(true, false);
-                    $cssPath = $bundlePath . '/styles/themeDesigner.css';
-                    $jsPath = $bundlePath . '/scripts/themeDesigner.js';
-
-                    $fileTime = filemtime( $cssPath );
-                    $fileTimeJs = filemtime( $jsPath );
-
-//                    $doctrine = $container->get('doctrine');
-//                    $entityManager = $doctrine->getManager();
-//                    $repository = $doctrine->getRepository(ThemeDesignerEntity::class);
-
-//                    $model = $repository->findOneBy(['page'=>$objRootPage->id]);
-                    $tokenChecker = $container->get('contao.security.token_checker');
-
-                    $beUserLoggedIn = $tokenChecker->hasBackendUser();
-
-                    $themeDesignerTemplateConfig =
-                    [
-                        'pageTitle' => 'THEME DESIGNER :: ' . $objRootPage->title,
-                        'baseUrl'   => Environment::get('base'),
-                        'pageId'    => $objRootPage->id,
-                        'iconPath'  => '../' . BundleConfig::getBundlePath( true ) . '/images/icons/',
-
-                        'headStyles'    => Template::generateStyleTag( $cssPath, null, $fileTime ),
-                        'headScripts'   => Template::generateScriptTag( $jsPath, false, $fileTimeJs ),
-
-                        'themeModel'            => $themeDesigner,
-                        'enableFilesManager'    => $beUserLoggedIn,
-
-                        'fieldOptions'  =>
-                        [
-                            'repeat'            => $GLOBALS['TL_LANG']['IIDO']['options']['repeat'],
-                            'position'          => $GLOBALS['TL_LANG']['IIDO']['options']['position'],
-                            'backgroundSize'    => $GLOBALS['TL_LANG']['IIDO']['options']['backgroundSize'],
-                            'boxedLayouts'      => $GLOBALS['TL_LANG']['IIDO']['layouts']['boxed'],
-                            'headerLayouts'     => $GLOBALS['TL_LANG']['IIDO']['layouts']['header'],
-                            'footerColumns'     => $GLOBALS['TL_LANG']['IIDO']['options']['footerColumns']
-                        ]
-                    ];
-
-                    return $container->get('twig')->render('@IIDOCore/Frontend/ThemeDesigner/FePage.html.twig', $themeDesignerTemplateConfig);
-                }
-            }
+            $themeDesignerConfig['disabled'] = true;
 
             //HEADER
             if( $objPage->hideHeader )
@@ -242,7 +244,8 @@ class FrontendTemplateListener
 
 
             // ENABLE PREVIEW MODE OPTIONS
-            if( $container->getParameter('iido_core.previewMode') || $objRootPage->enablePreviewMode || $objPage->enablePreviewMode )
+//            if( $container->getParameter('iido_core.previewMode') || $objRootPage->enablePreviewMode || $objPage->enablePreviewMode )
+            if( $objRootPage->enablePreviewMode || $objPage->enablePreviewMode )
             {
                 $content = preg_replace('/<meta name="robots" content="([a-z,]+)">/', '<meta name="robots" content="noindex,nofollow">', $content);
             }
@@ -691,7 +694,7 @@ class FrontendTemplateListener
                 $folderName     = $objLangPage->rootAlias;
             }
 
-            $mainScssFile = System::getContainer()->get('iido.core.util.basic')->getRootDir(true ) . "files/{$folderName}/styles/main.scss";
+            $mainScssFile = System::getContainer()->get('iido.utils.basic')->getRootDir(true ) . "files/{$folderName}/styles/main.scss";
 
             if( file_exists($mainScssFile) )
             {

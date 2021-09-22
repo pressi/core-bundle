@@ -83,8 +83,8 @@ class InsertTagsListener implements ServiceAnnotationInterface
 
         if( $chunks[0] === 'icon' )
         {
-            $basicUtil  = System::getContainer()->get('iido.core.util.basic');
-            $pageUtil   = System::getContainer()->get('iido.core.util.page');
+            $basicUtil  = System::getContainer()->get('iido.utils.basic');
+            $pageUtil   = System::getContainer()->get('iido.utils.page');
 
             $rootDir    = $basicUtil->getRootDir( true );
             $iconPath   = sprintf($this->iconPath, $pageUtil->getRootPageAlias( true ));
@@ -113,7 +113,7 @@ class InsertTagsListener implements ServiceAnnotationInterface
 
                 if( $chunks[1] === 'phone' )
                 {
-                    $basicUtil  = System::getContainer()->get('iido.core.util.basic');
+                    $basicUtil  = System::getContainer()->get('iido.utils.basic');
 
                     $return = '<a href="tel:' . $basicUtil->renderPhoneNumber( $return ) . '">' . $return . '</a>';
                 }

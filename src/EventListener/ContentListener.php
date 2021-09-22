@@ -19,8 +19,8 @@ use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Template;
-use IIDO\CoreBundle\Util\ContentUtil;
-use IIDO\CoreBundle\Util\PageUtil;
+use IIDO\UtilsBundle\Util\ContentUtil;
+use IIDO\UtilsBundle\Util\PageUtil;
 
 
 class ContentListener
@@ -92,7 +92,7 @@ class ContentListener
 
         else
         {
-            $buffer = System::getContainer()->get('iido.core.util.text')->renderHeadline( $buffer, $contentModel, $type );
+            $buffer = System::getContainer()->get('iido.utils.text')->renderHeadline( $buffer, $contentModel, $type );
         }
 
 

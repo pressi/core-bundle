@@ -27,23 +27,30 @@ use IIDO\CoreBundle\Permission\BackendPermissionChecker;
  */
 class ArticleListener
 {
+    protected BackendPermissionChecker $permissionChecker;
+
+
+
+    public function __construct( BackendPermissionChecker $permissionChecker )
+    {
+        $this->permissionChecker = $permissionChecker;
+    }
+
+
 
     /**
      * @Hook("getArticle")
      */
     public function onGetArticle( ArticleModel $article ):void
     {
-        $permission = System::getContainer()->get('iido.core.backend.permission_checker');
-        /* @var $permission BackendPermissionChecker */
+//        $permission = System::getContainer()->get('iido.core.backend.permission_checker');
+//        /* @var $permission BackendPermissionChecker */
 
         $classes    = $article->classes?:[];
         $cssID      = StringUtil::deserialize( $article->cssID, true );
         $classes[]  = 'article-element';
 
-//        $classes[]  = "row";
-//        $classes[] = "row-direction-$objRow->layout_direction";
-
-        if( $permission->hasFullAccessTo('article', 'padding') )
+        if( $this->permissionChecker->hasFullAccessTo('article', 'padding') )
         {
 //            $padding = strtolower( $article->padding );
             $paddingTop     = strtolower( $article->paddingTop );
@@ -66,7 +73,7 @@ class ArticleListener
 //            }
         }
 
-        if( $permission->hasFullAccessTo('article', 'bg_color') )
+        if( $this->permissionChecker->hasFullAccessTo('article', 'bg_color') )
         {
 //            $bgColor    = ColorHelper::compileColor( $article->bgColor );
             $bgColor    = $article->bgColor;
@@ -96,7 +103,7 @@ class ArticleListener
 //            }
 //        }
 
-        if( $permission->hasFullAccessTo('article', 'width') )
+        if( $this->permissionChecker->hasFullAccessTo('article', 'width') )
         {
             if( $article->width )
             {

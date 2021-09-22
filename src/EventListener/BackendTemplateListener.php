@@ -52,9 +52,16 @@ class BackendTemplateListener
 
             $noMessages = '<p>Zurzeit sind keine Hinweise vorhanden.</p>';
             preg_match_all('/<div id="tl_messages">([A-Za-z0-9\s\-<>=",;.:_öäüÖÄÜß!?\/\(\)\{\}]+)<\/div>/', $content, $matches);
-            preg_match_all('/<p>(.*?)<\/p>/', $matches[1][0], $matches);
+            preg_match_all('/<p(.*?)>(.*?)<\/p>/', $matches[1][0], $matches);
 
-            if( count($matches[0]) <= 1 )
+            $count = 1;
+
+            if( $matches[2][1] === 'Zurzeit sind keine Versionen vorhanden.' )
+            {
+                $count = 2;
+            }
+;
+            if( count($matches[0]) <= $count )
             {
                 $content = preg_replace('/<div id="tl_messages"><div class="inside">([\n\s]{0,})<h2>([A-Za-z0-9\s\-,;.:_öäüÖÄÜß!?]+)<\/h2>/', '<div id="tl_messages"><div class="inside">$1<h2>$2</h2>' . $noMessages, $content);
             }
