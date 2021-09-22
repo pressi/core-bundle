@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace IIDO\CoreBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use IIDO\CoreBundle\DependencyInjection\IIDOCoreExtension;
+//use IIDO\CoreBundle\DependencyInjection\IIDOCoreExtension;
 
 
 /**
@@ -22,13 +22,19 @@ use IIDO\CoreBundle\DependencyInjection\IIDOCoreExtension;
  */
 class IIDOCoreBundle extends Bundle
 {
-    public function getContainerExtension(): IIDOCoreExtension
+    public function getContainerExtension()
     {
-        return new IIDOCoreExtension();
+        if( null === $this->extension )
+        {
+            $this->extension = $this->createContainerExtension();
+        }
+
+        return $this->extension;
     }
 
-//    public function getPath(): string
-//    {
-//        return \dirname(__DIR__);
-//    }
+
+    public function getPath(): string
+    {
+        return \dirname(__DIR__);
+    }
 }
