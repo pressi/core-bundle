@@ -20,8 +20,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class WebsiteSettingsUtil
 {
-    protected static $cache = [];
-    protected static $configFilePath = 'config/iido.settings.yml';
+    protected static array $cache = [];
+    protected static string $configFilePath = 'config/iido.settings.yml';
 
 
 
@@ -33,18 +33,18 @@ class WebsiteSettingsUtil
 
         Controller::loadLanguageFile('website-settings');
 
-        $themeDesignerConfig = $container->getParameter('iido_core.themeDesigner');
-
-        if( !$themeDesignerConfig['disabled'] )
-        {
-            $defaultSettings['themeDesigner'] =
-            [
-                'name'       => $GLOBALS['TL_LANG']['IIDO']['website-settings']['themeDesigner']['name'],
-                'icon'       => 'theme-designer.svg',
-                'href'       => $router->generate('iido.core.website-settings.details', ['settingAlias'=>'themeDesigner']),
-                'callback'   => ['iido.core.website-settings.themeDesigner', 'renderThemeDesigner']
-            ];
-        }
+//        $themeDesignerConfig = $container->getParameter('iido_core.themeDesigner');
+//
+//        if( !$themeDesignerConfig['disabled'] )
+//        {
+//            $defaultSettings['themeDesigner'] =
+//            [
+//                'name'       => $GLOBALS['TL_LANG']['IIDO']['website-settings']['themeDesigner']['name'],
+//                'icon'       => 'theme-designer.svg',
+//                'href'       => $router->generate('iido.core.website-settings.details', ['settingAlias'=>'themeDesigner']),
+//                'callback'   => ['iido.core.website-settings.themeDesigner', 'renderThemeDesigner']
+//            ];
+//        }
 
         $defaultSettings['settings'] =
         [
@@ -100,7 +100,7 @@ class WebsiteSettingsUtil
 
 
 
-    public static function getConfigFilePath( $onlyFilePath = false )
+    public static function getConfigFilePath( bool $onlyFilePath = false ): string
     {
         return $onlyFilePath ? self::$configFilePath : BundleConfig::getRootDir( true ) . self::$configFilePath;
     }
@@ -119,7 +119,7 @@ class WebsiteSettingsUtil
 
 
 
-    public static function getConfigFileValue()
+    public static function getConfigFileValue(): array
     {
         self::checkIfConfigFileExists();
 
@@ -151,17 +151,17 @@ class WebsiteSettingsUtil
 
 
 
-    public static function getWebsiteSettings( string $name = '', string $table = '' )
+    public static function getWebsiteSettings( string $name = '', string $table = '' ): mixed
     {
         $settings = self::getConfigFileValue();
 
         if( $table )
         {
-            $settings = $settings[ $table ];
+            $settings = $settings[ $table ]??[];
 
             if( $name )
             {
-                $settings = $settings[ $name ];
+                $settings = $settings[ $name ]??[];
             }
         }
 
@@ -175,7 +175,7 @@ class WebsiteSettingsUtil
 
 
 
-    public static function updateWebsiteSetting( string $name, string $table, $value = '' )
+    public static function updateWebsiteSetting( string $name, string $table, $value = '' ): void
     {
         $settings = self::getWebsiteSettings();
 
