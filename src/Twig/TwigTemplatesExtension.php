@@ -27,7 +27,7 @@ class TwigTemplatesExtension extends AbstractExtension
      *
      * @return array|TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return array
         (
@@ -49,7 +49,7 @@ class TwigTemplatesExtension extends AbstractExtension
      *
      * @return array|TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array
         (
@@ -70,7 +70,7 @@ class TwigTemplatesExtension extends AbstractExtension
 
 
 
-    public function languageFilter( $path )
+    public function languageFilter( string $path ): string
     {
         $parts  = StringUtil::trimsplit('.', $path);
         $lang   = $GLOBALS['TL_LANG'];
