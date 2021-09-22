@@ -33,7 +33,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  */
 class WebsiteSettings
 {
-    public function renderSettings()
+    public function renderSettings(): string
     {
 //        $this->processForm();
 
