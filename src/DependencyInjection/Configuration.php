@@ -6,6 +6,7 @@
  * this file is permitted unless explicitly granted by IIDO
  * www.iido.at <development@iido.at>
  *******************************************************************/
+
 namespace IIDO\CoreBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -13,22 +14,15 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('iido_core');
 
         $treeBuilder->getRootNode()
             ->children()
-                ->booleanNode('previewMode')
-                    ->defaultTrue()
+                ->booleanNode('enabled')
+                    ->defaultFalse()
                 ->end()
-                ->arrayNode('themeDesigner')
-                    ->children()
-                        ->booleanNode('disabled')
-                            ->defaultFalse()
-                        ->end()
-                    ->end()
-                ->end() // themeDesigner
             ->end()
         ;
 
