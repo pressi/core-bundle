@@ -4,7 +4,7 @@
 namespace IIDO\CoreBundle\Config;
 
 
-use IIDO\CoreBundle\Util\BasicUtil;
+//use IIDO\CoreBundle\Util\BasicUtil;
 use IIDO\CoreBundle\Util\WebsiteSettingsUtil;
 
 
@@ -13,14 +13,14 @@ class IIDOConfig
     const FILE_NAME = 'iido.settings.yml';
     const FILE_PATH = 'config/%s';
 
-    protected BasicUtil $basic;
+//    protected BasicUtil $basic;
 
 
 
-    public function __construct( BasicUtil $basicUtil )
-    {
-        $this->basic = $basicUtil;
-    }
+//    public function __construct( BasicUtil $basicUtil )
+//    {
+//        $this->basic = $basicUtil;
+//    }
 
 
 
