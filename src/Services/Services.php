@@ -10,7 +10,9 @@
 namespace IIDO\CoreBundle\Services;
 
 
+use IIDO\CoreBundle\Automator\Automator;
 use IIDO\CoreBundle\Dispatcher\EventDispatcher;
+use IIDO\CoreBundle\Messages\FlashMessage;
 
 
 class Services
@@ -27,7 +29,7 @@ class Services
      * @return Automator
      * @TODO ?????
      */
-    public static function getAutomator()
+    public static function getAutomator(): Automator
     {
         return static::get(
             'automator',
@@ -59,7 +61,7 @@ class Services
      * @return Exporter
      * @TODO: ????
      */
-    public static function getExporter()
+    public static function getExporter(): Exporter
     {
         return static::get(
             'exporter',
@@ -111,7 +113,7 @@ class Services
 
 
 
-    private static function get( string $key, callable $init ): object
+    private static function get( string $key, callable $init )
     {
         if (!isset(static::$instances[$key]))
         {
