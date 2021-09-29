@@ -68,6 +68,8 @@ if( $config->get('includeElementFields') )
     }
 }
 
+$objContentTable->replacePaletteFields('all', ',headline', ',headline,headlineFontColor,headlineFontFamily,headlineFontSize,headlineStyle');
+
 
 
 /**
@@ -86,8 +88,28 @@ $GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['text']['eval']['rte'] = 'cu
 //    ->addEval('allowHtml', true)
 //    ->updateField();
 
+//\IIDO\CoreBundle\Dca\Field::update('text', $objContentTable)
+//    ->addEval('rte', 'customTinyMCE', true)
+//    ->updateField();
+
 
 $objContentTable->addAnimationsFields( true );
+
+\IIDO\CoreBundle\Dca\Field::create('headlineFontColor', 'select')
+    ->addEval('tl_class', 'w25', true)
+    ->addToTable( $objContentTable );
+
+\IIDO\CoreBundle\Dca\Field::create('headlineFontSize', 'select')
+    ->addEval('tl_class', 'w25', true)
+    ->addToTable( $objContentTable );
+
+\IIDO\CoreBundle\Dca\Field::create('headlineFontFamily', 'select')
+    ->addEval('tl_class', 'w25', true)
+    ->addToTable( $objContentTable );
+
+\IIDO\CoreBundle\Dca\Field::create('headlineStyle', 'select')
+    ->addEval('tl_class', 'w25', true)
+    ->addToTable( $objContentTable );
 
 
 $objContentTable->updateDca();
