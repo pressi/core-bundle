@@ -12,6 +12,8 @@ namespace IIDO\CoreBundle\EventSubscriber;
 
 use Contao\CoreBundle\Routing\ScopeMatcher;
 use IIDO\CoreBundle\Config\BundleConfig;
+use IIDO\CoreBundle\Model\CompanyModel;
+use IIDO\CoreBundle\Widget\InputUnitWidget;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -45,6 +47,14 @@ class KernelRequestSubscriber implements EventSubscriberInterface
         {
             $GLOBALS['TL_CSS']['be_iido_styles'] = BundleConfig::getBundlePath( true, false ) . '/styles/backend.scss|static';
         }
+
+
+        // backend form fields
+        $GLOBALS['BE_FFL']['inputUnit'] = InputUnitWidget::class;
+
+
+        // models
+        $GLOBALS['TL_MODELS']['tl_iido_company'] = CompanyModel::class;
     }
 
 }
