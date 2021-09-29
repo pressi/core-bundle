@@ -19,6 +19,7 @@ use IIDO\CoreBundle\Controller\Backend\CompanyController;
 use IIDO\CoreBundle\Controller\Backend\WebsiteSettingsController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Security;
 use Terminal42\ServiceAnnotationBundle\Annotation\ServiceTag;
 
 
