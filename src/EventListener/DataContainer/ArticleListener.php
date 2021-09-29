@@ -16,6 +16,7 @@ use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\Image;
 use Contao\PageModel;
 use Contao\StringUtil;
+use IIDO\CoreBundle\Config\BundleConfig;
 use IIDO\UtilsBundle\Util\ColorUtil;
 use Symfony\Component\HttpFoundation\RequestStack;
 
