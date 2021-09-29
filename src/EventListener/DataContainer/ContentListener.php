@@ -15,6 +15,7 @@ use Contao\ContentModel;
 use Contao\DataContainer;
 use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\PageModel;
+use IIDO\CoreBundle\Config\PageConfig;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 
@@ -56,5 +57,19 @@ class ContentListener
         {
             $GLOBALS['TL_DCA']['tl_content']['fields']['enableAnimation']['label'] = ['Animation überschreiben', ''];
         }
+    }
+
+
+
+    /**
+     * @Callback(table="tl_content", target="fields.headlineFontColor.options")
+     */
+    public function getFontColorOptions( ?DataContainer $dc ): array
+    {
+        $options = [];
+
+        PageConfig::loadCurrentPageColors();
+
+        return $options;
     }
 }
