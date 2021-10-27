@@ -65,6 +65,13 @@ services:
     IIDO\CoreBundle\Permission\BackendPermissionChecker: '@iido.core.backend.permission_checker'
 
 
+    # utils
+    iido.core.util.company:
+        class: IIDO\CoreBundle\Util\CompanyUtil
+        public: true
+
+
+
 #    # pages
 #    IIDO\CoreBundle\Controller\Page\GlobalElementPageController: ~
 
