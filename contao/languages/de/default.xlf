@@ -32,6 +32,47 @@
             </trans-unit>
 
 
+<!-- ### OPTIONS ############################################################################################################ -->
+
+            <!-- ## POSITIONS ## -->
+            <trans-unit id="POSITIONS.left_top">
+                <source>left top</source>
+                <target>Links Oben</target>
+            </trans-unit>
+            <trans-unit id="POSITIONS.center_top">
+                <source>center top</source>
+                <target>Mitte Oben</target>
+            </trans-unit>
+            <trans-unit id="POSITIONS.right_top">
+                <source>right top</source>
+                <target>Rechts Oben</target>
+            </trans-unit>
+            <trans-unit id="POSITIONS.left_center">
+                <source>left center</source>
+                <target>Links Mitte</target>
+            </trans-unit>
+            <trans-unit id="POSITIONS.center_center">
+                <source>center center</source>
+                <target>Mitte Mitte (Zentriert)</target>
+            </trans-unit>
+            <trans-unit id="POSITIONS.right_center">
+                <source>right center</source>
+                <target>Rechts Mitte</target>
+            </trans-unit>
+            <trans-unit id="POSITIONS.left_bottom">
+                <source>left bottom</source>
+                <target>Links Unten</target>
+            </trans-unit>
+            <trans-unit id="POSITIONS.center_bottom">
+                <source>center bottom</source>
+                <target>Mitte Unten</target>
+            </trans-unit>
+            <trans-unit id="POSITIONS.right_bottom">
+                <source>right bottom</source>
+                <target>Rechts Unten</target>
+            </trans-unit>
+
+
         </body>
     </file>
 </xliff>

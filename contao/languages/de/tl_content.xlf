@@ -31,6 +31,46 @@
 
 
 
+            <trans-unit id="tl_content.headlineFontColor.0">
+                <source>Farbe</source>
+                <target>Farbe</target>
+            </trans-unit>
+
+            <trans-unit id="tl_content.headlineFontFamily.0">
+                <source>Schriftart</source>
+                <target>Schriftart</target>
+            </trans-unit>
+
+            <trans-unit id="tl_content.headlineFontSize.0">
+                <source>Schriftgröße</source>
+                <target>Schriftgröße</target>
+            </trans-unit>
+
+            <trans-unit id="tl_content.headlineStyle.0">
+                <source>Stil / Vorlage</source>
+                <target>Stil / Vorlage</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="tl_content.topHeadline.0">
+                <source>Überschrift Oben</source>
+                <target>Überschrift Oben</target>
+            </trans-unit>
+
+            <trans-unit id="tl_content.subHeadline.0">
+                <source>Überschrift Unten</source>
+                <target>Überschrift Unten</target>
+            </trans-unit>
+
+
+            <trans-unit id="tl_content.headlineImagePosition.0">
+                <source>headline position</source>
+                <target>Überschrift Position</target>
+            </trans-unit>
+
+
+
 <!-- ### LEGENDS ############################################################################################################ -->
 
             <trans-unit id="tl_content.animation_legend">
@@ -41,6 +81,21 @@
 
 
 <!-- ### OPTIONS ############################################################################################################ -->
+
+            <trans-unit id="tl_content.options.headlineImagePosition.top">
+                <source>above the picture</source>
+                <target>Oberhalb vom Bild</target>
+            </trans-unit>
+<!--            <trans-unit id="tl_content.options.headlineImagePosition.bottom">-->
+<!--                <source>below the picture</source>-->
+<!--                <target>Unterhalb vom Bild</target>-->
+<!--            </trans-unit>-->
+            <trans-unit id="tl_content.options.headlineImagePosition.nextTo">
+                <source>next to the picture (above the text)</source>
+                <target>Neben dem Bild (über dem Text)</target>
+            </trans-unit>
+
+
 
 <!--            <trans-unit id="tl_content.options_animationType.Aufmerksamkeitssuchende.bounce">-->
 <!--                <source>bounce</source>-->

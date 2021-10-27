@@ -62,6 +62,17 @@
 
 
 
+            <trans-unit id="tl_page.enablePreviewMode.0">
+                <source>Vorschaumodus aktivieren</source>
+                <target>Vorschaumodus aktivieren</target>
+            </trans-unit>
+            <trans-unit id="tl_page.enablePreviewMode.1">
+                <source>Fügt bei allen Seiten im Meta-Tag "robots" > "noindex,nofollow" ein.</source>
+                <target>Fügt bei allen Seiten im Meta-Tag "robots" > "noindex,nofollow" ein.</target>
+            </trans-unit>
+
+
+
 <!-- ### LEGENDS ############################################################################################################ -->
 
             <trans-unit id="tl_page.themedesigner_legend">
@@ -77,6 +88,11 @@
             <trans-unit id="tl_page.design_legend">
                 <source>Design</source>
                 <target>Design</target>
+            </trans-unit>
+
+            <trans-unit id="tl_page.experts_legend">
+                <source>Experten-Einstellungen</source>
+                <target>Experten-Einstellungen</target>
             </trans-unit>
 
 
