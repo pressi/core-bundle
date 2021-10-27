@@ -17,6 +17,7 @@ use Contao\Image\ResizeConfiguration;
 use Contao\LayoutModel;
 use Contao\ModuleModel;
 use Contao\PageModel;
+use Contao\StringUtil;
 use Contao\System;
 use IIDO\CoreBundle\Config\BundleConfig;
 use IIDO\CoreBundle\Config\ThemeDesignerConfig;
@@ -280,6 +281,23 @@ class SectionRenderer
                 if( $section->count() > 1 )
                 {
                     //TODO: search for the right root page!! ? save root page id in article?? submit callback?
+
+                    $curSection = false;
+                    while( $section->next() )
+                    {
+                        $parentPage = PageModel::findByPk( $section->pid )->loadDetails();
+
+                        if( $parentPage->rootId == $objPage->rootId )
+                        {
+                            $curSection = $section->current();
+                            break;
+                        }
+                    }
+
+                    if( $curSection )
+                    {
+                        $section = $curSection;
+                    }
                 }
                 else
                 {
@@ -303,6 +321,32 @@ class SectionRenderer
 
             $wrapperStart .= '<div class="container"><div class="row g-4">';
             $wrapperClose .= '</div></div>';
+        }
+
+        $cssID = StringUtil::deserialize($section->cssID, true);
+
+        if( str_contains($cssID[1], 'show-columns') )
+        {
+            $classes = '';
+            \preg_match_all('/gap-x([0-9]+)/', $cssID[1], $matchesGapX);
+
+            if( is_array($matchesGapX) && count($matchesGapX) && count($matchesGapX[0]) )
+            {
+                $classes .= ' ' . trim( $matchesGapX[0][0] );
+            }
+
+            \preg_match_all('/columns-([A-Za-z0-9\-]+)/', $cssID[1], $matches);
+
+            if( is_array($matches) && count($matches) && count($matches[0]) )
+            {
+                foreach( $matches[1] as $className )
+                {
+                    $classes .= ' cc-' . $className;
+                }
+            }
+
+            $wrapperStart = '<div class="columns-container' . $classes . '"><div class="cc-inside">';
+            $wrapperClose = '</div></div>';
         }
 
         return $wrapperStart . Controller::getArticle($section, false, true) . $wrapperClose;
