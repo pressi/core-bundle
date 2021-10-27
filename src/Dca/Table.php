@@ -2495,7 +2495,7 @@ class Table
 
 
 
-    public function addLegend( string $name, string $parent = '', string $position = 'after', string $palette = 'default'): void
+    public function addLegend( string $name, string $parent = '', string $position = 'after', string|array $palette = 'default'): void
     {
         $parts  = StringUtil::trimsplit(':', $name);
         $name   = $parts[0];
@@ -2545,31 +2545,59 @@ class Table
         }
         else
         {
-            $strPalette = $this->arrPalettes[ $palette ];
-
-            if( $parent )
+            if( is_array($palette) )
             {
-                if( 'after' === $position )
+                foreach( $palette as $paletteName )
                 {
-                    $strPalette = \preg_replace('/\{' . $parent . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $parent . '$1},$2;{' . $name . '},;', $strPalette);
-                }
-                else if( 'before' === $position )
-                {
-                    $strPalette = \preg_replace('/\{' . $parent . '/', '{' . $name . '},;{' . $parent, $strPalette);
+                    $strPalette = $this->arrPalettes[ $paletteName ];
+
+                    if( $parent )
+                    {
+                        if( 'after' === $position )
+                        {
+                            $strPalette = \preg_replace('/\{' . $parent . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $parent . '$1},$2;{' . $name . '},;', $strPalette);
+                        }
+                        else if( 'before' === $position )
+                        {
+                            $strPalette = \preg_replace('/\{' . $parent . '/', '{' . $name . '},;{' . $parent, $strPalette);
+                        }
+                    }
+                    else
+                    {
+                        $strPalette .= '{' . $name . '},;';
+                    }
+
+                    $this->arrPalettes[ $paletteName ] = $strPalette;
                 }
             }
             else
             {
-                $strPalette .= '{' . $name . '},;';
-            }
+                $strPalette = $this->arrPalettes[ $palette ];
 
-            $this->arrPalettes[ $palette ] = $strPalette;
+                if( $parent )
+                {
+                    if( 'after' === $position )
+                    {
+                        $strPalette = \preg_replace('/\{' . $parent . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $parent . '$1},$2;{' . $name . '},;', $strPalette);
+                    }
+                    else if( 'before' === $position )
+                    {
+                        $strPalette = \preg_replace('/\{' . $parent . '/', '{' . $name . '},;{' . $parent, $strPalette);
+                    }
+                }
+                else
+                {
+                    $strPalette .= '{' . $name . '},;';
+                }
+
+                $this->arrPalettes[ $palette ] = $strPalette;
+            }
         }
     }
 
 
 
-    public function addFieldToLegend( string|array $name, string $legend, string $position = 'append', string $palette = 'default' ): void
+    public function addFieldToLegend( string|array $name, string $legend, string $position = 'append', string|array $palette = 'default' ): void
     {
         if( !str_ends_with($legend, '_legend') )
         {
@@ -2603,19 +2631,41 @@ class Table
         }
         else
         {
-            $strPalette = $this->arrPalettes[ $palette ];
-
-            if( 'append' === $position )
+            if( is_array($palette) )
             {
-                $strPalette = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},$2,' . implode(',', $fields) . ';', $strPalette);
-            }
+                foreach( $palette as $paletteName )
+                {
+                    $strPalette = $this->arrPalettes[ $paletteName ];
 
-            elseif( 'prepand' === $position )
+                    if( 'append' === $position )
+                    {
+                        $strPalette = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},$2,' . implode(',', $fields) . ';', $strPalette);
+                    }
+
+                    elseif( 'prepand' === $position )
+                    {
+                        $strPalette = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},' . implode(',', $fields) . ',$2;', $strPalette);
+                    }
+
+                    $this->arrPalettes[ $paletteName ] = str_replace(',,', ',', $strPalette);
+                }
+            }
+            else
             {
-                $strPalette = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},' . implode(',', $fields) . ',$2;', $strPalette);
-            }
+                $strPalette = $this->arrPalettes[ $palette ];
 
-            $this->arrPalettes[ $palette ] = str_replace(',,', ',', $strPalette);
+                if( 'append' === $position )
+                {
+                    $strPalette = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},$2,' . implode(',', $fields) . ';', $strPalette);
+                }
+
+                elseif( 'prepand' === $position )
+                {
+                    $strPalette = \preg_replace('/\{' . $legend . '([a-z:]{0,})\},([A-Za-z\-_,]{0,});/', '{' . $legend . '$1},' . implode(',', $fields) . ',$2;', $strPalette);
+                }
+
+                $this->arrPalettes[ $palette ] = str_replace(',,', ',', $strPalette);
+            }
         }
     }
 
