@@ -74,10 +74,10 @@ class PageConfig
         ];
 
         $requestStack = Controller::getContainer()->get('request_stack');
-        /** @var $requestStack RequestStack */
+        /** @var $requestStack RequestStack **/
 
         $scopeMatcher = Controller::getContainer()->get('contao.routing.scope_matcher');
-        /** @var $scopeMatcher ScopeMatcher */
+        /** @var $scopeMatcher ScopeMatcher **/
 
         $doctrine = System::getContainer()->get('doctrine');
         $colorRepository = $doctrine->getRepository( WebsiteColorEntity::class );
@@ -94,17 +94,14 @@ class PageConfig
                 {
                     $content = ContentModel::findByPk( $id );
                     $article = ArticleModel::findByPk( $content->pid );
-                    $page = PageModel::findByPk( $article->pid );
-
-                    $pageId = $page->id;
                 }
                 else
                 {
                     $article = ArticleModel::findByPk( $id );
-                    $page = PageModel::findByPk( $article->pid );
-
-                    $pageId = $page->id;
                 }
+
+                $page   = PageModel::findByPk( $article->pid );
+                $pageId = $page->id;
             }
         }
 
