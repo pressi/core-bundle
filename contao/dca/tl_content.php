@@ -44,31 +44,38 @@ $GLOBALS['TL_DCA'][ $strContentFileName ]['config']['markAsCopy'] = '';
  * Palettes
  */
 
-if( $config->get('includeElementFields') )
-{
-    $arrFields      = \Contao\StringUtil::deserialize( $config->get('elementFields'), true);
+//TODO: edit this in onload callback??
+//if( $config->get('includeElementFields') )
+//{
+//    $arrFields      = \Contao\StringUtil::deserialize( $config->get('elementFields'), true);
 
-    $arrAnimations  = [];
+//    $arrAnimations  = [];
+
+    // Headline
+//    if( in_array('topHeadline', $arrFields) )
+//    {
+//        $objContentTable->addField('topHeadline', 'headline', 'before', 'all');
+//    }
 
 
     // Animation
-    if( in_array('animation', $arrFields) )
-    {
-        $includeDisabled = ($article && $article->enableAnimation) || ($page && $page->enableAnimation) || ($rootPage && $rootPage->enableAnimation);
+//    if( in_array('animation', $arrFields) )
+//    {
+//        $includeDisabled = ($article && $article->enableAnimation) || ($page && $page->enableAnimation) || ($rootPage && $rootPage->enableAnimation);
+//
+//        if( $includeDisabled )
+//        {
+//            $arrAnimations[] = 'disableAnimation';
+//        }
+//
+//        $arrAnimations[] = 'enableAnimation';
+//
+//        $objContentTable->addLegend('animation', 'expert', 'after', 'all');
+//        $objContentTable->addFieldToLegend($arrAnimations, 'animation', 'prepand', 'all');
+//    }
+//}
 
-        if( $includeDisabled )
-        {
-            $arrAnimations[] = 'disableAnimation';
-        }
-
-        $arrAnimations[] = 'enableAnimation';
-
-        $objContentTable->addLegend('animation', 'expert', 'after', 'all');
-        $objContentTable->addFieldToLegend($arrAnimations, 'animation', 'prepand', 'all');
-    }
-}
-
-$objContentTable->replacePaletteFields('all', ',headline', ',headline,headlineFontColor,headlineFontFamily,headlineFontSize,headlineStyle');
+//$objContentTable->replacePaletteFields('all', ',headline', ',headline,headlineFontColor,headlineFontFamily,headlineFontSize,headlineStyle');
 
 
 
@@ -76,8 +83,13 @@ $objContentTable->replacePaletteFields('all', ',headline', ',headline,headlineFo
  * Fields
  */
 
+$GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['headline']['default'] = serialize(['value'=>'', 'unit'=>'h2']);
 $GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['headline']['eval']['tl_class'] = str_replace('w50', 'long', $GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['headline']['eval']['tl_class']);
 $GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['headline']['eval']['allowHtml'] = true;
+
+unset($GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['headline']['eval']['maxlength']);
+//$GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['headline']['sql'] = "mediumtext NOT NULL default 'a:2:{s:5:\"value\";s:0:\"\";s:4:\"unit\";s:2:\"h2\";}'";
+$GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['headline']['sql'] = "mediumtext NOT NULL";
 
 
 $GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['text']['eval']['rte'] = 'customTinyMCE';
@@ -91,6 +103,15 @@ $GLOBALS['TL_DCA'][ $strContentFileName ]['fields']['text']['eval']['rte'] = 'cu
 //\IIDO\CoreBundle\Dca\Field::update('text', $objContentTable)
 //    ->addEval('rte', 'customTinyMCE', true)
 //    ->updateField();
+
+
+\IIDO\CoreBundle\Dca\Field::create('topHeadline')
+    ->addEval('tl_class', 'clr')
+    ->addToTable( $objContentTable );
+
+\IIDO\CoreBundle\Dca\Field::create('subHeadline')
+    ->addEval('tl_class', 'clr')
+    ->addToTable( $objContentTable );
 
 
 $objContentTable->addAnimationsFields( true );
@@ -110,6 +131,11 @@ $objContentTable->addAnimationsFields( true );
 \IIDO\CoreBundle\Dca\Field::create('headlineStyle', 'select')
     ->addEval('tl_class', 'w25', true)
     ->addToTable( $objContentTable );
+
+\IIDO\CoreBundle\Dca\Field::create('headlineImagePosition', 'select')
+    ->addEval('maxlength', '60')
+    ->addToTable( $objContentTable );
+
 
 
 $objContentTable->updateDca();

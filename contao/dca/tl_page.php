@@ -26,7 +26,7 @@ if( \Contao\Input::get('act') === 'edit' )
     }
 }
 
-//TODO: move sizes, fonts and colors in an extra table => page_config_table
+//TODO: move sizes, fonts and colors in an extra table => page_config_table ???
 
 
 
@@ -74,6 +74,9 @@ if( $config->get('includePageFields') )
 
         $objPageTable->replacePaletteFields(['root', 'rootfallback'], ',includeLayout', ',includeLayout,' . implode(',', $arrNavigation));
     }
+
+    $objPageTable->addLegend('experts', 'publish', 'before', ['root', 'rootfallback']);
+    $objPageTable->addFieldToLegend(['enablePreviewMode'], 'experts', 'append', ['root', 'rootfallback']);
 }
 
 
@@ -321,6 +324,12 @@ $objPageTable->addAnimationsFields( true );
 //
 //
 ////TODO: socialmedia daten
+
+
+// EXPERTS
+
+\IIDO\CoreBundle\Dca\Field::create('enablePreviewMode', 'checkbox')
+    ->addToTable( $objPageTable );
 
 
 
