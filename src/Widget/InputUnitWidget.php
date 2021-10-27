@@ -36,12 +36,14 @@ class InputUnitWidget extends InputUnit
             //        $buffer = \preg_replace('/<input([A-Za-z0-9\s\-="\[\]\(\),;.:_]+)value="([A-Za-z0-9\s\-\[\]\(\),;.:_#<>="]{0,})"([A-Za-z0-9\s\-="\[\]\(\),;.:_]{0,})> <select/', '<textarea$1$3>$2</textarea> <select', $buffer);
             $buffer = \preg_replace('/<input/', '<div', $buffer);
             $buffer = \preg_replace('/ <select/', $this->varValue['value'] . '</div> <select', $buffer);
-            $buffer = \preg_replace('/tl_text_unit" value="([A-Za-z0-9\s\-=";,.:#\[\]\(\)&!?ßöäüÖÄÜ\/<>]{0,})" maxlength="/', 'tl_text_unit tl_textarea_unit" maxlength="', $buffer);
+//            $buffer = \preg_replace('/tl_text_unit" value="([A-Za-z0-9\s\-=";,.:#\[\]\(\)&!?ßöäüÖÄÜ\/<>]{0,})" maxlength="/', 'tl_text_unit tl_textarea_unit" maxlength="', $buffer);
+        $buffer = \preg_replace('/tl_text_unit" value="([A-Za-z0-9\s\-=";,.:#\[\]\(\)&!?ßöäüÖÄÜ%\/<>\|üb–áàãâúùûóòõôíìîéèê]{0,})" onfocus="/', 'tl_text_unit tl_textarea_unit" onfocus="', $buffer);
             $buffer = \preg_replace('/id="ctrl_headline"/', 'id="headline[value]"', $buffer);
             //echo "\n";
-            //        echo "<br>";
-            //print_r( $buffer );
-            //exit;
+//        echo "<pre>";
+//                    echo "<br>";
+//            print_r( $buffer );
+//            exit;
 
 
             $buffer .= '<script>window.tinymce || document.write(\'<script src="' . Controller::replaceInsertTags('{{asset::js/tinymce.min.js::contao-components/tinymce4}}') . '">\x3C/script>\')</script>
