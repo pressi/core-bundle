@@ -36,6 +36,6 @@ document.addEventListener('DOMContentLoaded', () =>
 
     if( $('[data-aos]').length )
     {
-        setTimeout(() => { AOS.init(); }, 500);
+        setTimeout(() => { AOS.init({duration:2000}); }, 500);
     }
 });
