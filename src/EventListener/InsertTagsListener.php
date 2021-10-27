@@ -45,7 +45,6 @@ class InsertTagsListener implements ServiceAnnotationInterface
 
                 case "section":
                     $return = '';
-
                     switch( $chunks[2] )
                     {
                         case "header":
@@ -104,21 +103,28 @@ class InsertTagsListener implements ServiceAnnotationInterface
 
             if( $company )
             {
-                if( $chunks[1] === 'name' )
+                if( 'name' === $chunks[1] )
                 {
                     $chunks[1] = 'company';
                 }
 
                 $return = $company->{$chunks[1]};
 
-                if( $chunks[1] === 'phone' )
+                if( 'phone' === $chunks[1] )
                 {
                     $basicUtil  = System::getContainer()->get('iido.utils.basic');
 
-                    $return = '<a href="tel:' . $basicUtil->renderPhoneNumber( $return ) . '">' . $return . '</a>';
+                    if( $chunks[2] && 'number' === $chunks[2] )
+                    {
+                        $return = $basicUtil->renderPhoneNumber( $return );
+                    }
+                    else
+                    {
+                        $return = '<a href="tel:' . $basicUtil->renderPhoneNumber( $return ) . '">' . $return . '</a>';
+                    }
                 }
 
-                elseif( $chunks[1] === 'email' )
+                elseif( 'email' === $chunks[1] )
                 {
                     $return = '{{email::' . $return . '}}';
                 }

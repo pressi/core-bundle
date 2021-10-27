@@ -10,6 +10,7 @@
 namespace IIDO\CoreBundle\EventListener;
 
 
+use Contao\Controller;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\FrontendTemplate;
 use Contao\PageRegular;
@@ -20,7 +21,9 @@ use Contao\StyleSheets;
 use Contao\Template;
 use IIDO\CoreBundle\Config\BundleConfig;
 use IIDO\CoreBundle\Config\ThemeDesignerConfig;
+use IIDO\CoreBundle\Util\ScriptUtil;
 use IIDO\UtilsBundle\Util\PageUtil;
+use IIDO\UtilsBundle\Util\ScriptsUtil;
 
 
 class PageListener
@@ -45,16 +48,27 @@ class PageListener
         $this->pageUtil->addDefaultPageStyleSheets();
         $this->pageUtil->addDefaultPageScripts();
 
+        $rootPage   = $this->pageUtil->getRootPage( $pageModel );
+
+        /** @var $scriptsUtil ScriptsUtil **/
+        $scriptsUtil = Controller::getContainer()->get('iido.utils.scripts');
+        $scriptsUtil->setBundleName('core');
+
         $themeDesigner = false; //ThemeDesignerConfig::loadCurrentThemeDesigner();
         $styles = [];
 
         //TODO:
-        $GLOBALS['TL_JAVASCRIPT']['aos'] = 'bundles/iidocore/scripts/library/aos/2.3.4/aos.min.js|static';
-        $GLOBALS['TL_CSS']['aos'] = 'bundles/iidocore/styles/library/aos/2.3.4/aos.min.css||static';
+//        if( $pageModel->enableAnimation || $rootPage->enableAnimation && !$pageModel->disableAnimation )
+//        {
+//            $scriptsUtil->addScript('aos', true);
+            $GLOBALS['TL_JAVASCRIPT']['aos'] = 'bundles/iidocore/scripts/library/aos/2.3.4/aos.min.js|static';
+            $GLOBALS['TL_CSS']['aos'] = 'bundles/iidocore/styles/library/aos/2.3.4/aos.min.css||static';
+//        }
 
 
         //TODO:
-        $GLOBALS['TL_JAVASCRIPT']['fancybox'] = 'bundles/iidocore/scripts/library/fancybox/3.2.10/jquery.fancybox.min.js|static';
+        $scriptsUtil->addScript('fancybox', true);
+//        $GLOBALS['TL_JAVASCRIPT']['fancybox'] = 'bundles/iidocore/scripts/library/fancybox/3.2.10/jquery.fancybox.min.js|static';
         $GLOBALS['TL_CSS']['fancybox'] = 'bundles/iidocore/styles/library/fancybox/3.2.10/jquery.fancybox.min.css||static';
 
         $template = new FrontendTemplate('script_fancybox');

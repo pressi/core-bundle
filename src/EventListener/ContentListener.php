@@ -90,10 +90,10 @@ class ContentListener
             $buffer = '<div class="ce_headline' . ($cssID[1] ? ' ' . $cssID[1] : '' ) . '">' . $buffer . '</div>';
         }
 
-        else
-        {
-            $buffer = System::getContainer()->get('iido.utils.text')->renderHeadline( $buffer, $contentModel, $type );
-        }
+//        else
+//        {
+//            $buffer = System::getContainer()->get('iido.utils.text')->renderHeadline( $buffer, $contentModel, $type );
+//        }
 
 
         if( 'image' === $type )
@@ -120,7 +120,7 @@ class ContentListener
             }
 
             //TODO: checkbox "imageInline"
-            elseif( str_contains($cssID[1], 'image-inline') )
+            elseif( str_contains($cssID[1], 'image-inline') && TL_MODE === 'FE' )
             {
                 $inlineImage = \file_get_contents( FilesModel::findByPk( $contentModel->singleSRC )->path );
 
@@ -150,7 +150,7 @@ class ContentListener
                 $elementClasses[] = 'has-image';
                 $elementClasses[] = 'ip-' . $contentModel->floating;
 
-                if( str_contains($cssID[1], 'boxed') )
+                if( str_contains($cssID[1], 'boxed') || str_contains($cssID[1], 'text-middle') )
                 {
                     if( $contentModel->floating === 'below' )
                     {
@@ -169,9 +169,21 @@ class ContentListener
                             $buffer = \preg_replace('/' . preg_quote($headline, '/') . '/', '', $buffer);
                         }
 
+                        $midCont = '';
+
+                        if( str_contains($cssID[1], 'text-middle') )
+                        {
+                            $midCont = '<div class="middle-cont">';
+                        }
+
                         $buffer = \preg_replace('/<figure([A-Za-z0-9\s\-,;.:_\(\)\{\}="]+)>/', '<figure$1><div class="ic-inside c-inside">', $buffer);
-                        $buffer = \str_replace('</figure>', '</div></figure><div class="text_container"><div class="tc-inside c-inside">' . $headline, $buffer);
+                        $buffer = \str_replace('</figure>', '</div></figure><div class="text_container"><div class="tc-inside c-inside">' . $midCont . $headline, $buffer);
                         $buffer .= '</div></div>';
+
+                        if( str_contains($cssID[1], 'text-middle') )
+                        {
+                            $buffer .= '</div>';
+                        }
                     }
 
                     if( str_contains($cssID[1], 'image-100') )
@@ -185,6 +197,46 @@ class ContentListener
                         $objImage = FilesModel::findByPk( $contentModel->singleSRC );
 
                         $buffer = \preg_replace('/<figure([A-Za-z0-9\s\-,;.:_="\(\)\{\}]+)>/', '<figure$1style="background-image:url(' . \preg_replace('/\s/', '%20', $objImage->path) . ');">', $buffer);
+                    }
+                }
+
+                if( $contentModel->headlineImagePosition )
+                {
+                    $arrHeadline        = \StringUtil::deserialize($contentModel->headline, true);
+
+                    $headlineUnit       = $arrHeadline['unit'];
+                    $headlineValue      = $arrHeadline['value'];
+
+                    if( strlen(trim($headlineValue)) )
+                    {
+                        $strHeadline        = '<' . $headlineUnit . '>' . $headlineValue . '</' . $headlineUnit . '>';
+
+                        if( "above" === $contentModel->floating && "bottom" === $contentModel->headlineImagePosition )
+                        {
+                            if( $arrHeadline['value'] != "" )
+                            {
+                                $buffer = str_replace($strHeadline , '', $buffer);
+                            }
+
+                            $buffer = str_replace('</figure>' , '</figure>' . $strHeadline, $buffer);
+                        }
+                        elseif( "left" === $contentModel->floating || "right" === $contentModel->floating )
+                        {
+                            if( "nextTo" === $contentModel->headlineImagePosition || "bottom" === $contentModel->headlineImagePosition )
+                            {
+                                if( $arrHeadline['value'] != "" )
+                                {
+                                    $buffer = str_replace($strHeadline , '', $buffer);
+                                }
+
+                                if( !str_contains($cssID[1], 'boxed') && !str_contains($cssID[1], 'text-middle') )
+                                {
+                                    $buffer = str_replace('</figure>' , '</figure>' . $strHeadline, $buffer);
+                                }
+                            }
+                        }
+
+                        $elementClasses[] =  'headline-position-' . $contentModel->headlineImagePosition;
                     }
                 }
             }
@@ -232,6 +284,36 @@ class ContentListener
 
                     $elementClasses[] = 'no-image';
                 }
+            }
+
+
+            if( str_contains($cssID[1], 'slogan-text') )
+            {
+                $text       = '';
+                $ceText     = $contentModel->text;
+                $textParts  = \explode('<br>', $ceText);
+
+                foreach( $textParts as $tpKey => $textPart )
+                {
+                    $textPart = \preg_replace('/^<p>/', '<p><span>', trim($textPart), 1, $countF);
+                    $textPart = \preg_replace('/<\/p>$/', '</span></p>', trim($textPart), 1, $countA);
+
+                    if( !$countF )
+                    {
+                        $textPart = (($tpKey > 0) ? '<br>' : '') . ($countA ? '<span>' : '') . $textPart;
+                    }
+
+                    if( !$countA )
+                    {
+                        $text .=  $textPart . '</span>';
+                    }
+                    else
+                    {
+                        $text .= $textPart;
+                    }
+                }
+
+                $buffer = str_replace($ceText, $text, $buffer);
             }
         }
 
@@ -304,6 +386,11 @@ class ContentListener
                     $buffer = \preg_replace('/<' . $tag . '([A-Za-z0-9\s\-,;.:\(\)?!_\{\}="\/]+)class="' . $elementType . '/', '<' . $tag . ' id="' . $id . '"$1class="' . $elementType, $buffer);
                 }
             }
+        }
+
+        if( 'headline' != $type )
+        {
+            $buffer = System::getContainer()->get('iido.utils.text')->renderHeadline( $buffer, $contentModel, $type );
         }
 
         $attributes = '';
@@ -407,24 +494,60 @@ class ContentListener
 
         $insideTag = '';
 
-        if( !in_array($type, $this->skipInsideElement) && ($cssID[1] && !$contentUtil->stringContains($cssID[1], $this->skipInsideElementClasses)) )
+        if( !in_array($type, $this->skipInsideElement) && (($cssID[1] && !$contentUtil->stringContains($cssID[1], $this->skipInsideElementClasses)) || !$cssID[1]) )
         {
             $insideTag = '<div class="' . $insideClass . '-inside">';
+
+            if( $cssID[1] && $contentUtil->stringContains($cssID[1], ['inbo']) )
+            {
+                $insideTag .= '<div class="cei-inside">';
+            }
         }
 
         $buffer = \preg_replace('/<' . $tag . '([A-Za-z0-9\s\-,;.:\(\)?!_\{\}="\/]+)class="' . $elementType . '([A-Za-z0-9\s\-,;.:\(\)?!_\{\}]{0,})"([A-Za-z0-9\s\-,;.:\(\)?!_\{\}="\/]{0,})>/', '<' . $tag . $attributes . '$1class="' . $elementType . ($elementClasses ? ' ' . implode(' ', $elementClasses) : '') . '$2"$3>' . $insideTag, $buffer, 1, $count);
 
         if( $count && $insideTag )
         {
-            $buffer .= '</' . $tag . '>';
+            if( $cssID[1] && $contentUtil->stringContains($cssID[1], ['inbo']) )
+            {
+                $buffer .= '</div>';
+            }
+
+            if( 'div' === $tag )
+            {
+                $buffer .= '</' . $tag . '>';
+            }
+            else
+            {
+                $buffer = \preg_replace('/<\/' . $tag . '>/', '</div></' . $tag . '>', $buffer);
+            }
+
+            if( 'navigation' === $insideClass && $contentUtil->stringContains($cssID[1], 'nav-main')
+            && !$contentUtil->stringContains($cssID[1], 'nav-main-home') )
+            {
+//                echo "<pre>";
+//                print_r($buffer);
+//                echo "</pre>";
+                $navHamburger = '<div class="hamburger hamburger--squeeze hamburger-accessible js-hamburger light">
+    <div class="hamburger-box"><div class="hamburger-inner"></div></div>
+    <div class="hamburger-label">Menü</div>
+</div>';
+
+//                if( !$contentUtil->stringContains($cssID[1], 'js-hamburger') )
+//                {
+                    $buffer = \preg_replace('/<\/nav>/',  '</nav>' . $navHamburger, $buffer);
+//                }
+            }
         }
 
         if( Input::get('mode') === 'dev' )
         {
-            preg_match_all('/<a([A-Za-z0-9\s\-,;.:_="\(\)\{\}\/#]+)href="([A-Za-z0-9\s\-,;.:_\(\)\{\}\/#]+)"/', $buffer, $matches);
+            preg_match_all('/<a([A-Za-z0-9\s\-,;.:_="\(\)\{\}\/#]+)href="([A-Za-z0-9\s\-,;.:_\(\)\{\}\/#\|]+)"/', $buffer, $matches);
 
             if( count($matches[0]) )
             {
+                $base = Environment::get('base');
+
                 foreach( $matches[0] as $key => $value )
                 {
                     $attributes = $matches[1][ $key ];
@@ -432,6 +555,11 @@ class ContentListener
                     $addon      = '?mode=dev';
 
                     if( \preg_match('/.(png|jpg|JPG|jpeg|JPEG|tiff|TIFF|tif|TIF|gif|GIF|svg|webp)$/', $link) )
+                    {
+                        $addon = '';
+                    }
+
+                    if( str_starts_with($link, 'http') && !str_starts_with($link, $base) )
                     {
                         $addon = '';
                     }

@@ -111,14 +111,14 @@ class ArticleListener
             }
         }
 
-//        if( $objPermission->hasFullAccessTo('article', 'height') )
-//        {
-//            if( $objRow->height )
-//            {
-//                $classes[] = 'height-' . $objRow->height;
-//            }
-//        }
-//
+        if( $this->permissionChecker->hasFullAccessTo('article', 'height') )
+        {
+            if( $article->height )
+            {
+                $classes[] = 'height-' . $article->height;
+            }
+        }
+
 //        if( ScriptHelper::hasPageFullPage( true ) )
 //        {
 //            if( !$objRow->noSection && false === strpos($cssID[1], 'no-section') )

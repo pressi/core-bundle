@@ -134,7 +134,7 @@ class FrontendTemplateListener
     public function onOutputFrontendTemplate(string $content, string $template): string
     {
         global $objPage;
-        /** @var \PageModel $objPage */
+        /** @var PageModel $objPage */
 
         $objRootPage = PageModel::findByPk( $objPage->rootId );
         $themeDesigner = false; //ThemeDesignerConfig::loadCurrentThemeDesigner();
@@ -238,32 +238,18 @@ class FrontendTemplateListener
                 $content = preg_replace('/<div id="pitLane">([\s\n]{0,})<div class="inside">([A-Za-z0-9\s\n\-:_\{\}\[\]&;,öäüÖÄÜß+]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
             }
 
-
-            // REMOVE EMPTY "custom" CONTAINER
-            $content = preg_replace('/<div class="custom">([\s\n]{0,})<\/div>/', '', $content);
+            if( $objPage->hideFooterBottom || str_contains($objPage->cssClass, 'hide-footer-bottom')  )
+            {
+                $content = preg_replace('/<div id="footerBottom">([\s\n]{0,})<div class="inside">([A-Za-z0-9\s\n\-:_\{\}]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+            }
 
 
             // ENABLE PREVIEW MODE OPTIONS
 //            if( $container->getParameter('iido_core.previewMode') || $objRootPage->enablePreviewMode || $objPage->enablePreviewMode )
-            if( $objRootPage->enablePreviewMode || $objPage->enablePreviewMode )
+//            if( $objRootPage->enablePreviewMode || $objPage->enablePreviewMode )
+            if( $objRootPage->enablePreviewMode )
             {
                 $content = preg_replace('/<meta name="robots" content="([a-z,]+)">/', '<meta name="robots" content="noindex,nofollow">', $content);
-            }
-
-            if( str_contains($content, 'id="offsetNavigation"') )
-            {
-                $label = '{{iflng::de}}Menü{{iflng}}{{ifnlng::de}}Menu{{ifnlng}}';
-                $mode = 'squeeze'; // TODO (squeeze / arrowalt)
-
-                $navTogglerClasses = ' light'; // TODO
-
-                $toggler = '<div class="offset-navigation-toggler hamburger hamburger--' . $mode . ' hamburger-accessible js-hamburger' . $navTogglerClasses . '">
-<div class="hamburger-box"><div class="hamburger-inner"></div></div>
-<div class="hamburger-label">' . $label . '</div>
-</div>
-<div class="offset-navigation-overlay"></div>';
-
-                $content = str_replace('</body>', $toggler . '</body>', $content);
             }
 
 //            if( ScriptHelper::hasPageFullPage( true ) )
@@ -323,6 +309,8 @@ class FrontendTemplateListener
 //
 //                $strBuffer  = preg_replace('/<\/footer>(\s){0,}<\/div>/im', '</footer>', $strBuffer);
 //            }
+
+            $content = str_replace('</body>', '<div class="loading-container" id="loadCont"><div class="loader loader-5">' . \file_get_contents(TL_ROOT . '/files/kranabitl/Uploads/Logos/Logo_K.svg') . '</div></div></body>', $content);
         }
 
         return $content;
@@ -676,6 +664,45 @@ class FrontendTemplateListener
 //        }
 //
 //        return $strBuffer;
+    }
+
+
+
+    /**
+     * @Hook("modifyFrontendPage")
+     */
+    public function onModifyFrontendPage( string $content, string $templateName ): string
+    {
+        if( str_starts_with($templateName, 'fe_page') )
+        {
+            // REMOVE EMPTY SECTIONS
+            $content = preg_replace('/<div id="fixedContainer">([\s\n]{0,})<div class="inside">([\s\n]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+            $content = preg_replace('/<div id="footerBottom">([\s\n]{0,})<div class="inside">([\s\n]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+            $content = preg_replace('/<div id="offsetNavigation">([\s\n]{0,})<div class="inside">([\s\n]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+
+            $content = preg_replace('/<div id="pitLane">([\s\n]{0,})<div class="inside">([\s\n]{0,})<\/div>([\s\n]{0,})<\/div>/', '', $content);
+
+            // REMOVE EMPTY "custom" CONTAINER
+            $content = preg_replace('/<div class="custom">([\s\n]{0,})<\/div>/', '', $content);
+
+            if( str_contains($content, 'id="offsetNavigation"') )
+            {
+                $label = '{{iflng::de}}Menü{{iflng}}{{ifnlng::de}}Menu{{ifnlng}}';
+                $mode = 'squeeze'; // TODO (squeeze / arrowalt)
+
+                $navTogglerClasses = ' light'; // TODO
+
+                $toggler = '<div class="offset-navigation-toggler hamburger hamburger--' . $mode . ' hamburger-accessible js-hamburger' . $navTogglerClasses . '">
+<div class="hamburger-box"><div class="hamburger-inner"></div></div>
+<div class="hamburger-label">' . $label . '</div>
+</div>
+<div class="offset-navigation-overlay"></div>';
+
+                $content = str_replace('</body>', $toggler . '</body>', $content);
+            }
+        }
+
+        return $content;
     }
 
 
